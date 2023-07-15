@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode, ChangeEvent } from "react";
 
-type Props = { children };
+type Props = { children: ReactNode };
 
 export default function CompleteWrapper({ children }: Props) {
     const [complete, setComplete] = useState("");
 
-    const handleClick = (event) => {
+    const handleClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             setComplete("complete");
         } else {
@@ -17,7 +17,7 @@ export default function CompleteWrapper({ children }: Props) {
         <div
             className={complete ? "complete grid-container" : "grid-container"}
         >
-            <input type="checkbox" name="done" onClick={handleClick} />
+            <input type="checkbox" name="done" onChange={handleClick} />
             {children}
         </div>
     );

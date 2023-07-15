@@ -5,12 +5,18 @@ type Feedback = { guidance: string; www: string; ebi: string };
 type Props = {
     title: string;
     feedbackData: Feedback[];
-    addPositiveFeedback: (feedback: string, event) => void;
-    addEbiFeedback: (feedback: string, event) => void;
+    addPositiveFeedback: (
+        feedback: string,
+        event: ChangeEvent<HTMLInputElement>
+    ) => void;
+    addEbiFeedback: (
+        feedback: string,
+        event: ChangeEvent<HTMLInputElement>
+    ) => void;
 };
 
 import CompleteWrapper from "@/wrappers/CompleteWrapper";
-import { useState } from "react";
+import { ChangeEvent } from "react";
 
 export default function Checklist({
     title,
@@ -18,8 +24,6 @@ export default function Checklist({
     addPositiveFeedback,
     addEbiFeedback,
 }: Props) {
-    const [complete, setComplete] = useState("");
-
     return (
         <section>
             <h2>{title}</h2>
@@ -29,14 +33,14 @@ export default function Checklist({
                         <input
                             type="checkbox"
                             name="www"
-                            onClick={(event) =>
+                            onChange={(event) =>
                                 addPositiveFeedback(element.www, event)
                             }
                         />
                         <input
                             type="checkbox"
                             name="ebi"
-                            onClick={(event) =>
+                            onChange={(event) =>
                                 addEbiFeedback(element.ebi, event)
                             }
                         />

@@ -7,7 +7,7 @@ type Props = {
     couldData: Feedback[];
 };
 
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import Checklist from "./Checklist";
 
 export default function GuidanceGrid({
@@ -18,7 +18,10 @@ export default function GuidanceGrid({
     const [wwwFeedback, setWwwFeedback] = useState<string[]>([]);
     const [ebiFeedback, setEbiFeedback] = useState<string[]>([]);
 
-    const addPositiveFeedback = (feedback: string, event) => {
+    const addPositiveFeedback = (
+        feedback: string,
+        event: ChangeEvent<HTMLInputElement>
+    ) => {
         if (event.target.checked) {
             setWwwFeedback((prevState) => {
                 return [...prevState, feedback];
@@ -30,7 +33,10 @@ export default function GuidanceGrid({
         }
     };
 
-    const addEbiFeedback = (feedback: string, event) => {
+    const addEbiFeedback = (
+        feedback: string,
+        event: ChangeEvent<HTMLInputElement>
+    ) => {
         if (event.target.checked) {
             setEbiFeedback((prevState) => {
                 return [...prevState, feedback];
