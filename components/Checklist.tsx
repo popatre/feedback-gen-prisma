@@ -1,3 +1,5 @@
+"use client";
+
 type Feedback = { guidance: string; www: string; ebi: string };
 
 type Props = {
@@ -7,19 +9,23 @@ type Props = {
     addEbiFeedback: (feedback: string, event) => void;
 };
 
+import CompleteWrapper from "@/wrappers/CompleteWrapper";
+import { useState } from "react";
+
 export default function Checklist({
     title,
     feedbackData,
     addPositiveFeedback,
     addEbiFeedback,
 }: Props) {
+    const [complete, setComplete] = useState("");
+
     return (
         <section>
             <h2>{title}</h2>
             {feedbackData.map((element) => {
                 return (
-                    <div className="grid-container">
-                        <input type="checkbox" name="done" />
+                    <CompleteWrapper>
                         <input
                             type="checkbox"
                             name="www"
@@ -35,7 +41,7 @@ export default function Checklist({
                             }
                         />
                         <p>{element.guidance}</p>
-                    </div>
+                    </CompleteWrapper>
                 );
             })}
         </section>

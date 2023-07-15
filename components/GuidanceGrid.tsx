@@ -43,7 +43,7 @@ export default function GuidanceGrid({
     };
 
     return (
-        <main>
+        <main className="container">
             <Checklist
                 title="Must"
                 feedbackData={mustData}
@@ -63,17 +63,21 @@ export default function GuidanceGrid({
                 addEbiFeedback={addEbiFeedback}
             />
 
-            <section>
+            <section className="shadow-xl ">
                 <h2>What went well...</h2>
-                {wwwFeedback.map((feedback) => {
-                    return <p>{feedback}</p>;
-                })}
+                <ul className="py-5 px-3">
+                    {wwwFeedback.map((feedback) => {
+                        return <li>- {feedback}</li>;
+                    })}
+                </ul>
             </section>
-            <section>
+            <section className="shadow-xl py-2 border-2 border-black min-h-[150px]">
                 <h2>Even better..</h2>
-                {ebiFeedback.map((feedback) => {
-                    return <p>{feedback}</p>;
-                })}
+                <ul className="px-3">
+                    {ebiFeedback.map((feedback) => {
+                        return <li>- [ ] {feedback}</li>;
+                    })}
+                </ul>
             </section>
         </main>
     );
