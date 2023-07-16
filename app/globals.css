@@ -65,10 +65,10 @@ body {
 }
 
 .nav__grid {
-    width: clamp(500px, 80%, 1200px);
+    width: clamp(80%, 80%, 1200px);
     margin-inline: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
 }
 

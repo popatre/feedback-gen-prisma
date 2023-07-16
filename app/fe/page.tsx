@@ -29,7 +29,7 @@ export default function Page({}: Props) {
     ];
 
     return (
-        <section className="grid-flow-row nav__grid">
+        <section className="grid-flow-row nav__grid h-screen">
             {fePages.map((page) => {
                 return (
                     <NavCard

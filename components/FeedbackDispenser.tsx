@@ -12,7 +12,7 @@ export default function FeedbackDispenser({
     feedbackType,
 }: Props) {
     return (
-        <article className="shadow-xl min-h-[250px]  my-10 bg-slate-200">
+        <article className="shadow-xl min-h-[250px]  my-10 bg-slate-100">
             <h2 className="feedback__subtitle">{header}</h2>
             <ul className="py-5 px-3">
                 {feedback.map((feedback) => {
