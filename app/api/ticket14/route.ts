@@ -5,31 +5,51 @@ export async function GET() {
         ticketDescription: "Ticket 12 - Error Handling",
         mustData: [
             {
-                guidance:
-                    "See an appropriate error if going to a non-existent path (404)",
-                www: "Good 404 for a path that doesnt exist",
-                ebi: "Please add some handling of 404 for a path that doesnt exist",
+                guidance: "Link to the deployed version of the app",
+                www: "Has link to netlify deployed app ✅",
+                ebi: "Please add a link to the deployed app",
+            },
+            {
+                guidance: "Link to the back end repo",
+                www: "Has link to backend repo ✅",
+                ebi: "Please add a link to your backend repo",
+            },
+            {
+                guidance: "Link to hosted api",
+                www: "Has link to backend api ✅",
+                ebi: "Please add a link to the api server you used for the data",
             },
             {
                 guidance:
-                    "See an appropriate error if going to a path for a non-existent article (404)",
-                www: "Good handling of a 404 for an article that doesnt exist",
-                ebi: "Please add some handling of 404 for an article that doesnt exist",
+                    "Provides general info about the app and a description of what the project is",
+                www: "Good overview on the app and project and what is does",
+                ebi: "Please add a bit more info about the app and what the aim of the project was",
             },
             {
-                guidance:
-                    "See an appropriate error if going to a path for a non-existent topic (404)",
-                www: "Please handle a 404 for an topic that doesnt exist",
-                ebi: "handling of 404 for an topic that doesnt exist",
+                guidance: "Should tell user how to navigate the app",
+                www: "Good instructions on how to navigate the app",
+                ebi: "Please add a little more info on how to navigate and use the app - e.g. logging in, posting etc",
             },
             {
-                guidance:
-                    "Invalid values for any other parametrics or queries the app accepts are handled (400)",
-                www: "Nice 400 for your parametrics/queries that don't exist",
-                ebi: "Please handle - 400 for your parametrics/queries that don't exist",
+                guidance: "Instructs user on how to run the project locally",
+                www: "Good instructions on how to run the project locally",
+                ebi: "Please add some instructions on how to clone and run the project locally",
             },
         ],
-        shouldData: [],
+        shouldData: [
+            {
+                guidance:
+                    "Should have some styling considerations, should be clear to read and have relevant headings",
+                www: "Good markdown styling considerations - nice and easy to read",
+                ebi: "Could benefit from some styling considerings/headings to make it a bit easier to read/professional looking",
+            },
+            {
+                guidance:
+                    "Specifies the minimum version of Node required to run the project locally",
+                www: "Added minimum version of node required ✅",
+                ebi: "Please add the minimum version of node required. You can just use the version you use, as you know the project runs on that version",
+            },
+        ],
         couldData: [],
     };
 
