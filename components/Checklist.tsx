@@ -32,9 +32,9 @@ export default function Checklist({
                 <p>👏</p>
                 <p>⁉️</p>
             </div>
-            {feedbackData.map((element) => {
+            {feedbackData.map((element, index) => {
                 return (
-                    <CompleteWrapper>
+                    <CompleteWrapper key={index}>
                         <input
                             type="checkbox"
                             name="www"
