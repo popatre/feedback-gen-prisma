@@ -105,13 +105,8 @@ body {
 }
 
 .sticky-note {
-    background: linear-gradient(
-        180deg,
-        rgba(187, 235, 255, 1) 0%,
-        rgba(187, 235, 255, 1) 12%,
-        rgba(170, 220, 241, 1) 75%,
-        rgba(195, 229, 244, 1) 100%
-    );
+    background: #fff799;
+    box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.3);
 }
 
 @media only screen and (min-width: 1400px) {
