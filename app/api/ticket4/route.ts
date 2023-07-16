@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const feedback = {
+        ticketDescription: "Ticket 4 - View all articles",
         mustData: [
             {
                 guidance: "Do they have this",

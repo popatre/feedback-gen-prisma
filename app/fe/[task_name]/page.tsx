@@ -11,10 +11,13 @@ export default async function Page({
         method: "GET",
     });
     const parsed = await res.json();
-    const { couldData, shouldData, mustData } = parsed.feedback;
+    const { couldData, shouldData, mustData, ticketDescription } =
+        parsed.feedback;
     return (
         <div>
-            <h1> {params.task_name}</h1>
+            <h1 className="text-center font-bold text-2xl">
+                {ticketDescription}
+            </h1>
             <GuidanceGrid
                 mustData={mustData}
                 shouldData={shouldData}
