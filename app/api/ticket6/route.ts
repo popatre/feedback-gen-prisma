@@ -2,27 +2,40 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const feedback = {
-        ticketDescription: "Ticket 4 - View all articles",
+        ticketDescription:
+            "Ticket 6 - View list of comments associated with an article",
         mustData: [
             {
-                guidance: "A list of all articles must be viewable",
-                www: "Good list of all the article being rendered",
-                ebi: "Please render all the article from the api",
+                guidance:
+                    "User must be able to view a list of comments for each article",
+                www: "Excellent work displaying the comments",
+                ebi: "We need to be able to see all the comments for the individual article",
+            },
+            {
+                guidance: "Comments should be viewable for a given article",
+                www: "Excellent work displaying the comments",
+                ebi: "We need to be able to see all the comments for the individual article",
             },
             {
                 guidance:
-                    "If this list is not on the homepage, a link must be present to go to the relevant page",
-                www: "Nice UX having a link to all the articles",
-                ebi: "For a better UX/UI, could you please add a link to all the articles from the home page",
+                    "Components should not be too large. Consider dedicated components for rendering comments to avoid a Single Article component becoming bloated",
+                www: "Lovely stuff creating a separate component for the comments; stops the components getting too big and bloated",
+                ebi: "The article component is getting a bit big. Consider dedicated components for rendering comments to avoid a Single Article component becoming bloated",
             },
+
             {
                 guidance:
                     "isLoading pattern is followed with visual feedback to inform user",
-                www: "Lovely seeing the loading indicator to let us know something is happening",
-                ebi: "Please add some loading feedback/state to let us know that something is happening, its just a slow server/Internet connection",
+                www: "Excellent see some loading feedback to let us know something is happening",
+                ebi: "We need some loading feedback for a better UX - let the user know that something is happening/data is being requested",
             },
         ],
         shouldData: [
+            {
+                guidance: "UI consideration for articles with no comments.",
+                www: "Nice work on handling the articles that have no comments",
+                ebi: "Would be good for the articles which have no comments to get a little messages saying so e.g. 'No comments to show - why not be the first to add one?'",
+            },
             {
                 guidance:
                     "Requests to api should be handled separately in a utils file using axios i.e. getArticles",
@@ -39,12 +52,7 @@ export async function GET() {
                 www: "Nice layout to far.",
                 ebi: "I'd make sure this matches your designs/layout",
             },
-            {
-                guidance:
-                    "make sure the data is presented in an interesting way",
-                www: "Nice presentation of the data in a more interesting way",
-                ebi: "Would be good for this data to be presented in a bit more of an exciting way. Can look at this website for ideas: https://www.refactoringui.com/previews/labels-are-a-last-resort",
-            },
+
             {
                 guidance: "timestamp is formatted to human readable format",
                 www: "Timestamp is readable",
@@ -65,9 +73,9 @@ export async function GET() {
             },
             {
                 guidance:
-                    "Pagination is optional at this stage and is ok to be added in later",
-                www: "Excellent getting the pagination to work",
-                ebi: "Optional: If you've got it on the backend, you could look at pagination. Might be on to come back to later on though",
+                    "Make sure the data is presented in an interesting way",
+                www: "Nice presentation of the data in a more interesting way",
+                ebi: "Optional: Would be good for this data to be presented in a bit more of an exciting way. Can look at this website for ideas: https://www.refactoringui.com/previews/labels-are-a-last-resort",
             },
             {
                 guidance: "UI responds to API timeout errors - advanced!",

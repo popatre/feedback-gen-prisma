@@ -12,7 +12,7 @@ export default function Page({}: Props) {
         { url: "/fe/ticket2", description: "2. Enable CORS" },
         { url: "/fe/ticket3", description: "3. Planning" },
         { url: "/fe/ticket4", description: "4. View all articles" },
-        { url: "/fe/ticket5", description: "5. Planning" },
+        { url: "/fe/ticket5", description: "5. View Single Article" },
         {
             url: "/fe/ticket6",
             description: "6. View list of comments associated with an article",
