@@ -30,7 +30,6 @@ export default function FeedbackDispenser({
             .writeText(listContent)
             .then(() => {
                 setIsCopied(true);
-                console.log("im copied");
                 toast.success("📄 Copied to clipboard!", {
                     position: "top-center",
                     autoClose: 2000,
@@ -44,8 +43,17 @@ export default function FeedbackDispenser({
                     setIsCopied(false);
                 }, 2000);
             })
-            .catch((error) => {
-                console.error("Failed to copy list to clipboard:", error);
+            .catch(() => {
+                toast.error("❌ Something Went Wrong", {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             });
     };
 
@@ -68,7 +76,7 @@ export default function FeedbackDispenser({
                 {feedback.map((feedbackItem, index) => {
                     const listItemContent =
                         feedbackType === "www"
-                            ? `- feedbackItem`
+                            ? `- ${feedbackItem}`
                             : `- [ ] ${feedbackItem}`;
 
                     return <li key={index}>{listItemContent}</li>;
