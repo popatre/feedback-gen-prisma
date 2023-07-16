@@ -22,10 +22,10 @@ export default function Page({}: Props) {
         { url: "/fe/ticket9", description: "9.View articles by topic" },
         { url: "/fe/ticket10", description: "10. Sort articles" },
         { url: "/fe/ticket11", description: "11. Delete comment" },
-        { url: "/fe/ticket11", description: "12. Delete comment" },
-        { url: "/fe/ticket12", description: "13. Error Handling" },
-        { url: "/fe/ticket13", description: "14. Deploy App" },
-        { url: "/fe/ticket14", description: "15. README" },
+        { url: "/fe/ticket12", description: "12. Delete comment" },
+        { url: "/fe/ticket13", description: "13. Error Handling" },
+        { url: "/fe/ticket14", description: "14. Deploy App" },
+        { url: "/fe/ticket15", description: "15. README" },
     ];
 
     return (
