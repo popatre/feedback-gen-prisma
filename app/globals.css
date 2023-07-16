@@ -27,8 +27,8 @@ body {
 }
 
 .container {
-    width: 70%;
-    max-width: 900px;
+    width: 90%;
+
     margin-inline: auto;
 }
 
@@ -43,6 +43,32 @@ body {
     box-shadow: black 1px 1px 10px;
 }
 
+.box-labels {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 30fr;
+    gap: 10px;
+    padding-inline: 1.2em;
+}
+
 .complete {
     background-color: rgb(48, 206, 95);
+}
+
+.feedback__title {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.feedback__subtitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+@media only screen and (min-width: 1400px) {
+    .container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 1500px;
+        gap: 2em;
+    }
 }

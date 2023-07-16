@@ -9,6 +9,7 @@ type Props = {
 
 import { useState, ChangeEvent } from "react";
 import Checklist from "./Checklist";
+import FeedbackDispenser from "./FeedbackDispenser";
 
 export default function GuidanceGrid({
     mustData,
@@ -50,40 +51,37 @@ export default function GuidanceGrid({
 
     return (
         <main className="container">
-            <Checklist
-                title="Must"
-                feedbackData={mustData}
-                addPositiveFeedback={addPositiveFeedback}
-                addEbiFeedback={addEbiFeedback}
-            />
-            <Checklist
-                title="Should"
-                feedbackData={shouldData}
-                addPositiveFeedback={addPositiveFeedback}
-                addEbiFeedback={addEbiFeedback}
-            />
-            <Checklist
-                title="Could"
-                feedbackData={couldData}
-                addPositiveFeedback={addPositiveFeedback}
-                addEbiFeedback={addEbiFeedback}
-            />
-
-            <section className="shadow-xl ">
-                <h2>What went well...</h2>
-                <ul className="py-5 px-3">
-                    {wwwFeedback.map((feedback) => {
-                        return <li>- {feedback}</li>;
-                    })}
-                </ul>
-            </section>
-            <section className="shadow-xl py-2 border-2 border-black min-h-[150px]">
-                <h2>Even better..</h2>
-                <ul className="px-3">
-                    {ebiFeedback.map((feedback) => {
-                        return <li>- [ ] {feedback}</li>;
-                    })}
-                </ul>
+            <div className="container__checkboxes">
+                <Checklist
+                    title="Must"
+                    feedbackData={mustData}
+                    addPositiveFeedback={addPositiveFeedback}
+                    addEbiFeedback={addEbiFeedback}
+                />
+                <Checklist
+                    title="Should"
+                    feedbackData={shouldData}
+                    addPositiveFeedback={addPositiveFeedback}
+                    addEbiFeedback={addEbiFeedback}
+                />
+                <Checklist
+                    title="Could"
+                    feedbackData={couldData}
+                    addPositiveFeedback={addPositiveFeedback}
+                    addEbiFeedback={addEbiFeedback}
+                />
+            </div>
+            <section className="container__feedback">
+                <FeedbackDispenser
+                    header="What went well..."
+                    feedback={wwwFeedback}
+                    feedbackType="www"
+                />
+                <FeedbackDispenser
+                    header="Even Better If..."
+                    feedback={ebiFeedback}
+                    feedbackType="ebi"
+                />
             </section>
         </main>
     );

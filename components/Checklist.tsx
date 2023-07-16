@@ -26,7 +26,12 @@ export default function Checklist({
 }: Props) {
     return (
         <section>
-            <h2>{title}</h2>
+            <h2 className="feedback__title">{title}</h2>
+            <div className="box-labels">
+                <p>✅</p>
+                <p>👏</p>
+                <p>⁉️</p>
+            </div>
             {feedbackData.map((element) => {
                 return (
                     <CompleteWrapper>

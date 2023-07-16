@@ -11,7 +11,6 @@ export default async function Page({
         method: "GET",
     });
     const parsed = await res.json();
-    console.log(parsed);
     const { couldData, shouldData, mustData } = parsed.feedback;
     return (
         <div>
