@@ -13,7 +13,7 @@ export default function Navbar({}: Props) {
             <ul className=" w-1/4 flex flex-row justify-around py-5">
                 {pages.map((page) => {
                     return (
-                        <li>
+                        <li className="font-semibold text-white hover:text-black">
                             <Link href={page.url}>{page.name}</Link>
                         </li>
                     );
