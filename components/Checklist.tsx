@@ -24,7 +24,7 @@ export default function Checklist({
     addPositiveFeedback,
     addEbiFeedback,
 }: Props) {
-    return (
+    return feedbackData.length > 0 ? (
         <section>
             <h2 className="feedback__title">{title}</h2>
             <div className="box-labels">
@@ -53,6 +53,11 @@ export default function Checklist({
                     </CompleteWrapper>
                 );
             })}
+        </section>
+    ) : (
+        <section>
+            <h2 className="feedback__title">{title}</h2>
+            <p>No {title} criteria for this ticket</p>
         </section>
     );
 }
