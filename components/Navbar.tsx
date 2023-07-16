@@ -9,11 +9,11 @@ export default function Navbar({}: Props) {
         { name: "Front End", url: "/fe" },
     ];
     return (
-        <nav className="bg-purple-400 mb-10">
-            <ul className=" w-1/4 flex flex-row justify-around py-5">
+        <nav className="mb-10 nav-bar">
+            <ul className=" w-1/3 flex flex-row justify-around py-5">
                 {pages.map((page) => {
                     return (
-                        <li className="font-semibold text-white hover:text-black">
+                        <li className="font-semibold text-white hover:text-black ml-3">
                             <Link href={page.url}>{page.name}</Link>
                         </li>
                     );
