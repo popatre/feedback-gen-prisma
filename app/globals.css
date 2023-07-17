@@ -4,7 +4,7 @@
 
 @layer base {
     body {
-        @apply bg-main-bg-pattern bg-slate-50;
+        @apply bg-main-bg-pattern bg-neutral-50;
     }
 }
 
@@ -89,6 +89,7 @@ body {
         rgb(39 174 232) 75%,
         rgb(64 198 251) 100%
     );
+
     /* rgb(56 189 248) */
     /* rgb(56 189 248)
     rgb(39 174 232)
