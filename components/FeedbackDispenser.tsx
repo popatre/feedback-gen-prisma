@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 
 type Props = {
     header: string;
@@ -30,41 +29,19 @@ export default function FeedbackDispenser({
             .writeText(listContent)
             .then(() => {
                 setIsCopied(true);
-                toast.success("📄 Copied to clipboard!", {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.success("📄 Copied to clipboard!");
                 setTimeout(() => {
                     setIsCopied(false);
                 }, 2000);
             })
             .catch(() => {
-                toast.error("❌ Something Went Wrong", {
-                    position: "top-center",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error("❌ Something Went Wrong");
             });
     };
 
     return (
         <article className="relative shadow-xl min-h-[250px] my-10 sticky-note">
-            <ToastContainer
-                position="top-center"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                rtl={false}
-                theme="light"
-            />
+            <Toaster position="top-center" reverseOrder={false} />
             <button className="copy-btn" onClick={handleCopyToClipboard}>
                 {!isCopied ? `Copy to Clipboard` : `Copied!`}
             </button>
