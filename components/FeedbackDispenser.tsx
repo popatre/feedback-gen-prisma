@@ -21,7 +21,7 @@ export default function FeedbackDispenser({
         const listContent = feedback
             .map((feedbackItem) => {
                 return feedbackType === "www"
-                    ? `- feedbackItem`
+                    ? `- ${feedbackItem}`
                     : `- [ ] ${feedbackItem}`;
             })
             .join("\n");
