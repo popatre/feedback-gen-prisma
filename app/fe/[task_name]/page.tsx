@@ -6,11 +6,15 @@ export default async function Page({
 }: {
     params: { task_name: string };
 }) {
-    const res = await fetch(`http://localhost:3000/api/${params.task_name}`, {
-        next: { revalidate: 0 },
-        method: "GET",
-    });
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/${params.task_name}`,
+        {
+            next: { revalidate: 0 },
+            method: "GET",
+        }
+    );
     const parsed = await res.json();
+
     const { couldData, shouldData, mustData, ticketDescription } =
         parsed.feedback;
     return (
