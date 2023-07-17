@@ -38,6 +38,7 @@ export default function Checklist({
                         <input
                             type="checkbox"
                             name="www"
+                            disabled={true}
                             onChange={(event) =>
                                 addPositiveFeedback(element.www, event)
                             }

@@ -33,6 +33,13 @@ export default function CompleteWrapper({ children }: Props) {
                                 disabled: true,
                             }
                         );
+                    } else if (index === 0 && complete) {
+                        return cloneElement(
+                            child as React.ReactElement<ChildProps>,
+                            {
+                                disabled: false,
+                            }
+                        );
                     }
                     return child;
                 })}
