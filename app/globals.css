@@ -82,25 +82,29 @@ body {
 }
 
 .nav-bar {
-    /* background: linear-gradient(
+    background: linear-gradient(
         180deg,
-        rgba(187, 235, 255, 1) 0%,
-        rgba(187, 235, 255, 1) 12%,
-        rgba(170, 220, 241, 1) 75%,
-        rgba(195, 229, 244, 1) 100%
-    ); */
-    background-color: var(--main-banner-color);
+        rgb(56 189 248) 0%,
+        rgb(56 189 248) 12%,
+        rgb(39 174 232) 75%,
+        rgb(64 198 251) 100%
+    );
+    /* rgb(56 189 248) */
+    /* rgb(56 189 248)
+    rgb(39 174 232)
+    rgb(64 198 251) */
+    /* background-color: var(--main-banner-color); */
 }
 
 .nav-card {
-    /* background: linear-gradient(
+    background: linear-gradient(
         180deg,
-        rgba(187, 235, 255, 1) 0%,
-        rgba(187, 235, 255, 1) 12%,
-        rgba(170, 220, 241, 1) 75%,
-        rgba(195, 229, 244, 1) 100%
-    ); */
-    background-color: var(--main-banner-color);
+        rgb(56 189 248) 0%,
+        rgb(56 189 248) 12%,
+        rgb(39 174 232) 75%,
+        rgb(64 198 251) 100%
+    );
+    /* background-color: var(--main-banner-color); */
     text-shadow: black 0 1px 2px;
 }
 
