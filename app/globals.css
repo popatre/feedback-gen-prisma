@@ -4,7 +4,7 @@
 
 @layer base {
     body {
-        @apply bg-main-bg-pattern bg-neutral-50;
+        @apply bg-main-bg-pattern bg-white;
     }
 }
 

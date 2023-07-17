@@ -9,7 +9,7 @@ module.exports = {
         extend: {
             backgroundImage: {
                 "main-bg-pattern":
-                    "url('https://www.transparenttextures.com/patterns/graphy.png')",
+                    "url('https://www.transparenttextures.com/patterns/wood-pattern.png')",
             },
             fontFamily: {
                 roboto: ["var(--font-roboto)"],
