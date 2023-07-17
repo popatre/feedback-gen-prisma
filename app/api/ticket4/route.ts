@@ -36,7 +36,7 @@ export async function GET() {
             },
             {
                 guidance: "Basic layout design implemented",
-                www: "Nice layout to far.",
+                www: "Nice layout so far.",
                 ebi: "I'd make sure this matches your designs/layout",
             },
             {
