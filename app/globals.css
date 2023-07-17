@@ -122,6 +122,10 @@ body {
 }
 
 .copy-btn:hover {
+    transform: scale(1.01);
+}
+
+.copy-btn:hover {
     background-color: white;
 }
 

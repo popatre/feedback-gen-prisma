@@ -46,10 +46,8 @@ export default function FeedbackDispenser({
             .catch(() => {
                 toast.error("❌ Something Went Wrong", {
                     position: "top-center",
-                    autoClose: 2000,
+                    autoClose: 1000,
                     hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
                     theme: "light",
@@ -61,10 +59,9 @@ export default function FeedbackDispenser({
         <article className="relative shadow-xl min-h-[250px] my-10 sticky-note">
             <ToastContainer
                 position="top-center"
-                autoClose={2000}
+                autoClose={1000}
                 hideProgressBar={false}
                 newestOnTop={false}
-                closeOnClick
                 rtl={false}
                 theme="light"
             />
