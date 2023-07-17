@@ -15,7 +15,7 @@ export default async function Page({
         parsed.feedback;
     return (
         <div>
-            <h1 className="text-center font-bold text-2xl">
+            <h1 className="text-center font-bold text-2xl page-title">
                 {ticketDescription}
             </h1>
             <GuidanceGrid

@@ -1,9 +1,13 @@
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+    weight: ["500", "700"],
+    subsets: ["latin"],
+    variable: "--font-roboto",
+});
 
 export const metadata: Metadata = {
     title: "Project Guidance",
@@ -17,7 +21,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={`${roboto.variable} roboto.className`}>
                 <Navbar />
                 {children}
             </body>

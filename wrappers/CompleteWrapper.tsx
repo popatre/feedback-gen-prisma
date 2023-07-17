@@ -19,7 +19,9 @@ export default function CompleteWrapper({ children }: Props) {
 
     return (
         <div
-            className={complete ? "complete grid-container" : "grid-container"}
+            className={
+                complete ? "complete grid-container " : "grid-container "
+            }
         >
             <input type="checkbox" name="done" onChange={handleChange} />
             {children &&
