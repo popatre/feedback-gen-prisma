@@ -1,5 +1,5 @@
 import CheckboxInputs from "@/components/CheckboxInputs";
-import React, { useState, ReactNode, ChangeEvent, cloneElement } from "react";
+import React, { useState, ReactNode, ChangeEvent } from "react";
 
 type Props = {
     children: ReactNode | null | undefined;
@@ -9,11 +9,7 @@ type Props = {
     addEbiFeedback: (feedback: string, isChecked: boolean) => void;
 };
 
-type ChildProps = {
-    disabled: boolean;
-};
-
-export default function CompleteWrapper({
+export default function CheckBoxWrapper({
     children,
     wwwFeedback,
     ebiFeedback,
