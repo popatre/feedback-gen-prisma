@@ -13,7 +13,7 @@ export async function GET() {
             },
             {
                 guidance: "Comments should be viewable for a given article",
-                www: "Excellent work displaying the comments",
+                www: "Good that we've got the comments for the correct article showing 👍",
                 ebi: "We need to be able to see all the comments for the individual article",
             },
             {
@@ -27,7 +27,7 @@ export async function GET() {
                 guidance:
                     "isLoading pattern is followed with visual feedback to inform user",
                 www: "Excellent see some loading feedback to let us know something is happening",
-                ebi: "We need some loading feedback for a better UX - let the user know that something is happening/data is being requested",
+                ebi: "We need some loading feedback for a better UX - let the user know that something is happening/comments are being requested",
             },
         ],
         shouldData: [
