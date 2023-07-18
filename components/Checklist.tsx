@@ -5,18 +5,13 @@ type Feedback = { guidance: string; www: string; ebi: string };
 type Props = {
     title: string;
     feedbackData: Feedback[];
-    addPositiveFeedback: (
-        feedback: string,
-        event: ChangeEvent<HTMLInputElement>
-    ) => void;
-    addEbiFeedback: (
-        feedback: string,
-        event: ChangeEvent<HTMLInputElement>
-    ) => void;
+    addPositiveFeedback: (feedback: string, isChecked: boolean) => void;
+    addEbiFeedback: (feedback: string, isChecked: boolean) => void;
 };
 
 import CompleteWrapper from "@/wrappers/CompleteWrapper";
-import { ChangeEvent } from "react";
+import CheckboxInput from "./CheckboxInputs";
+import { useState } from "react";
 
 export default function Checklist({
     title,
@@ -24,6 +19,8 @@ export default function Checklist({
     addPositiveFeedback,
     addEbiFeedback,
 }: Props) {
+    const [complete, setComplete] = useState(false);
+
     return feedbackData.length > 0 ? (
         <section>
             <h2 className="feedback__title">{title}</h2>
@@ -34,22 +31,28 @@ export default function Checklist({
             </div>
             {feedbackData.map((element, index) => {
                 return (
-                    <CompleteWrapper key={index}>
-                        <input
-                            type="checkbox"
+                    <CompleteWrapper
+                        key={index}
+                        wwwFeedback={element.www}
+                        ebiFeedback={element.ebi}
+                        addPositiveFeedback={addPositiveFeedback}
+                        addEbiFeedback={addEbiFeedback}
+                    >
+                        {/* <CheckboxInput
                             name="www"
+                            feedback={element.www}
+                            addPositiveFeedback={addPositiveFeedback}
+                            addEbiFeedback={addEbiFeedback}
                             disabled={true}
-                            onChange={(event) =>
-                                addPositiveFeedback(element.www, event)
-                            }
                         />
-                        <input
-                            type="checkbox"
+                        <CheckboxInput
                             name="ebi"
-                            onChange={(event) =>
-                                addEbiFeedback(element.ebi, event)
-                            }
-                        />
+                            feedback={element.ebi}
+                            addPositiveFeedback={addPositiveFeedback}
+                            addEbiFeedback={addEbiFeedback}
+                            disabled={false}
+                        /> */}
+
                         <p>{element.guidance}</p>
                     </CompleteWrapper>
                 );
