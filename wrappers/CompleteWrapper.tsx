@@ -1,20 +1,30 @@
+import CheckboxInputs from "@/components/CheckboxInputs";
 import React, { useState, ReactNode, ChangeEvent, cloneElement } from "react";
 
-type Props = { children: ReactNode | null | undefined };
+type Props = {
+    children: ReactNode | null | undefined;
+    wwwFeedback: string;
+    ebiFeedback: string;
+    addPositiveFeedback: (feedback: string, isChecked: boolean) => void;
+    addEbiFeedback: (feedback: string, isChecked: boolean) => void;
+};
 
 type ChildProps = {
     disabled: boolean;
 };
 
-export default function CompleteWrapper({ children }: Props) {
-    const [complete, setComplete] = useState("");
+export default function CompleteWrapper({
+    children,
+    wwwFeedback,
+    ebiFeedback,
+    addPositiveFeedback,
+    addEbiFeedback,
+}: Props) {
+    const [complete, setComplete] = useState(false);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.target.checked) {
-            setComplete("complete");
-        } else {
-            setComplete("");
-        }
+        const isChecked = event.target.checked;
+        setComplete(isChecked);
     };
 
     return (
@@ -23,26 +33,27 @@ export default function CompleteWrapper({ children }: Props) {
                 complete ? "complete grid-container " : "grid-container "
             }
         >
-            <input type="checkbox" name="done" onChange={handleChange} />
-            {children &&
-                React.Children.map(children, (child, index) => {
-                    if (index === 1 && complete) {
-                        return cloneElement(
-                            child as React.ReactElement<ChildProps>,
-                            {
-                                disabled: true,
-                            }
-                        );
-                    } else if (index === 0 && complete) {
-                        return cloneElement(
-                            child as React.ReactElement<ChildProps>,
-                            {
-                                disabled: false,
-                            }
-                        );
-                    }
-                    return child;
-                })}
+            <input
+                type="checkbox"
+                name="done"
+                checked={complete}
+                onChange={handleChange}
+            />
+            <CheckboxInputs
+                name="www"
+                feedback={wwwFeedback}
+                addPositiveFeedback={addPositiveFeedback}
+                addEbiFeedback={addEbiFeedback}
+                disabled={!complete}
+            />
+            <CheckboxInputs
+                name="ebi"
+                feedback={ebiFeedback}
+                addPositiveFeedback={addPositiveFeedback}
+                addEbiFeedback={addEbiFeedback}
+                disabled={complete}
+            />
+            {children}
         </div>
     );
 }

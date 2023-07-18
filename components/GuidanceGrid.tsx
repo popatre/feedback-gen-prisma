@@ -19,11 +19,8 @@ export default function GuidanceGrid({
     const [wwwFeedback, setWwwFeedback] = useState<string[]>([]);
     const [ebiFeedback, setEbiFeedback] = useState<string[]>([]);
 
-    const addPositiveFeedback = (
-        feedback: string,
-        event: ChangeEvent<HTMLInputElement>
-    ) => {
-        if (event.target.checked) {
+    const addPositiveFeedback = (feedback: string, isChecked: boolean) => {
+        if (isChecked) {
             setWwwFeedback((prevState) => {
                 return [...prevState, feedback];
             });
@@ -34,11 +31,8 @@ export default function GuidanceGrid({
         }
     };
 
-    const addEbiFeedback = (
-        feedback: string,
-        event: ChangeEvent<HTMLInputElement>
-    ) => {
-        if (event.target.checked) {
+    const addEbiFeedback = (feedback: string, isChecked: boolean) => {
+        if (isChecked) {
             setEbiFeedback((prevState) => {
                 return [...prevState, feedback];
             });
