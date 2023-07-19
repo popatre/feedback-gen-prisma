@@ -4,15 +4,20 @@ import React from "react";
 export default async function Page({
     params,
 }: {
-    params: { task_name: string };
+    params: { ticket_num: string; block: string };
 }) {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/${params.task_name}`,
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/feedback?block=${params.block}&ticket=${params.ticket_num}`,
         {
             next: { revalidate: 0 },
             method: "GET",
         }
     );
+
+    if (res.status === 404) {
+        return <p>Something went wrong...</p>;
+    }
+
     const parsed = await res.json();
 
     const { couldData, shouldData, mustData, ticketDescription } =

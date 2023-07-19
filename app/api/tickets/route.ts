@@ -2,12 +2,14 @@ import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 
+type Ticket = { url: string; description: string };
+type Tickets = Ticket[];
+
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-    const ticketNum = searchParams.get("ticket");
     const block = searchParams.get("block");
 
-    if (!ticketNum || !block) {
+    if (!block) {
         return NextResponse.error();
     }
 
@@ -15,13 +17,12 @@ export async function GET(request: Request) {
         process.cwd(),
         "data",
         block,
-        `ticket${ticketNum}.json`
+        "ticketList.json"
     );
     try {
-        const feedback = await fs.readFile(modulePath, "utf8");
-        return NextResponse.json({ feedback: JSON.parse(feedback) });
+        const tickets = await fs.readFile(modulePath, "utf8");
+        return NextResponse.json({ tickets: JSON.parse(tickets) });
     } catch (error) {
-        // File not found or other error occurred
         return NextResponse.json(
             {
                 status: 404,
