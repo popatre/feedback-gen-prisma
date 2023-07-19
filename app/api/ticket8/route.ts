@@ -7,7 +7,7 @@ export async function GET() {
             {
                 guidance: "Posting functionality should work and be persistent",
                 www: "Excellent job getting the posting to work and update the db",
-                ebi: "We need the post to be persistent - at the moment, the comment disappears after i refresh the page",
+                ebi: "We need the post to be persistent - at the moment, the comment disappears after I refresh the page",
             },
             {
                 guidance:
@@ -25,7 +25,7 @@ export async function GET() {
                 guidance:
                     "Comments are posted as a hard coded user or - if implemented - the current logged in user",
                 www: "Nicely done using the current user of the app",
-                ebi: "Please could you post the comments as either a hardcoded user, or the user set in context",
+                ebi: "Please could you post the comments as either a hardcoded user, or the user set in context/state",
             },
             {
                 guidance:
