@@ -15,7 +15,7 @@ export default async function Page({ params }: Props) {
         }
     );
 
-    if (res.status === 404) {
+    if (res.status !== 200) {
         return <p>Something went wrong...</p>;
     }
 
