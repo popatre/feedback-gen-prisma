@@ -1,0 +1,58 @@
+[
+    {
+        "url": "/fe/1",
+        "description": "1. Create React project and public repo"
+    },
+    {
+        "url": "/fe/2",
+        "description": "2. Enable CORS"
+    },
+    {
+        "url": "/fe/3",
+        "description": "3. Planning"
+    },
+    {
+        "url": "/fe/4",
+        "description": "4. View all articles"
+    },
+    {
+        "url": "/fe/5",
+        "description": "5. View Single Article"
+    },
+    {
+        "url": "/fe/6",
+        "description": "6. View list of comments associated with an article"
+    },
+    {
+        "url": "/fe/7",
+        "description": "7. Vote on article"
+    },
+    {
+        "url": "/fe/8",
+        "description": "8. Post article comment"
+    },
+    {
+        "url": "/fe/9",
+        "description": "9.View articles by topic"
+    },
+    {
+        "url": "/fe/10",
+        "description": "10. Sort articles"
+    },
+    {
+        "url": "/fe/11",
+        "description": "11. Delete comment"
+    },
+    {
+        "url": "/fe/12",
+        "description": "12. Error Handling"
+    },
+    {
+        "url": "/fe/13",
+        "description": "13. Deploy App"
+    },
+    {
+        "url": "/fe/14",
+        "description": "14. README"
+    }
+]
