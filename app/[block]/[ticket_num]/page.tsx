@@ -14,7 +14,7 @@ export default async function Page({
         }
     );
 
-    if (res.status === 404) {
+    if (res.status !== 200) {
         return <p>Something went wrong...</p>;
     }
 

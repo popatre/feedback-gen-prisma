@@ -2,15 +2,18 @@ import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 
-type Ticket = { url: string; description: string };
-type Tickets = Ticket[];
-
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const block = searchParams.get("block");
 
     if (!block) {
-        return NextResponse.error();
+        return NextResponse.json(
+            {
+                status: 404,
+                statusText: "Block not Found",
+            },
+            { status: 404 }
+        );
     }
 
     const modulePath = path.join(

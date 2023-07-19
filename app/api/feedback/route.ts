@@ -8,7 +8,13 @@ export async function GET(request: Request) {
     const block = searchParams.get("block");
 
     if (!ticketNum || !block) {
-        return NextResponse.error();
+        return NextResponse.json(
+            {
+                status: 400,
+                statusText: "Bad request - no block and/or ticket",
+            },
+            { status: 400 }
+        );
     }
 
     const modulePath = path.join(
@@ -21,7 +27,6 @@ export async function GET(request: Request) {
         const feedback = await fs.readFile(modulePath, "utf8");
         return NextResponse.json({ feedback: JSON.parse(feedback) });
     } catch (error) {
-        // File not found or other error occurred
         return NextResponse.json(
             {
                 status: 404,
