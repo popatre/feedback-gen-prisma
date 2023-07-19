@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const feedback = {
-        ticketDescription: "Ticket 12 - Error Handling",
+        ticketDescription: "Ticket 13 - Hosting",
         mustData: [
             {
                 guidance: "The app is deployed on netlify with a working link",
