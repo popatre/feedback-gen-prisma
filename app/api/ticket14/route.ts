@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const feedback = {
-        ticketDescription: "Ticket 12 - Error Handling",
+        ticketDescription: "Ticket 14 - README",
         mustData: [
             {
                 guidance: "Link to the deployed version of the app",
