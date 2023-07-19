@@ -26,7 +26,7 @@ export async function GET() {
             {
                 guidance:
                     "isLoading pattern is followed with visual feedback to inform user",
-                www: "Excellent see some loading feedback to let us know something is happening",
+                www: "Excellent see some loading feedback to let us know something is happening, especially if the server is slow or someone's Internet is slow",
                 ebi: "We need some loading feedback for a better UX - let the user know that something is happening/comments are being requested",
             },
         ],
@@ -39,7 +39,7 @@ export async function GET() {
             {
                 guidance:
                     "Requests to api should be handled separately in a utils file using axios i.e. getArticles",
-                www: "Good to see the axios requests extracted into their own folder - nice and reusable",
+                www: "Good to see the axios requests extracted into their own folder - nice and reusable, means you only need make any adjustment to the api in one place",
                 ebi: "Would be good to see the axios requests extracted into their own folder - make them more reusable/maintainable",
             },
             {

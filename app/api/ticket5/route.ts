@@ -46,7 +46,7 @@ export async function GET() {
                 guidance:
                     "URL should show article id in the format of /articles/:article_id",
                 www: "The URL is well thought out and gives a nice flow from the previous articles page",
-                ebi: "Might be nicer to have the url as /articles/:article_id",
+                ebi: "Might be nicer to have the url as something like /articles/:article_id",
             },
             {
                 guidance:
@@ -67,7 +67,7 @@ export async function GET() {
 
             {
                 guidance: "timestamp is formatted to human readable format",
-                www: "Timestamp is readable",
+                www: "Timestamp is readable, rather than the default one",
                 ebi: "Would be better to have the timestamp formatted in a bit more of a human readable way, than the default",
             },
             {
