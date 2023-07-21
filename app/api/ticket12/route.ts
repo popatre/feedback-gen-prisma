@@ -19,7 +19,7 @@ export async function GET() {
             {
                 guidance:
                     "See an appropriate error if going to a path for a non-existent topic (404)",
-                www: "Please handle a 404 for an topic that doesnt exist",
+                www: "Good work with the non-existent topic 404! 👍",
                 ebi: "handling of 404 for an topic that doesnt exist",
             },
             {
