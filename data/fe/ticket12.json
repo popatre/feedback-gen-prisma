@@ -13,12 +13,12 @@
         },
         {
             "guidance": "See an appropriate error if going to a path for a non-existent topic (404)",
-            "www": "Please handle a 404 for an topic that doesnt exist",
+            "www": "Well handled for the 404 of a non-existent topic!",
             "ebi": "handling of 404 for an topic that doesnt exist"
         },
         {
             "guidance": "Invalid values for any other parametrics or queries the app accepts are handled (400)",
-            "www": "Nice 400 for your parametrics/queries that don't exist",
+            "www": "Nice 400 for your parametric/queries that don't exist",
             "ebi": "Please handle - 400 for your parametrics/queries that don't exist"
         }
     ],
