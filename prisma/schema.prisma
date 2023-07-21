@@ -1,0 +1,50 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  email String  @unique @id
+  feedback Feedback[]
+}
+
+model Block  { 
+  block_id Int @id
+ block_name String 
+  tickets Ticket[]
+ }
+
+ model Ticket {
+        ticket_id String @id
+        ticket_number Int
+        block_id Int
+        block Block @relation(fields:[block_id], references:[block_id])
+        description String
+        guidance Guidance[]
+        
+    }
+
+    model Guidance {
+        guidance_id Int @id @default(autoincrement())
+        ticket_id String 
+        ticket Ticket @relation(fields:[ticket_id], references:[ticket_id])
+        type String
+        guidance String
+        feedback Feedback[]
+    }
+
+    model Feedback {
+        feedback_id Int @id @default(autoincrement())
+        www String
+        ebi String
+        user_email String
+        email User @relation(fields:[user_email], references:[email])
+        guidance_id Int 
+        guidance Guidance @relation(fields:[guidance_id], references:[guidance_id])
+    }
