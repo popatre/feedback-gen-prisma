@@ -109,12 +109,63 @@ describe("tickets", () => {
                     feedback: expect.any(Array),
                 });
                 criterion.feedback.forEach((feedback) => {
-                    console.log(feedback, "*****");
                     expect(feedback).toMatchObject({
                         feedback_id: expect.any(Number),
                         www: expect.any(String),
                         ebi: expect.any(String),
                         user_email: "test@gmail.com",
+                        guidance_id: expect.any(Number),
+                    });
+                });
+                expect(criterion.feedback).toHaveLength(1);
+            });
+        }
+    });
+    test("should handle ticket with not feedback", async () => {
+        const feTicketOne = await selectTicketByIdWithEmail(
+            "BE1",
+            "test2@gmail.com"
+        );
+        expect(feTicketOne).toBeInstanceOf(Object);
+        if (feTicketOne) {
+            expect(feTicketOne.guidance).toHaveLength(6);
+            feTicketOne.guidance.forEach((criterion) => {
+                expect(criterion).toMatchObject({
+                    guidance_id: expect.any(Number),
+                    ticket_id: "BE1",
+                    type: expect.any(String),
+                    guidance: expect.any(String),
+                    feedback: expect.any(Array),
+                });
+                expect(criterion.feedback).toHaveLength(0);
+            });
+        }
+    });
+    test("should handle ticket with partial feedback for some guidance criteria", async () => {
+        const feTicketOne = await selectTicketByIdWithEmail(
+            "FE1",
+            "test2@gmail.com"
+        );
+        expect(feTicketOne).toBeInstanceOf(Object);
+        if (feTicketOne) {
+            expect(feTicketOne.guidance).toHaveLength(6);
+            feTicketOne.guidance.forEach((criterion) => {
+                expect(criterion).toMatchObject({
+                    guidance_id: expect.any(Number),
+                    ticket_id: "FE1",
+                    type: expect.any(String),
+                    guidance: expect.any(String),
+                    feedback: expect.any(Array),
+                });
+                if (criterion.feedback.length !== 0) {
+                    expect(criterion.feedback).toHaveLength(1);
+                }
+                criterion.feedback.forEach((feedback) => {
+                    expect(feedback).toMatchObject({
+                        feedback_id: expect.any(Number),
+                        www: expect.any(String),
+                        ebi: expect.any(String),
+                        user_email: "test2@gmail.com",
                         guidance_id: expect.any(Number),
                     });
                 });
