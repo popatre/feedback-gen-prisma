@@ -32,9 +32,13 @@ export default function GuidanceGrid({
         }
     };
 
-    let { data: users, isLoading, isFetching } = trpc.getUsers.useQuery();
+    let {
+        data: blocks,
+        isLoading,
+        isFetching,
+    } = trpc.block.getAllBlocks.useQuery();
 
-    console.log(users, "*****8");
+    console.log(blocks, "*****8");
 
     const addEbiFeedback = (feedback: string, isChecked: boolean) => {
         if (isChecked) {
