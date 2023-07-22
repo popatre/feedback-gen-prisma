@@ -173,3 +173,5 @@ describe("tickets", () => {
         }
     });
 });
+
+describe("patchFeedback", () => {});

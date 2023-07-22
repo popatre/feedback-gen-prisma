@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { TrpcProvider } from "../utils/trpc-providers";
 
 const roboto = Roboto({
     weight: ["500", "700"],
@@ -23,7 +24,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${roboto.variable} roboto.className`}>
                 <Navbar />
-                {children}
+                <TrpcProvider>{children}</TrpcProvider>
             </body>
         </html>
     );
