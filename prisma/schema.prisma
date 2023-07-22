@@ -19,6 +19,7 @@ model Block  {
   tickets Ticket[]
  }
 
+// ticket id unique?
  model Ticket {
         ticket_id String @id
         ticket_number Int

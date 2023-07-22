@@ -2,6 +2,7 @@ import * as data from "../../db/data/index";
 import seed from "../../db/seeds/seed";
 import client from "../../db/connection";
 import { selectAllBlocks, selectSingleBlock } from "../../models/block.model";
+import { selectTicketById } from "../../models/ticket.model";
 
 beforeEach(() => seed(data));
 afterAll(() => client.$disconnect());
@@ -10,6 +11,7 @@ describe("blocks", () => {
     test("should get all blocks", async () => {
         const blocks = await selectAllBlocks();
         expect(blocks).toBeInstanceOf(Array);
+        expect(blocks).toHaveLength(2);
         blocks.forEach((block) => {
             expect(block).toMatchObject({
                 block_name: expect.any(String),
@@ -40,5 +42,19 @@ describe("blocks", () => {
             "non_existing_block_id"
         );
         expect(nonExistingBlock).toBeNull();
+    });
+});
+
+describe("tickets", () => {
+    test("should return ticket data for id given", async () => {
+        const feTicketOne = await selectTicketById("BE1");
+        expect(feTicketOne).toBeInstanceOf(Object);
+        expect(feTicketOne).toMatchObject({
+            ticket_id: "BE1",
+            ticket_number: expect.any(Number),
+            block_name: "be",
+            description: expect.any(String),
+            guidance: expect.any(Array),
+        });
     });
 });
