@@ -16,7 +16,7 @@ model User {
 
 model Block  { 
   block_id Int @id
- block_name String 
+ block_name String @unique
   tickets Ticket[]
  }
 
