@@ -15,16 +15,15 @@ model User {
 }
 
 model Block  { 
-  block_id Int @id
- block_name String @unique
+ block_name String @unique @id
   tickets Ticket[]
  }
 
  model Ticket {
         ticket_id String @id
         ticket_number Int
-        block_id Int
-        block Block @relation(fields:[block_id], references:[block_id])
+        block_name String 
+        block Block @relation(fields:[block_name], references:[block_name])
         description String
         guidance Guidance[]
         

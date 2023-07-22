@@ -12,16 +12,14 @@ describe("blocks", () => {
         expect(blocks).toBeInstanceOf(Array);
         blocks.forEach((block) => {
             expect(block).toMatchObject({
-                block_id: expect.any(Number),
                 block_name: expect.any(String),
             });
         });
     });
-    test("should single block data", async () => {
+    test("should fetch single block data", async () => {
         const block = await selectSingleBlock("fe");
         expect(block).toBeInstanceOf(Object);
         expect(block).toMatchObject({
-            block_id: expect.any(Number),
             block_name: expect.any(String),
             tickets: expect.any(Array),
         });
@@ -31,10 +29,16 @@ describe("blocks", () => {
                 expect(ticket).toMatchObject({
                     ticket_id: expect.any(String),
                     ticket_number: expect.any(Number),
-                    block_id: expect.any(Number),
+                    block_name: "fe",
                     description: expect.any(String),
                 });
             });
         }
+    });
+    test("should return null for non-existing block", async () => {
+        const nonExistingBlock = await selectSingleBlock(
+            "non_existing_block_id"
+        );
+        expect(nonExistingBlock).toBeNull();
     });
 });
