@@ -3,6 +3,7 @@ import seed from "../../db/seeds/seed";
 import client from "../../db/connection";
 import { selectAllBlocks, selectSingleBlock } from "../../models/block.model";
 import { selectTicketByIdWithEmail } from "../../models/ticket.model";
+import { selectAllGuidance } from "../../models/guidance.model";
 
 beforeEach(() => seed(data));
 afterAll(() => client.$disconnect());
@@ -171,6 +172,22 @@ describe("tickets", () => {
                 });
             });
         }
+    });
+});
+
+describe("guidance", () => {
+    test("should return all guidance for all tickets", async () => {
+        const guidance = await selectAllGuidance();
+        expect(guidance).toBeInstanceOf(Array);
+        expect(guidance).toHaveLength(30);
+        guidance.forEach((criterion) => {
+            expect(criterion).toMatchObject({
+                guidance_id: expect.any(Number),
+                ticket_id: expect.any(String),
+                type: expect.any(String),
+                guidance: expect.any(String),
+            });
+        });
     });
 });
 
