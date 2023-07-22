@@ -2,7 +2,7 @@ import * as data from "../../db/data/index";
 import seed from "../../db/seeds/seed";
 import client from "../../db/connection";
 import { selectAllBlocks, selectSingleBlock } from "../../models/block.model";
-import { selectTicketById } from "../../models/ticket.model";
+import { selectTicketByIdWithEmail } from "../../models/ticket.model";
 
 beforeEach(() => seed(data));
 afterAll(() => client.$disconnect());
@@ -47,7 +47,10 @@ describe("blocks", () => {
 
 describe("tickets", () => {
     test("should return ticket data for id given", async () => {
-        const feTicketOne = await selectTicketById("BE1");
+        const feTicketOne = await selectTicketByIdWithEmail(
+            "BE1",
+            "test@gmail.com"
+        );
         expect(feTicketOne).toBeInstanceOf(Object);
         expect(feTicketOne).toMatchObject({
             ticket_id: "BE1",
@@ -58,7 +61,10 @@ describe("tickets", () => {
         });
     });
     test("should return ticket guidance for requested ticket", async () => {
-        const feTicketOne = await selectTicketById("BE1");
+        const feTicketOne = await selectTicketByIdWithEmail(
+            "BE1",
+            "test@gmail.com"
+        );
         expect(feTicketOne).toBeInstanceOf(Object);
         expect(feTicketOne).toMatchObject({
             ticket_id: "BE1",
@@ -75,6 +81,42 @@ describe("tickets", () => {
                     ticket_id: "BE1",
                     type: expect.any(String),
                     guidance: expect.any(String),
+                });
+            });
+        }
+    });
+    test("should return null when passed ticket id not in db", async () => {
+        const nonTicket = await selectTicketByIdWithEmail(
+            "not_a_ticket",
+            "test@gmail.com"
+        );
+        expect(nonTicket).toBeNull();
+    });
+    test("should return ticket with feedback from email", async () => {
+        const feTicketOne = await selectTicketByIdWithEmail(
+            "BE1",
+            "test@gmail.com"
+        );
+        expect(feTicketOne).toBeInstanceOf(Object);
+        if (feTicketOne) {
+            expect(feTicketOne.guidance).toHaveLength(6);
+            feTicketOne.guidance.forEach((criterion) => {
+                expect(criterion).toMatchObject({
+                    guidance_id: expect.any(Number),
+                    ticket_id: "BE1",
+                    type: expect.any(String),
+                    guidance: expect.any(String),
+                    feedback: expect.any(Array),
+                });
+                criterion.feedback.forEach((feedback) => {
+                    console.log(feedback, "*****");
+                    expect(feedback).toMatchObject({
+                        feedback_id: expect.any(Number),
+                        www: expect.any(String),
+                        ebi: expect.any(String),
+                        user_email: "test@gmail.com",
+                        guidance_id: expect.any(Number),
+                    });
                 });
             });
         }
