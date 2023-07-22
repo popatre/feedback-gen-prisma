@@ -57,4 +57,26 @@ describe("tickets", () => {
             guidance: expect.any(Array),
         });
     });
+    test("should return ticket guidance for requested ticket", async () => {
+        const feTicketOne = await selectTicketById("BE1");
+        expect(feTicketOne).toBeInstanceOf(Object);
+        expect(feTicketOne).toMatchObject({
+            ticket_id: "BE1",
+            ticket_number: expect.any(Number),
+            block_name: "be",
+            description: expect.any(String),
+            guidance: expect.any(Array),
+        });
+        if (feTicketOne) {
+            expect(feTicketOne.guidance).toHaveLength(6);
+            feTicketOne.guidance.forEach((criterion) => {
+                expect(criterion).toMatchObject({
+                    guidance_id: expect.any(Number),
+                    ticket_id: "BE1",
+                    type: expect.any(String),
+                    guidance: expect.any(String),
+                });
+            });
+        }
+    });
 });
