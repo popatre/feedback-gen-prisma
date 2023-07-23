@@ -204,6 +204,25 @@ describe("patchFeedback", () => {
         );
         expect(updatedFeedback).toMatchObject({ ...patch });
     });
+    test("should update when passed single key", async () => {
+        const patch = { www: "im a new www" } as { www: string; ebi: string };
+        const feedbackIds = await getTableIds("Feedback", "feedback_id");
+        const currentId = feedbackIds[0];
+        const updatedFeedback = await updateFeedbackByFeedbackId(
+            +currentId,
+            patch
+        );
+        expect(updatedFeedback).toMatchObject({ ...patch });
+    });
+    test("should return null for id not in db", async () => {
+        const patch = { www: "im a new www", ebi: "im a new ebi" };
+        const notCurrentId = "0";
+        const failedPatch = await updateFeedbackByFeedbackId(
+            +notCurrentId,
+            patch
+        );
+        expect(failedPatch).toBeNull();
+    });
 });
 
 describe("users", () => {
