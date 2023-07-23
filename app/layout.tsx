@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { TrpcProvider } from "../utils/trpc-providers";
+import AuthContextProvider from "@/wrappers/AuthProvider";
 
 const roboto = Roboto({
     weight: ["500", "700"],
@@ -23,8 +24,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${roboto.variable} roboto.className`}>
-                <Navbar />
-                <TrpcProvider>{children}</TrpcProvider>
+                <AuthContextProvider>
+                    <Navbar />
+                    <TrpcProvider>{children}</TrpcProvider>
+                </AuthContextProvider>
             </body>
         </html>
     );
