@@ -24,12 +24,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${roboto.variable} roboto.className`}>
-                <AuthContextProvider>
-                    <TrpcProvider>
-                        <Navbar />
-                        {children}
-                    </TrpcProvider>
-                </AuthContextProvider>
+                <TrpcProvider>
+                    <AuthContextProvider>{children}</AuthContextProvider>
+                </TrpcProvider>
             </body>
         </html>
     );

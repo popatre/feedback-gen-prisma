@@ -90,11 +90,8 @@ body {
         rgb(64 198 251) 100%
     );
 
-    /* rgb(56 189 248) */
-    /* rgb(56 189 248)
-    rgb(39 174 232)
-    rgb(64 198 251) */
-    /* background-color: var(--main-banner-color); */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .nav-card {

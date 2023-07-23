@@ -4,8 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { UserContext } from "@/lib/context";
 import { useRouter } from "next/navigation";
-import { signInWithPopup, signOut } from "firebase/auth";
-import { auth, provider } from "../lib/firebase";
+import { signOut } from "firebase/auth";
+import { auth } from "../lib/firebase";
 import useHandleUserLogin from "@/hooks/useHandleUserLogin";
 
 type Props = {};
@@ -30,15 +30,6 @@ export default function Navbar({}: Props) {
         }
     }, [user]);
 
-    // const handleSignIn = async () => {
-    //     try {
-    //         await signInWithPopup(auth, provider);
-    //         router.push("/");
-    //     } catch (error) {
-    //         console.log("gone wrong");
-    //     }
-    // };
-
     const handleSignOut = () => {
         signOut(auth)
             .then(() => {
@@ -55,27 +46,37 @@ export default function Navbar({}: Props) {
     ];
 
     if (isLoading) return <p>Loading...</p>;
+    console.log(user, "***");
     return (
         <nav className="mb-10 nav-bar">
-            <ul className=" w-1/3 flex flex-row justify-around py-5">
-                {pages.map((page) => {
-                    return (
-                        <li
-                            key={page.url}
-                            className="font-semibold text-white hover:text-black ml-3"
-                        >
-                            <Link href={page.url}>{page.name}</Link>
-                        </li>
-                    );
-                })}
+            <ul className="flex flex-row justify-around py-5">
+                {user &&
+                    pages.map((page) => {
+                        return (
+                            <li
+                                key={page.url}
+                                className="font-semibold text-white hover:text-black ml-3"
+                            >
+                                <Link href={page.url}>{page.name}</Link>
+                            </li>
+                        );
+                    })}
             </ul>
-            {!user?.email ? // <button onClick={handleSignIn}>Login</button>
-            null : (
-                <>
-                    <p>Welcome {user?.email}</p>
-                    <button onClick={handleSignOut}>Sign Out</button>
-                </>
-            )}
+            <aside className="flex flex-row justify-end mr-10">
+                {!user?.email ? null : (
+                    <>
+                        <p className="mr-10 self-center text-white">
+                            Hi, {user?.displayName}
+                        </p>
+                        <button
+                            onClick={handleSignOut}
+                            className="bg-green-600 hover:bg-blue-700 text-xs text-white font-bold py-1 px-2 rounded my-1"
+                        >
+                            Sign Out
+                        </button>
+                    </>
+                )}
+            </aside>
         </nav>
     );
 }
