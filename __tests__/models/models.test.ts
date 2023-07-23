@@ -6,6 +6,7 @@ import { selectTicketByIdWithEmail } from "../../models/ticket.model";
 import { selectAllGuidance } from "../../models/guidance.model";
 import { updateFeedbackByFeedbackId } from "../../models/feedback.model";
 import getTableIds from "../../db/utils/getTableIds";
+import { postUser } from "../../models/user.model";
 
 beforeEach(() => seed(data));
 afterAll(() => client.$disconnect());
@@ -226,5 +227,10 @@ describe("patchFeedback", () => {
 });
 
 describe("users", () => {
+    test("should add user", async () => {
+        const newEmail = "test999@gmail.com";
+        const newUser = await postUser(newEmail);
+        expect(newUser).toEqual({ email: newEmail });
+    });
     test.todo("user exist");
 });
