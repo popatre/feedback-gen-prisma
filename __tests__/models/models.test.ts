@@ -232,5 +232,4 @@ describe("users", () => {
         const newUser = await postUser(newEmail);
         expect(newUser).toEqual({ email: newEmail });
     });
-    test.todo("user exist");
 });
