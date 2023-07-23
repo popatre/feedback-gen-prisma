@@ -44,6 +44,9 @@ async function seed({
     await client.feedback.createMany({
         data: feedbackData as Prisma.Enumerable<Prisma.FeedbackCreateManyInput>,
     });
+
+    // const result =
+    //     await client.$queryRaw`ALTER SEQUENCE feedback_feedback_id_seq RESTART WITH 1;`;
 }
 
 export default seed;

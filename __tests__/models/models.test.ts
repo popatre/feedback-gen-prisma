@@ -3,6 +3,10 @@ import seed from "../../db/seeds/seed";
 import client from "../../db/connection";
 import { selectAllBlocks, selectSingleBlock } from "../../models/block.model";
 import { selectTicketByIdWithEmail } from "../../models/ticket.model";
+import { selectAllGuidance } from "../../models/guidance.model";
+import { updateFeedbackByFeedbackId } from "../../models/feedback.model";
+import getTableIds from "../../db/utils/getTableIds";
+import { postUser } from "../../models/user.model";
 
 beforeEach(() => seed(data));
 afterAll(() => client.$disconnect());
@@ -171,5 +175,61 @@ describe("tickets", () => {
                 });
             });
         }
+    });
+});
+
+describe("guidance", () => {
+    test("should return all guidance for all tickets", async () => {
+        const guidance = await selectAllGuidance();
+        expect(guidance).toBeInstanceOf(Array);
+        expect(guidance).toHaveLength(30);
+        guidance.forEach((criterion) => {
+            expect(criterion).toMatchObject({
+                guidance_id: expect.any(Number),
+                ticket_id: expect.any(String),
+                type: expect.any(String),
+                guidance: expect.any(String),
+            });
+        });
+    });
+});
+
+describe("patchFeedback", () => {
+    test("should add feedback to given guidance", async () => {
+        const patch = { www: "im a new www", ebi: "im a new ebi" };
+        const feedbackIds = await getTableIds("Feedback", "feedback_id");
+        const currentId = feedbackIds[0];
+        const updatedFeedback = await updateFeedbackByFeedbackId(
+            +currentId,
+            patch
+        );
+        expect(updatedFeedback).toMatchObject({ ...patch });
+    });
+    test("should update when passed single key", async () => {
+        const patch = { www: "im a new www" } as { www: string; ebi: string };
+        const feedbackIds = await getTableIds("Feedback", "feedback_id");
+        const currentId = feedbackIds[0];
+        const updatedFeedback = await updateFeedbackByFeedbackId(
+            +currentId,
+            patch
+        );
+        expect(updatedFeedback).toMatchObject({ ...patch });
+    });
+    test("should return null for id not in db", async () => {
+        const patch = { www: "im a new www", ebi: "im a new ebi" };
+        const notCurrentId = "0";
+        const failedPatch = await updateFeedbackByFeedbackId(
+            +notCurrentId,
+            patch
+        );
+        expect(failedPatch).toBeNull();
+    });
+});
+
+describe("users", () => {
+    test("should add user", async () => {
+        const newEmail = "test999@gmail.com";
+        const newUser = await postUser(newEmail);
+        expect(newUser).toEqual({ email: newEmail });
     });
 });

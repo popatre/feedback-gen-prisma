@@ -21,7 +21,7 @@ model Block  {
 
 // ticket id unique?
  model Ticket {
-        ticket_id String @id
+        ticket_id String @id @unique
         ticket_number Int
         block_name String 
         block Block @relation(fields:[block_name], references:[block_name])
