@@ -18,8 +18,6 @@ export default function Page({
 
     if (isLoading) return <p>Loading...</p>;
 
-    console.log(ticket, "**********");
-
     const mustData =
         ticket?.guidance.filter((criterion) => criterion.type === "must") || [];
     const shouldData =

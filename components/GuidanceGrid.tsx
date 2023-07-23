@@ -14,7 +14,7 @@ type Props = {
     couldData: Guidance[];
 };
 
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import Checklist from "./Checklist";
 import FeedbackDispenser from "./FeedbackDispenser";
 
