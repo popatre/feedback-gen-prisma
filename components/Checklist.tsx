@@ -17,7 +17,7 @@ import Modal from "react-modal";
 import CheckBoxWrapper from "@/wrappers/CheckBoxWrapper";
 import useModal from "@/hooks/useModal";
 import FeedbackForm from "./FeedbackForm";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Checklist({
     title,
@@ -27,11 +27,21 @@ export default function Checklist({
 }: Props) {
     const { modalIsOpen, openModal, closeModal, customStyles } = useModal();
     const [editTitle, setEditTitle] = useState("Default");
-    const [feedbackInput, setFeedbackinput] = useState({ www: "", ebi: "" });
+    const [feedbackInput, setFeedbackinput] = useState({
+        www: "",
+        ebi: "",
+    });
+    const feedbackIdRef = useRef<number | null>(null);
 
-    const editFeedback = (guidance: string, www: string, ebi: string) => {
+    const editFeedback = (
+        guidance: string,
+        www: string,
+        ebi: string,
+        feedbackId: number
+    ) => {
         setEditTitle(guidance);
         setFeedbackinput({ www, ebi });
+        feedbackIdRef.current = feedbackId;
         openModal();
     };
 
@@ -42,6 +52,7 @@ export default function Checklist({
                 onRequestClose={closeModal}
                 style={customStyles}
                 contentLabel="Example Modal"
+                ariaHideApp={false}
             >
                 <FeedbackForm
                     editTitle={editTitle}
@@ -49,6 +60,7 @@ export default function Checklist({
                     setFeedbackinput={setFeedbackinput}
                     setEditTitle={setEditTitle}
                     closeModal={closeModal}
+                    feedbackIdRef={feedbackIdRef}
                 />
             </Modal>
             <h2 className="feedback__title">{title}</h2>
@@ -72,7 +84,8 @@ export default function Checklist({
                                 editFeedback(
                                     element.guidance,
                                     element.feedback[0].www,
-                                    element.feedback[0].ebi
+                                    element.feedback[0].ebi,
+                                    element.feedback[0].feedback_id
                                 )
                             }
                         >
