@@ -1,3 +1,5 @@
+"use client";
+
 type Guidance = { guidance: string; feedback: Feedback[] };
 type Feedback = {
     feedback_id: number;
@@ -31,7 +33,36 @@ export default function Checklist({
         www: "",
         ebi: "",
     });
+    const [feedback, setFeedback] = useState(feedbackData);
     const feedbackIdRef = useRef<number | null>(null);
+
+    const updateFeedback = (
+        feedbackId: number,
+        updateObj: { www?: string; ebi?: string }
+    ) => {
+        setFeedback((prevFeedback) => {
+            return prevFeedback.map((element) => {
+                if (
+                    element.feedback.some(
+                        (feedback) => feedback.feedback_id === feedbackId
+                    )
+                ) {
+                    return {
+                        ...element,
+                        feedback: element.feedback.map((feedback) => {
+                            if (feedback.feedback_id === feedbackId) {
+                                return { ...feedback, ...updateObj };
+                            } else {
+                                return feedback;
+                            }
+                        }),
+                    };
+                } else {
+                    return element;
+                }
+            });
+        });
+    };
 
     const editFeedback = (
         guidance: string,
@@ -45,7 +76,7 @@ export default function Checklist({
         openModal();
     };
 
-    return feedbackData.length > 0 ? (
+    return feedback.length > 0 ? (
         <section>
             <Modal
                 isOpen={modalIsOpen}
@@ -61,6 +92,7 @@ export default function Checklist({
                     setEditTitle={setEditTitle}
                     closeModal={closeModal}
                     feedbackIdRef={feedbackIdRef}
+                    updateFeedback={updateFeedback}
                 />
             </Modal>
             <h2 className="feedback__title">{title}</h2>
@@ -69,7 +101,7 @@ export default function Checklist({
                 <p>👏</p>
                 <p>⁉️</p>
             </div>
-            {feedbackData.map((element, index) => {
+            {feedback.map((element, index) => {
                 return (
                     <CheckBoxWrapper
                         key={index}

@@ -13,6 +13,10 @@ type Props = {
     setEditTitle: React.Dispatch<React.SetStateAction<string>>;
     closeModal: () => void;
     feedbackIdRef: MutableRefObject<number | null>;
+    updateFeedback: (
+        feedbackId: number,
+        updateObj: { www?: string; ebi?: string }
+    ) => void;
 };
 
 const FeedbackForm = ({
@@ -22,6 +26,7 @@ const FeedbackForm = ({
     setEditTitle,
     closeModal,
     feedbackIdRef,
+    updateFeedback,
 }: Props) => {
     const { handleFeedbackUpdate, isLoading, isSuccess } = useUpdateFeedback();
 
@@ -33,6 +38,7 @@ const FeedbackForm = ({
             feedbackInput.www,
             feedbackInput.ebi
         ).then(() => {
+            updateFeedback(feedbackId, feedbackInput);
             setEditTitle("");
             setFeedbackinput({ www: "", ebi: "" });
             feedbackIdRef.current = null;
