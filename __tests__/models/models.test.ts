@@ -5,6 +5,7 @@ import { selectAllBlocks, selectSingleBlock } from "../../models/block.model";
 import { selectTicketByIdWithEmail } from "../../models/ticket.model";
 import { selectAllGuidance } from "../../models/guidance.model";
 import { updateFeedbackByFeedbackId } from "../../models/feedback.model";
+import getTableIds from "../../db/utils/getTableIds";
 
 beforeEach(() => seed(data));
 afterAll(() => client.$disconnect());
@@ -195,7 +196,12 @@ describe("guidance", () => {
 describe("patchFeedback", () => {
     test("should add feedback to given guidance", async () => {
         const patch = { www: "im a new www", ebi: "im a new ebi" };
-        const updatedFeedback = await updateFeedbackByFeedbackId(1, patch);
+        const feedbackIds = await getTableIds("Feedback", "feedback_id");
+        const currentId = feedbackIds[0];
+        const updatedFeedback = await updateFeedbackByFeedbackId(
+            +currentId,
+            patch
+        );
         expect(updatedFeedback).toMatchObject({ ...patch });
     });
 });

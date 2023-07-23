@@ -3,15 +3,20 @@ import { PrismaClient } from "@prisma/client";
 
 type PrismaTableNames = "Block" | "Feedback" | "Ticket" | "User" | "Guidance";
 
-export default async function createRefObj(
+type QueryResult<T> = { [key: string]: T };
+
+export default async function getTableIds(
     tableName: PrismaTableNames,
     id: string
-): Promise<[]> {
+): Promise<string[]> {
     try {
         const ids = (await prisma.$queryRawUnsafe(
             `SELECT ${id} FROM "${tableName}"`
-        )) as [];
-        return ids;
+        )) as QueryResult<string>[];
+
+        const map = ids.map((element) => element[id]);
+
+        return map;
     } catch (error) {
         return [];
     }
