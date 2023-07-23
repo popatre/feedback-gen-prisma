@@ -1,37 +1,41 @@
+"use client";
+
 import GuidanceGrid from "@/components/GuidanceGrid";
+import useGetTicketById from "@/hooks/useGetTicketById";
 import React from "react";
 
-export default async function Page({
+export default function Page({
     params,
 }: {
     params: { ticket_num: string; block: string };
 }) {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/feedback?block=${params.block}&ticket=${params.ticket_num}`,
-        {
-            next: { revalidate: 0 },
-            method: "GET",
-        }
-    );
+    const ticketId = params.block.toUpperCase() + params.ticket_num;
 
-    if (res.status !== 200) {
-        return <p>Something went wrong...</p>;
-    }
+    const { isLoading, ticket } = useGetTicketById(ticketId, "test@gmail.com");
 
-    const parsed = await res.json();
+    if (isLoading) return <p>Loading...</p>;
 
-    const { couldData, shouldData, mustData, ticketDescription } =
-        parsed.feedback;
+    const mustData =
+        ticket?.guidance.filter((criterion) => criterion.type === "must") || [];
+    const shouldData =
+        ticket?.guidance.filter((criterion) => criterion.type === "should") ||
+        [];
+    const couldData =
+        ticket?.guidance.filter((criterion) => criterion.type === "could") ||
+        [];
+
     return (
-        <div>
-            <h1 className="text-center font-bold text-2xl page-title">
-                {ticketDescription}
-            </h1>
-            <GuidanceGrid
-                mustData={mustData}
-                shouldData={shouldData}
-                couldData={couldData}
-            />
-        </div>
+        ticket && (
+            <div>
+                <h1 className="text-center font-bold text-2xl page-title">
+                    {ticket.description}
+                </h1>
+                <GuidanceGrid
+                    mustData={mustData}
+                    shouldData={shouldData}
+                    couldData={couldData}
+                />
+            </div>
+        )
     );
 }

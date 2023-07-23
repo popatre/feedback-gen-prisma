@@ -1,8 +1,15 @@
-type Feedback = { guidance: string; www: string; ebi: string };
+type Guidance = { guidance: string; feedback: Feedback[] };
+type Feedback = {
+    feedback_id: number;
+    www: string;
+    ebi: string;
+    user_email: string;
+    guidance_id: number;
+};
 
 type Props = {
     title: string;
-    feedbackData: Feedback[];
+    feedbackData: Guidance[];
     addPositiveFeedback: (feedback: string, isChecked: boolean) => void;
     addEbiFeedback: (feedback: string, isChecked: boolean) => void;
 };
@@ -27,8 +34,8 @@ export default function Checklist({
                 return (
                     <CheckBoxWrapper
                         key={index}
-                        wwwFeedback={element.www}
-                        ebiFeedback={element.ebi}
+                        wwwFeedback={element.feedback[0].www}
+                        ebiFeedback={element.feedback[0].ebi}
                         addPositiveFeedback={addPositiveFeedback}
                         addEbiFeedback={addEbiFeedback}
                     >

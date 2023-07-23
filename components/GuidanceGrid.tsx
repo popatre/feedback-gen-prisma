@@ -1,10 +1,17 @@
 "use client";
 
-type Feedback = { guidance: string; www: string; ebi: string };
+type Guidance = { guidance: string; feedback: Feedback[] };
+type Feedback = {
+    feedback_id: number;
+    www: string;
+    ebi: string;
+    user_email: string;
+    guidance_id: number;
+};
 type Props = {
-    mustData: Feedback[];
-    shouldData: Feedback[];
-    couldData: Feedback[];
+    mustData: Guidance[];
+    shouldData: Guidance[];
+    couldData: Guidance[];
 };
 
 import { useState, ChangeEvent } from "react";
