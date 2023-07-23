@@ -7,6 +7,7 @@ type Props = {
     >;
     feedbackInput: { www: string; ebi: string };
     setEditTitle: React.Dispatch<React.SetStateAction<string>>;
+    closeModal: () => void;
 };
 
 const FeedbackForm = ({
@@ -14,6 +15,7 @@ const FeedbackForm = ({
     feedbackInput,
     setFeedbackinput,
     setEditTitle,
+    closeModal,
 }: Props) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -21,6 +23,7 @@ const FeedbackForm = ({
 
         setEditTitle("");
         setFeedbackinput({ www: "", ebi: "" });
+        closeModal();
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

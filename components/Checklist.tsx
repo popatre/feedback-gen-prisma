@@ -48,6 +48,7 @@ export default function Checklist({
                     feedbackInput={feedbackInput}
                     setFeedbackinput={setFeedbackinput}
                     setEditTitle={setEditTitle}
+                    closeModal={closeModal}
                 />
             </Modal>
             <h2 className="feedback__title">{title}</h2>
