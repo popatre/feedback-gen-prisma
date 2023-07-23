@@ -12,5 +12,5 @@ export default function useHandleUserLogin() {
         await mutateAsync(email);
     };
 
-    return { user, handleLogin };
+    return { user, handleLogin, isLoading };
 }

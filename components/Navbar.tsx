@@ -4,14 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { UserContext } from "@/lib/context";
 import { useRouter } from "next/navigation";
-import {
-    signInWithPopup,
-    signOut,
-    onAuthStateChanged,
-    User,
-} from "firebase/auth";
+import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, provider } from "../lib/firebase";
-import { trpc } from "@/utils/trpc";
 import useHandleUserLogin from "@/hooks/useHandleUserLogin";
 
 type Props = {};
@@ -20,7 +14,7 @@ export default function Navbar({}: Props) {
     const user = useContext(UserContext);
     const router = useRouter();
 
-    const { handleLogin } = useHandleUserLogin();
+    const { handleLogin, isLoading } = useHandleUserLogin();
 
     useEffect(() => {
         if (user) {
@@ -59,6 +53,8 @@ export default function Navbar({}: Props) {
         { name: "Home", url: "/" },
         { name: "Front End", url: "/fe" },
     ];
+
+    if (isLoading) return <p>Loading...</p>;
     return (
         <nav className="mb-10 nav-bar">
             <ul className=" w-1/3 flex flex-row justify-around py-5">
