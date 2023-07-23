@@ -45,7 +45,7 @@ const FeedbackForm = ({
 
             setTimeout(() => {
                 closeModal();
-            }, 1500);
+            }, 1000);
         });
     };
 
@@ -84,6 +84,7 @@ const FeedbackForm = ({
             ) : (
                 <h2>Feedback Updated!</h2>
             )}
+            <button onClick={closeModal}>Cancel</button>
         </form>
     );
 };
