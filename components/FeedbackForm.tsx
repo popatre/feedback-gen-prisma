@@ -39,7 +39,7 @@ const FeedbackForm = ({
 
             setTimeout(() => {
                 closeModal();
-            }, 2000);
+            }, 1500);
         });
     };
 
@@ -49,8 +49,6 @@ const FeedbackForm = ({
             return { ...prevInput, [id]: value };
         });
     };
-
-    //use hook to submit/patch
 
     return (
         <form onSubmit={handleSubmit}>
@@ -73,7 +71,13 @@ const FeedbackForm = ({
                     onChange={handleChange}
                 />
             </div>
-            <button type="submit">Submit</button>
+            {!isSuccess ? (
+                <button disabled={isLoading} type="submit">
+                    {!isLoading ? "Submit" : "Updating Feedback"}
+                </button>
+            ) : (
+                <h2>Feedback Updated!</h2>
+            )}
         </form>
     );
 };
