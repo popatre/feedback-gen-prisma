@@ -10,7 +10,6 @@ type Props = {
 import { useState, ChangeEvent } from "react";
 import Checklist from "./Checklist";
 import FeedbackDispenser from "./FeedbackDispenser";
-import { trpc } from "@/utils/trpc";
 
 export default function GuidanceGrid({
     mustData,
@@ -31,14 +30,6 @@ export default function GuidanceGrid({
             });
         }
     };
-
-    let {
-        data: blocks,
-        isLoading,
-        isFetching,
-    } = trpc.block.getAllBlocks.useQuery();
-
-    console.log(blocks, "*****8");
 
     const addEbiFeedback = (feedback: string, isChecked: boolean) => {
         if (isChecked) {
