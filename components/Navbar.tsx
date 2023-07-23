@@ -30,14 +30,14 @@ export default function Navbar({}: Props) {
         }
     }, [user]);
 
-    const handleSignIn = async () => {
-        try {
-            await signInWithPopup(auth, provider);
-            router.push("/");
-        } catch (error) {
-            console.log("gone wrong");
-        }
-    };
+    // const handleSignIn = async () => {
+    //     try {
+    //         await signInWithPopup(auth, provider);
+    //         router.push("/");
+    //     } catch (error) {
+    //         console.log("gone wrong");
+    //     }
+    // };
 
     const handleSignOut = () => {
         signOut(auth)
@@ -69,9 +69,8 @@ export default function Navbar({}: Props) {
                     );
                 })}
             </ul>
-            {!user?.email ? (
-                <button onClick={handleSignIn}>Login</button>
-            ) : (
+            {!user?.email ? // <button onClick={handleSignIn}>Login</button>
+            null : (
                 <>
                     <p>Welcome {user?.email}</p>
                     <button onClick={handleSignOut}>Sign Out</button>

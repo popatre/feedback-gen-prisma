@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { UserContext } from "@/lib/context";
+import Login from "@/components/Login";
 
 type Props = { children: ReactNode };
 
@@ -23,5 +24,9 @@ export default function AuthContextProvider({ children }: Props) {
         return () => unsubscribe();
     }, []);
 
-    return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+    return (
+        <UserContext.Provider value={user}>
+            {!user ? <Login /> : children}
+        </UserContext.Provider>
+    );
 }
