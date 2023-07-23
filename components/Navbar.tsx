@@ -1,17 +1,40 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { UserContext } from "@/lib/context";
 import { useRouter } from "next/navigation";
-import { signInWithPopup, signOut } from "firebase/auth";
+import {
+    signInWithPopup,
+    signOut,
+    onAuthStateChanged,
+    User,
+} from "firebase/auth";
 import { auth, provider } from "../lib/firebase";
+import { trpc } from "@/utils/trpc";
+import useHandleUserLogin from "@/hooks/useHandleUserLogin";
 
 type Props = {};
 
 export default function Navbar({}: Props) {
     const user = useContext(UserContext);
     const router = useRouter();
+
+    const { handleLogin } = useHandleUserLogin();
+
+    useEffect(() => {
+        if (user) {
+            const login = async () => {
+                if (user !== null) {
+                    const userEmail = user.email ?? "";
+                    try {
+                        await handleLogin(userEmail);
+                    } catch (error) {}
+                }
+            };
+            login();
+        }
+    }, [user]);
 
     const handleSignIn = async () => {
         try {
@@ -50,11 +73,11 @@ export default function Navbar({}: Props) {
                     );
                 })}
             </ul>
-            {!user ? (
+            {!user?.email ? (
                 <button onClick={handleSignIn}>Login</button>
             ) : (
                 <>
-                    <p>Welcome {user.email}</p>
+                    <p>Welcome {user?.email}</p>
                     <button onClick={handleSignOut}>Sign Out</button>
                 </>
             )}

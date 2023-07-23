@@ -2,18 +2,23 @@
 
 import GuidanceGrid from "@/components/GuidanceGrid";
 import useGetTicketById from "@/hooks/useGetTicketById";
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "@/lib/context";
 
 export default function Page({
     params,
 }: {
     params: { ticket_num: string; block: string };
 }) {
-    const ticketId = params.block.toUpperCase() + params.ticket_num;
+    const { email } = useContext(UserContext) ?? { email: "" };
+    if (!email) return <p>Must be logged in</p>;
 
-    const { isLoading, ticket } = useGetTicketById(ticketId, "test@gmail.com");
+    const ticketId = params.block.toUpperCase() + params.ticket_num;
+    const { isLoading, ticket } = useGetTicketById(ticketId, email);
 
     if (isLoading) return <p>Loading...</p>;
+
+    console.log(ticket, "**********");
 
     const mustData =
         ticket?.guidance.filter((criterion) => criterion.type === "must") || [];

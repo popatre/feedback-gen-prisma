@@ -8,6 +8,6 @@ export default async function checkIfExists(
     const results: [] = await prisma.$queryRawUnsafe(
         `SELECT * FROM "${table}" WHERE ${column} = '${value}'`
     );
-    console.log(results);
+
     return results.length > 0;
 }

@@ -8,7 +8,7 @@
         "start": "next start",
         "lint": "next lint",
         "seed": "ts-node ./db/seeds/run-seed.ts",
-        "test": "jest"
+        "test": "jest --runInBand"
     },
     "dependencies": {
         "@prisma/client": "^5.0.0",
