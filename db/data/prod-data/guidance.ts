@@ -750,4 +750,32 @@ export const guidanceData = [
         type: "could",
         guidance: "UI responds to API timeout errors - advanced!",
     },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE12",
+        type: "must",
+        guidance:
+            "See an appropriate error if going to a non-existent path (404)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE12",
+        type: "must",
+        guidance:
+            "See an appropriate error if going to a path for a non-existent article (404)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE12",
+        type: "must",
+        guidance:
+            "See an appropriate error if going to a path for a non-existent topic (404)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE12",
+        type: "must",
+        guidance:
+            "Invalid values for any other parametrics or queries the app accepts are handled (400)",
+    },
 ];
