@@ -1,5 +1,5 @@
 import { useState, CSSProperties } from "react";
-import RingLoader from "react-spinners/Ringloader";
+import { RingLoader } from "react-spinners";
 
 const override: CSSProperties = {
     display: "block",
