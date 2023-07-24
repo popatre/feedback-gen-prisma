@@ -12,10 +12,11 @@ export default function Page({
     params: { ticket_num: string; block: string };
 }) {
     const { email } = useContext(UserContext) ?? { email: "" };
-    if (!email) return <p>Must be logged in</p>;
 
     const ticketId = params.block.toUpperCase() + params.ticket_num;
     const { isLoading, ticket } = useGetTicketById(ticketId, email);
+
+    if (!email) return <p>Must be logged in</p>;
 
     if (isLoading) return <Loading />;
     if (ticket == null)
