@@ -678,4 +678,76 @@ export const guidanceData = [
         type: "could",
         guidance: "UI responds to API timeout errors - advanced!",
     },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "must",
+        guidance:
+            "The current logged in user can delete their own comments (logged in user can be hardcoded)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "must",
+        guidance: "UI should be updated accordingly once a comment is deleted",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "must",
+        guidance:
+            " Comments should not be re-fetched from the api to account for other users",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "must",
+        guidance:
+            "if comment is optimistically deleted, appropriate error handling and UI updates are shown for success and failure states",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "must",
+        guidance: "User must not be able to delete other users comments",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "should",
+        guidance:
+            "Delete button should not be rendered for users who aren't logged in",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "should",
+        guidance:
+            "User should not be able to click the delete button more than once per comment",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "should",
+        guidance: "Considerations for responsive design should be made",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "should",
+        guidance: "Basic layout design implemented",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "could",
+        guidance:
+            "Components are fully styled with considerations for accessibility",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE11",
+        type: "could",
+        guidance: "UI responds to API timeout errors - advanced!",
+    },
 ];
