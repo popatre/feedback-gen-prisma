@@ -49,7 +49,7 @@ const FeedbackForm = ({
         });
     };
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const { value, id } = e.target;
         setFeedbackinput((prevInput) => {
             return { ...prevInput, [id]: value };
@@ -57,34 +57,57 @@ const FeedbackForm = ({
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>{editTitle}</h2>
-            <div>
-                <label htmlFor="wwwInput">What went well:</label>
-                <input
-                    type="text"
-                    id="www"
-                    value={feedbackInput.www}
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="ebiInput">Even Better if:</label>
-                <input
-                    type="text"
-                    id="ebi"
-                    value={feedbackInput.ebi}
-                    onChange={handleChange}
-                />
-            </div>
-            {!isSuccess ? (
-                <button disabled={isLoading} type="submit">
-                    {!isLoading ? "Submit" : "Updating Feedback"}
-                </button>
-            ) : (
-                <h2>Feedback Updated!</h2>
+        <form className="my-10 mx-10 " onSubmit={handleSubmit}>
+            <h2 className="font-bold mb-10 text-lg">{editTitle}</h2>
+            {!isSuccess && (
+                <div className="flex flex-col">
+                    <label className="font-semibold " htmlFor="wwwInput">
+                        What went well:
+                    </label>
+                    <textarea
+                        className="mb-5 border-2"
+                        id="www"
+                        rows={4}
+                        value={feedbackInput.www}
+                        onChange={handleChange}
+                    />
+                </div>
             )}
-            <button onClick={closeModal}>Cancel</button>
+            {!isSuccess && (
+                <div className="flex flex-col">
+                    <label className="font-semibold" htmlFor="ebiInput">
+                        Even Better if:
+                    </label>
+                    <textarea
+                        className="mb-5 border-2"
+                        id="ebi"
+                        rows={4}
+                        value={feedbackInput.ebi}
+                        onChange={handleChange}
+                    />
+                </div>
+            )}
+            <div className="form-btns flex justify-around">
+                {!isSuccess ? (
+                    <button
+                        className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
+                        disabled={isLoading}
+                        type="submit"
+                    >
+                        {!isLoading ? "Submit" : "Updating Feedback"}
+                    </button>
+                ) : (
+                    <h2 className="font-bold text-xl">Feedback Updated!</h2>
+                )}
+                {!isSuccess && (
+                    <button
+                        className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
+                        onClick={closeModal}
+                    >
+                        Cancel
+                    </button>
+                )}
+            </div>
         </form>
     );
 };
