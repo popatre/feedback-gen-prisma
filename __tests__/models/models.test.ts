@@ -1,4 +1,4 @@
-import * as data from "../../db/data/index";
+import * as data from "../../db/data/test-data/index";
 import seed from "../../db/seeds/seed";
 import client from "../../db/connection";
 import { selectAllBlocks, selectSingleBlock } from "../../models/block.model";

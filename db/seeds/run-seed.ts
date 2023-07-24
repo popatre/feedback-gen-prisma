@@ -1,5 +1,5 @@
 import client from "../connection";
-import * as data from "../data/index";
+import * as data from "../data/test-data/index";
 import seed from "./seed";
 
 async function runSeed() {

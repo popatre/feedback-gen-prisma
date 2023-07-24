@@ -1,0 +1,86 @@
+export const ticketData = [
+    {
+        ticket_id: "FE1",
+        ticket_number: 1,
+        block_name: "fe",
+        description: "1. Create React project and public repo",
+    },
+    {
+        ticket_id: "FE2",
+        ticket_number: 2,
+        block_name: "fe",
+        description: "2. Enable CORS",
+    },
+    {
+        ticket_id: "FE3",
+        ticket_number: 3,
+        block_name: "fe",
+        description: "3. Planning",
+    },
+    {
+        ticket_id: "FE4",
+        ticket_number: 4,
+        block_name: "fe",
+        description: "4. View all articles",
+    },
+    {
+        ticket_id: "FE5",
+        ticket_number: 5,
+        block_name: "fe",
+        description: "5. View Single Article",
+    },
+    {
+        ticket_id: "FE6",
+        ticket_number: 6,
+        block_name: "fe",
+        description: "6. View list of comments associated with an article",
+    },
+    {
+        ticket_id: "FE7",
+        ticket_number: 7,
+        block_name: "fe",
+        description: "7. Vote on article",
+    },
+    {
+        ticket_id: "FE8",
+        ticket_number: 8,
+        block_name: "fe",
+        description: "8. Post article comment",
+    },
+    {
+        ticket_id: "FE9",
+        ticket_number: 9,
+        block_name: "fe",
+        description: "9.View articles by topic",
+    },
+    {
+        ticket_id: "FE10",
+        ticket_number: 10,
+        block_name: "fe",
+        description: "10. Sort articles",
+    },
+    {
+        ticket_id: "FE11",
+        ticket_number: 11,
+        block_name: "fe",
+        description: "11. Delete comment",
+    },
+    {
+        ticket_id: "FE12",
+        ticket_number: 12,
+        block_name: "fe",
+        description: "12. Error Handling",
+    },
+    {
+        ticket_id: "FE13",
+        ticket_number: 13,
+        block_name: "fe",
+        description: "13. Deploy App",
+    },
+    {
+        ticket_id: "FE14",
+        ticket_number: 14,
+        block_name: "fe",
+        description: "14. README",
+    },
+];

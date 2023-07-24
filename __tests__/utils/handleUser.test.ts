@@ -1,5 +1,5 @@
 import handleUser from "../../db/utils/handleUser";
-import * as data from "../../db/data/index";
+import * as data from "../../db/data/test-data/index";
 import seed from "../../db/seeds/seed";
 import checkIfExists from "../../db/utils/checkIfExists";
 
