@@ -81,7 +81,7 @@ describe("tickets", () => {
             expect(feTicketOne.guidance).toHaveLength(6);
             feTicketOne.guidance.forEach((criterion) => {
                 expect(criterion).toMatchObject({
-                    guidance_id: expect.any(Number),
+                    guidance_id: expect.any(String),
                     ticket_id: "BE1",
                     type: expect.any(String),
                     guidance: expect.any(String),
@@ -106,7 +106,7 @@ describe("tickets", () => {
             expect(feTicketOne.guidance).toHaveLength(6);
             feTicketOne.guidance.forEach((criterion) => {
                 expect(criterion).toMatchObject({
-                    guidance_id: expect.any(Number),
+                    guidance_id: expect.any(String),
                     ticket_id: "BE1",
                     type: expect.any(String),
                     guidance: expect.any(String),
@@ -118,7 +118,7 @@ describe("tickets", () => {
                         www: expect.any(String),
                         ebi: expect.any(String),
                         user_email: "test@gmail.com",
-                        guidance_id: expect.any(Number),
+                        guidance_id: expect.any(String),
                     });
                 });
                 expect(criterion.feedback).toHaveLength(1);
@@ -135,7 +135,7 @@ describe("tickets", () => {
             expect(feTicketOne.guidance).toHaveLength(6);
             feTicketOne.guidance.forEach((criterion) => {
                 expect(criterion).toMatchObject({
-                    guidance_id: expect.any(Number),
+                    guidance_id: expect.any(String),
                     ticket_id: "BE1",
                     type: expect.any(String),
                     guidance: expect.any(String),
@@ -155,7 +155,7 @@ describe("tickets", () => {
             expect(feTicketOne.guidance).toHaveLength(6);
             feTicketOne.guidance.forEach((criterion) => {
                 expect(criterion).toMatchObject({
-                    guidance_id: expect.any(Number),
+                    guidance_id: expect.any(String),
                     ticket_id: "FE1",
                     type: expect.any(String),
                     guidance: expect.any(String),
@@ -170,7 +170,7 @@ describe("tickets", () => {
                         www: expect.any(String),
                         ebi: expect.any(String),
                         user_email: "test2@gmail.com",
-                        guidance_id: expect.any(Number),
+                        guidance_id: expect.any(String),
                     });
                 });
             });
@@ -185,7 +185,7 @@ describe("guidance", () => {
         expect(guidance).toHaveLength(30);
         guidance.forEach((criterion) => {
             expect(criterion).toMatchObject({
-                guidance_id: expect.any(Number),
+                guidance_id: expect.any(String),
                 ticket_id: expect.any(String),
                 type: expect.any(String),
                 guidance: expect.any(String),

@@ -31,7 +31,7 @@ model Block  {
     }
 
     model Guidance {
-        guidance_id Int @id @default(autoincrement())
+        guidance_id String @id 
         ticket_id String 
         ticket Ticket @relation(fields:[ticket_id], references:[ticket_id])
         type String
@@ -45,6 +45,6 @@ model Block  {
         ebi String
         user_email String
         email User @relation(fields:[user_email], references:[email])
-        guidance_id Int 
+        guidance_id String
         guidance Guidance @relation(fields:[guidance_id], references:[guidance_id])
     }

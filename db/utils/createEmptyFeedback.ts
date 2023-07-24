@@ -12,7 +12,7 @@ export default async function createEmptyFeedback(email: string) {
                 www: "",
                 ebi: "",
                 user_email: email,
-                guidance_id: +guidanceId,
+                guidance_id: guidanceId,
             },
         })
     );
