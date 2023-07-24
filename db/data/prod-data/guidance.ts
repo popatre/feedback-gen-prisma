@@ -332,4 +332,88 @@ export const guidanceData = [
         type: "could",
         guidance: "UI responds to API timeout errors - advanced!",
     },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "must",
+        guidance:
+            "UI is updated with vote++ clearly to show the user has voted.",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "must",
+        guidance: "Total number of votes is incremented when vote submitted",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "must",
+        guidance: "Votes must be persistent between refreshes",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "must",
+        guidance: "User is notified if patch request fails",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "should",
+        guidance:
+            "Changes to the number of displayed votes should be handled optimistically",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "should",
+        guidance:
+            "The number of votes should not be re-fetched from the api to handle multiple users",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "should",
+        guidance:
+            "Requests to api should be handled separately in a utils file using axios i.e. getArticles",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "should",
+        guidance: "Considerations for responsive design should be made",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "should",
+        guidance: "Basic layout design implemented",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "could",
+        guidance: "Users can down vote as well as up vote",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "could",
+        guidance:
+            "Users should only be able to vote once in either direction (does not have to persist between refreshes)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "could",
+        guidance:
+            "Components are fully styled with considerations for accessibility",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE7",
+        type: "could",
+        guidance: "UI responds to API timeout errors - advanced!",
+    },
 ];
