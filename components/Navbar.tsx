@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import useHandleUserLogin from "@/hooks/useHandleUserLogin";
+import Loading from "./Loading";
 
 type Props = {};
 
@@ -45,7 +46,8 @@ export default function Navbar({}: Props) {
         { name: "Front End", url: "/fe" },
     ];
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <Loading />;
+
     console.log(user, "***");
     return (
         <nav className="mb-10 nav-bar">

@@ -4,6 +4,7 @@ import GuidanceGrid from "@/components/GuidanceGrid";
 import useGetTicketById from "@/hooks/useGetTicketById";
 import React, { useContext } from "react";
 import { UserContext } from "@/lib/context";
+import Loading from "@/components/Loading";
 
 export default function Page({
     params,
@@ -16,7 +17,7 @@ export default function Page({
     const ticketId = params.block.toUpperCase() + params.ticket_num;
     const { isLoading, ticket } = useGetTicketById(ticketId, email);
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <Loading />;
 
     const mustData =
         ticket?.guidance.filter((criterion) => criterion.type === "must") || [];

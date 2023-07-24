@@ -7,6 +7,7 @@ import { auth } from "../lib/firebase";
 import { UserContext } from "@/lib/context";
 import Login from "@/components/Login";
 import Navbar from "@/components/Navbar";
+import Loading from "@/components/Loading";
 
 type Props = { children: ReactNode };
 
@@ -27,7 +28,7 @@ export default function AuthContextProvider({ children }: Props) {
 
         return () => unsubscribe();
     }, []);
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <Loading />;
 
     return (
         <UserContext.Provider value={user}>

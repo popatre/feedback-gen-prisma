@@ -1,16 +1,18 @@
 "use client";
 
+import Loading from "@/components/Loading";
 import NavCard from "@/components/NavCard";
 import useSingleBlockQuery from "@/hooks/useSingleBlockQuery";
 import React from "react";
 
 type Ticket = { url: string; description: string };
-type Tickets = Ticket[];
 
 type Props = { params: { block: string } };
 
 export default function Page({ params }: Props) {
     const { isLoading, block } = useSingleBlockQuery(params.block);
+
+    if (isLoading) return <Loading />;
 
     return (
         block && (
