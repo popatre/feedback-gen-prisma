@@ -9,7 +9,8 @@
         "lint": "next lint",
         "seed": "ts-node ./db/seeds/run-seed.ts",
         "seed:prod": "NODE_ENV=production ts-node ./db/seeds/run-prod-seed.ts",
-        "test": "jest --runInBand"
+        "test": "jest --runInBand",
+        "postinstall": "prisma generate"
     },
     "dependencies": {
         "@prisma/client": "^5.0.0",
