@@ -1,13 +1,7 @@
 "use client";
 
-type Guidance = { guidance: string; feedback: Feedback[] };
-type Feedback = {
-    feedback_id: number;
-    www: string;
-    ebi: string;
-    user_email: string;
-    guidance_id: number;
-};
+import { Guidance } from "../types/types";
+
 type Props = {
     mustData: Guidance[];
     shouldData: Guidance[];
