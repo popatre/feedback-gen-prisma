@@ -18,6 +18,12 @@ export default function Page({
     const { isLoading, ticket } = useGetTicketById(ticketId, email);
 
     if (isLoading) return <Loading />;
+    if (ticket == null)
+        return (
+            <p className="text-bold text-xl flex justify-center">
+                Something went wrong :(
+            </p>
+        );
 
     const mustData =
         ticket?.guidance.filter((criterion) => criterion.type === "must") || [];

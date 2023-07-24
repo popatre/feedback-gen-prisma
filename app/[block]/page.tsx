@@ -10,9 +10,15 @@ type Ticket = { url: string; description: string };
 type Props = { params: { block: string } };
 
 export default function Page({ params }: Props) {
-    const { isLoading, block } = useSingleBlockQuery(params.block);
+    const { isLoading, block, isError } = useSingleBlockQuery(params.block);
 
     if (isLoading) return <Loading />;
+    if (block == null)
+        return (
+            <p className="text-bold text-xl flex justify-center">
+                Something went wrong :(
+            </p>
+        );
 
     return (
         block && (
