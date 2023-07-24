@@ -522,4 +522,82 @@ export const guidanceData = [
         type: "could",
         guidance: "UI responds to API timeout errors - advanced!",
     },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "must",
+        guidance:
+            "There are some UI elements to navigate to each topics page (links / dropdown etc.)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "must",
+        guidance: "Each topics pages updates the URL eg. /topics/football",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "must",
+        guidance: "Only displays articles by the current topic",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "must",
+        guidance:
+            "navigating to a page fetches the data afresh and not pass down a filter version of state",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "must",
+        guidance:
+            "useEffect dependencies must be correct and avoid infinite loops",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "should",
+        guidance:
+            "If the UI between all topics and articles by topic is consistent they should re-use the same component (optional as it might not be the case from their plan)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "should",
+        guidance: "Articles list component should be re-used - Same as above?",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "should",
+        guidance:
+            "Requests to api should be handled separately in a utils file using axios i.e. getArticles",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "should",
+        guidance: "Considerations for responsive design should be made",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "should",
+        guidance: "Basic layout design implemented",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "could",
+        guidance:
+            "Components are fully styled with considerations for accessibility",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE9",
+        type: "could",
+        guidance: "UI responds to API timeout errors - advanced!",
+    },
 ];
