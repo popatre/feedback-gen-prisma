@@ -600,4 +600,82 @@ export const guidanceData = [
         type: "could",
         guidance: "UI responds to API timeout errors - advanced!",
     },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "must",
+        guidance: "Clear UI to enable user to sort article list",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "must",
+        guidance:
+            "User is able to sort articles by date/votes/comment count and order by ascending/descending",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "must",
+        guidance:
+            "Default sorting values are in place (to date descending unless otherwise specified in plan)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "must",
+        guidance: "Sorting works for both all articles and articles by topic",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "must",
+        guidance: "Form inputs are controlled",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "should",
+        guidance:
+            " should amend api request with updated queries (not do a .sort())",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "should",
+        guidance:
+            "Requests to api should be handled separately in a utils file using axios i.e. getArticles",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "should",
+        guidance: "Considerations for responsive design should be made",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "should",
+        guidance: "Basic layout design implemented",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "could",
+        guidance:
+            "useSearchParams to use queries rather than state to manage the sort options",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "could",
+        guidance:
+            "Components are fully styled with considerations for accessibility",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE10",
+        type: "could",
+        guidance: "UI responds to API timeout errors - advanced!",
+    },
 ];
