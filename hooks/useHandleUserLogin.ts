@@ -5,6 +5,7 @@ export default function useHandleUserLogin() {
         data: user,
         isLoading,
         isSuccess,
+        isError,
         mutateAsync,
     } = trpc.user.login.useMutation();
 
@@ -12,5 +13,5 @@ export default function useHandleUserLogin() {
         await mutateAsync(email);
     };
 
-    return { user, handleLogin, isLoading };
+    return { user, handleLogin, isLoading, isError };
 }

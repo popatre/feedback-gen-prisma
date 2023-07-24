@@ -15,7 +15,7 @@ export default function Navbar({}: Props) {
     const user = useContext(UserContext);
     const router = useRouter();
 
-    const { handleLogin, isLoading } = useHandleUserLogin();
+    const { handleLogin, isLoading, isError } = useHandleUserLogin();
 
     useEffect(() => {
         if (user) {
@@ -47,8 +47,8 @@ export default function Navbar({}: Props) {
     ];
 
     if (isLoading) return <Loading />;
+    if (isError) return <p>Something went wrong...</p>;
 
-    console.log(user, "***");
     return (
         <nav className="mb-10 nav-bar">
             <ul className="flex flex-row justify-around py-5">
