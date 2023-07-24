@@ -249,4 +249,87 @@ export const guidanceData = [
         type: "could",
         guidance: "UI responds to API timeout errors - advanced!",
     },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "must",
+        guidance:
+            "User must be able to view a list of comments for each article",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "must",
+        guidance: "Comments should be viewable for a given article",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "must",
+        guidance:
+            "Components should not be too large. Consider dedicated components for rendering comments to avoid a Single Article component becoming bloated",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "must",
+        guidance:
+            "isLoading pattern is followed with visual feedback to inform user",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "should",
+        guidance: "UI consideration for articles with no comments.",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "should",
+        guidance:
+            "Requests to api should be handled separately in a utils file using axios i.e. getArticles",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "should",
+        guidance: "Considerations for responsive design should be made",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "should",
+        guidance: "Basic layout design implemented",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "should",
+        guidance: "timestamp is formatted to human readable format",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "should",
+        guidance: "loading component extracted for reusability",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "could",
+        guidance:
+            "Components are fully styled with considerations for accessibility",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "could",
+        guidance: "Make sure the data is presented in an interesting way",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE6",
+        type: "could",
+        guidance: "UI responds to API timeout errors - advanced!",
+    },
 ];
