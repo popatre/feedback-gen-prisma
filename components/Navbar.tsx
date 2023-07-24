@@ -47,7 +47,6 @@ export default function Navbar({}: Props) {
     ];
 
     if (isLoading) return <Loading />;
-    if (isError) return <p>Something went wrong...</p>;
 
     return (
         <nav className="mb-10 nav-bar">
