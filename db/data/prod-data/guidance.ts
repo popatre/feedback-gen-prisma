@@ -76,20 +76,20 @@ export const guidanceData = [
     {
         guidance_id: uuidv4(),
         ticket_id: "FE4",
-        type: "could",
+        type: "must",
         guidance: "A list of all articles must be viewable",
     },
     {
         guidance_id: uuidv4(),
         ticket_id: "FE4",
-        type: "could",
+        type: "must",
         guidance:
             "If this list is not on the homepage, a link must be present to go to the relevant page",
     },
     {
         guidance_id: uuidv4(),
         ticket_id: "FE4",
-        type: "could",
+        type: "must",
         guidance:
             "isLoading pattern is followed with visual feedback to inform user",
     },
@@ -147,6 +147,105 @@ export const guidanceData = [
     {
         guidance_id: uuidv4(),
         ticket_id: "FE4",
+        type: "could",
+        guidance: "UI responds to API timeout errors - advanced!",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "must",
+        guidance:
+            "Can view a single article (no comments necessary at this stage)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "must",
+        guidance:
+            "Must be able to navigate to an article page by the URL using the article id",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "must",
+        guidance:
+            "Article is fetched from the api and not just from the articles list in state. This could lead to stale data and should be accounted for",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "must",
+        guidance:
+            "Pages should still render on refresh. Should not be reliant on following a certain link",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "must",
+        guidance:
+            "isLoading pattern is followed with visual feedback to inform user",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "must",
+        guidance:
+            "There should be links to each of these articles from all articles or articles by topic",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "should",
+        guidance:
+            "URL should show article id in the format of /articles/:article_id",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "should",
+        guidance:
+            "Requests to api should be handled separately in a utils file using axios i.e. getArticles",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "should",
+        guidance: "Considerations for responsive design should be made",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "should",
+        guidance: "Basic layout design implemented",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "should",
+        guidance: "timestamp is formatted to human readable format",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "should",
+        guidance: "loading component extracted for reusability",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "could",
+        guidance:
+            "Components are fully styled with considerations for accessibility",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
+        type: "could",
+        guidance: "Make sure the data is presented in an interesting way",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE5",
         type: "could",
         guidance: "UI responds to API timeout errors - advanced!",
     },
