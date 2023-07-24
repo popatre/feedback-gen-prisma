@@ -416,4 +416,110 @@ export const guidanceData = [
         type: "could",
         guidance: "UI responds to API timeout errors - advanced!",
     },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "must",
+        guidance: "Posting functionality should work and be persistent",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "must",
+        guidance:
+            "Forms must be controlled (both value and handleChange set for inputs)",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "must",
+        guidance:
+            "Basic validation must be included. e.g. blank comments cannot be posted",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "must",
+        guidance:
+            "Comments are posted as a hard coded user or - if implemented - the current logged in user",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "must",
+        guidance:
+            "If comment post is done optimistically, appropriate error handling to remove comment and alert user if it fails",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "must",
+        guidance:
+            "If comment is posted on successful POST to BE, isLoading pattern, form is disabled, user is alerted if it fails",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "must",
+        guidance:
+            "on success, regardless of the rendering decision, comment should not be re-fetched from the api. Update state locally.",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "should",
+        guidance: "Forms that stay on the page should be reset after posting",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "should",
+        guidance:
+            "Text input for comment should be multi-line i.e. textarea over input",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "should",
+        guidance:
+            "Requests to api should be handled separately in a utils file using axios i.e. getArticles",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "should",
+        guidance: "Considerations for responsive design should be made",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "should",
+        guidance: "Basic layout design implemented",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "should",
+        guidance: "loading component extracted for reusability",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "could",
+        guidance:
+            "if users can log out, users are not able to post a comment if not logged in",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "could",
+        guidance:
+            "Components are fully styled with considerations for accessibility",
+    },
+    {
+        guidance_id: uuidv4(),
+        ticket_id: "FE8",
+        type: "could",
+        guidance: "UI responds to API timeout errors - advanced!",
+    },
 ];
