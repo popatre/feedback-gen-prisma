@@ -779,7 +779,7 @@ export const guidanceData = [
             "Invalid values for any other parametrics or queries the app accepts are handled (400)",
     },
     {
-        guidance_id: uuidv4(),
+        guidance_id: "fe13_g0",
         ticket_id: "FE13",
         type: "must",
         guidance: "The app is deployed on netlify with a working link",
