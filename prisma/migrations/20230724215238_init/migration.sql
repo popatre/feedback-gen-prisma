@@ -24,7 +24,7 @@ CREATE TABLE "Ticket" (
 
 -- CreateTable
 CREATE TABLE "Guidance" (
-    "guidance_id" SERIAL NOT NULL,
+    "guidance_id" TEXT NOT NULL,
     "ticket_id" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "guidance" TEXT NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE "Feedback" (
     "www" TEXT NOT NULL,
     "ebi" TEXT NOT NULL,
     "user_email" TEXT NOT NULL,
-    "guidance_id" INTEGER NOT NULL,
+    "guidance_id" TEXT NOT NULL,
 
     CONSTRAINT "Feedback_pkey" PRIMARY KEY ("feedback_id")
 );
@@ -48,6 +48,9 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Block_block_name_key" ON "Block"("block_name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Ticket_ticket_id_key" ON "Ticket"("ticket_id");
 
 -- AddForeignKey
 ALTER TABLE "Ticket" ADD CONSTRAINT "Ticket_block_name_fkey" FOREIGN KEY ("block_name") REFERENCES "Block"("block_name") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -13,9 +13,11 @@ type SeedData = {
 };
 
 async function seed({ blockData, ticketData, guidanceData }: SeedData) {
-    await client.guidance.deleteMany();
-    await client.ticket.deleteMany();
-    await client.block.deleteMany();
+    // await client.feedback.deleteMany();
+    // await client.guidance.deleteMany();
+    // await client.ticket.deleteMany();
+    // await client.block.deleteMany();
+    // await client.user.deleteMany();
 
     await client.block.createMany({
         data: blockData,

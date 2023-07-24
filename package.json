@@ -8,7 +8,7 @@
         "start": "next start",
         "lint": "next lint",
         "seed": "ts-node ./db/seeds/run-seed.ts",
-        "seed:prod": "ts-node ./db/seeds/run-prod-seed.ts",
+        "seed:prod": "NODE_ENV=production ts-node ./db/seeds/run-prod-seed.ts",
         "test": "jest --runInBand"
     },
     "dependencies": {
