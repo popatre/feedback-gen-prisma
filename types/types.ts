@@ -6,4 +6,8 @@ export type Feedback = {
     guidance_id: string;
 };
 
-export type Guidance = { guidance: string; feedback: Feedback[] };
+export type Guidance = {
+    guidance_id: string;
+    guidance: string;
+    feedback: Feedback[];
+};

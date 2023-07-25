@@ -1,5 +1,5 @@
 import useUpdateFeedback from "@/hooks/useUpdateFeedback";
-import React, { ChangeEvent, MutableRefObject } from "react";
+import React, { ChangeEvent, MutableRefObject, useEffect } from "react";
 
 type Props = {
     editTitle: string;
@@ -13,6 +13,7 @@ type Props = {
     setEditTitle: React.Dispatch<React.SetStateAction<string>>;
     closeModal: () => void;
     feedbackIdRef: MutableRefObject<number | null>;
+    guidanceIdRef: MutableRefObject<string | null>;
     updateFeedback: (
         feedbackId: number,
         updateObj: { www?: string; ebi?: string }
@@ -26,19 +27,16 @@ const FeedbackForm = ({
     setEditTitle,
     closeModal,
     feedbackIdRef,
+    guidanceIdRef,
     updateFeedback,
 }: Props) => {
-    const { handleFeedbackUpdate, isLoading, isSuccess } = useUpdateFeedback();
+    const { handleFeedbackUpdate, isLoading, isSuccess, feedback } =
+        useUpdateFeedback();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const feedbackId = Number(feedbackIdRef.current);
-        handleFeedbackUpdate(
-            feedbackId,
-            feedbackInput.www,
-            feedbackInput.ebi
-        ).then(() => {
-            updateFeedback(feedbackId, feedbackInput);
+    useEffect(() => {
+        if (feedback) {
+            //take the whole object and add to array?
+            updateFeedback(feedback.feedback_id, feedbackInput);
             setEditTitle("");
             setFeedbackinput({ www: "", ebi: "" });
             feedbackIdRef.current = null;
@@ -46,7 +44,21 @@ const FeedbackForm = ({
             setTimeout(() => {
                 closeModal();
             }, 1000);
-        });
+        }
+    }, [feedback]);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const feedbackId = feedbackIdRef.current;
+        const guidanceId = String(guidanceIdRef.current);
+
+        await handleFeedbackUpdate(
+            "jonathan.mcguire@northcoders.com",
+            feedbackInput.www,
+            feedbackInput.ebi,
+            guidanceId,
+            feedbackId
+        );
     };
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {

@@ -8,7 +8,7 @@ export const handleFeedback = async (
     feedback: { www: string; ebi: string },
     guidanceId: string,
     email: string,
-    feedbackId?: number
+    feedbackId?: number | null
 ) => {
     try {
         const isFeedback = await isExistingFeedback(email, guidanceId);

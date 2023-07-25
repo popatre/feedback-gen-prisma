@@ -6,15 +6,23 @@ export default function useUpdateFeedback() {
         isLoading,
         isSuccess,
         mutateAsync,
-    } = trpc.feedback.patchFeedback.useMutation();
+        isError,
+    } = trpc.feedback.processFeedback.useMutation();
 
     const handleFeedbackUpdate = async (
-        id: number,
+        email: string,
         www: string,
-        ebi: string
+        ebi: string,
+        guidanceId: string,
+        feedbackId: number | null
     ) => {
-        await mutateAsync({ id, update: { www, ebi } });
+        await mutateAsync({
+            feedbackId,
+            feedback: { www, ebi },
+            email,
+            guidanceId,
+        });
     };
 
-    return { feedback, handleFeedbackUpdate, isLoading, isSuccess };
+    return { feedback, handleFeedbackUpdate, isLoading, isSuccess, isError };
 }

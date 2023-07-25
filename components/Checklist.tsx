@@ -29,6 +29,7 @@ export default function Checklist({
     });
     const [feedback, setFeedback] = useState(feedbackData);
     const feedbackIdRef = useRef<number | null>(null);
+    const guidanceIdRef = useRef<string | null>(null);
 
     const updateFeedback = (
         feedbackId: number,
@@ -62,11 +63,13 @@ export default function Checklist({
         guidance: string,
         www: string,
         ebi: string,
-        feedbackId: number
+        feedbackId: number,
+        guidanceId: string
     ) => {
         setEditTitle(guidance);
         setFeedbackinput({ www, ebi });
         feedbackIdRef.current = feedbackId;
+        guidanceIdRef.current = guidanceId;
         openModal();
     };
 
@@ -86,6 +89,7 @@ export default function Checklist({
                     setEditTitle={setEditTitle}
                     closeModal={closeModal}
                     feedbackIdRef={feedbackIdRef}
+                    guidanceIdRef={guidanceIdRef}
                     updateFeedback={updateFeedback}
                 />
             </Modal>
@@ -99,19 +103,21 @@ export default function Checklist({
                 return (
                     <CheckBoxWrapper
                         key={index}
-                        wwwFeedback={element.feedback[0].www}
-                        ebiFeedback={element.feedback[0].ebi}
+                        wwwFeedback={element.feedback[0]?.www}
+                        ebiFeedback={element.feedback[0]?.ebi}
                         addPositiveFeedback={addPositiveFeedback}
                         addEbiFeedback={addEbiFeedback}
                     >
                         <p>{element.guidance}</p>
+
                         <button
                             onClick={() =>
                                 editFeedback(
                                     element.guidance,
-                                    element.feedback[0].www,
-                                    element.feedback[0].ebi,
-                                    element.feedback[0].feedback_id
+                                    element.feedback[0]?.www,
+                                    element.feedback[0]?.ebi,
+                                    element.feedback[0]?.feedback_id,
+                                    element.guidance_id
                                 )
                             }
                         >
