@@ -1,5 +1,5 @@
 "use client";
-
+import fetchPonyfill from "fetch-ponyfill";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, getFetch, loggerLink } from "@trpc/client";
 import { useState } from "react";
@@ -30,7 +30,7 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode }> = ({
                 httpBatchLink({
                     url,
                     fetch: async (input, init?) => {
-                        const fetch = getFetch();
+                        const fetch = fetchPonyfill().fetch;
                         return fetch(input, {
                             ...init,
                             credentials: "include",
