@@ -70,6 +70,7 @@ const FeedbackForm = ({
                         rows={4}
                         value={feedbackInput.www}
                         onChange={handleChange}
+                        required={true}
                     />
                 </div>
             )}
@@ -84,6 +85,7 @@ const FeedbackForm = ({
                         rows={4}
                         value={feedbackInput.ebi}
                         onChange={handleChange}
+                        required={true}
                     />
                 </div>
             )}
