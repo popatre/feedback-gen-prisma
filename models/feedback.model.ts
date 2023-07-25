@@ -26,13 +26,18 @@ export const createFeedback = async (
     guidanceId: string,
     email: string
 ) => {
-    const newFeedback = await prisma.feedback.create({
-        data: {
-            user_email: email,
-            www: feedback.www,
-            ebi: feedback.ebi,
-            guidance_id: guidanceId,
-        },
-    });
-    return newFeedback;
+    try {
+        const newFeedback = await prisma.feedback.create({
+            data: {
+                user_email: email,
+                www: feedback.www,
+                ebi: feedback.ebi,
+                guidance_id: guidanceId,
+            },
+        });
+        return newFeedback;
+    } catch (error) {
+        console.log("in here");
+        return null;
+    }
 };

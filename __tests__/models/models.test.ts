@@ -243,12 +243,35 @@ describe("feedback", () => {
         const guidanceId = "12";
         const feedback = { www: "This is good", ebi: "This is bad" };
         const newFeedback = await createFeedback(feedback, guidanceId, email);
-        console.log(newFeedback);
         expect(newFeedback).toMatchObject({
             guidance_id: "12",
             user_email: "test3@gmail.com",
             www: "This is good",
             ebi: "This is bad",
         });
+    });
+    test("should return null for not found userEmail", async () => {
+        const email = "notEmail@gmail.com";
+        const guidanceId = "12";
+        const feedback = { www: "This is good", ebi: "This is bad" };
+        const isNull = await createFeedback(feedback, guidanceId, email);
+        expect(isNull).toBeNull();
+    });
+    test("should return null for guidanceId not in the db", async () => {
+        const email = "test3@gmail.com";
+        const guidanceId = "0000000000";
+        const feedback = { www: "This is good", ebi: "This is bad" };
+        const isNull = await createFeedback(feedback, guidanceId, email);
+        expect(isNull).toBeNull();
+    });
+    test("should return null when missing keys from post object", async () => {
+        const email = "test3@gmail.com";
+        const guidanceId = "12";
+        const feedback = { www: "This is good" } as {
+            www: string;
+            ebi: string;
+        };
+        const isNull = await createFeedback(feedback, guidanceId, email);
+        expect(isNull).toBeNull();
     });
 });
