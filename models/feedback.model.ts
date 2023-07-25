@@ -1,11 +1,10 @@
-import { Feedback } from "@prisma/client";
 import prisma from "../db/connection";
 
-type FeedbackUpdate = { www: string; ebi: string };
+type Feedback = { www: string; ebi: string };
 
 export const updateFeedbackByFeedbackId = async (
     feedbackId: number,
-    update: FeedbackUpdate
+    update: Feedback
 ) => {
     try {
         const updatedFeedback = await prisma.feedback.update({
@@ -20,4 +19,20 @@ export const updateFeedbackByFeedbackId = async (
     } catch (error) {
         return null;
     }
+};
+
+export const createFeedback = async (
+    feedback: Feedback,
+    guidanceId: string,
+    email: string
+) => {
+    const newFeedback = await prisma.feedback.create({
+        data: {
+            user_email: email,
+            www: feedback.www,
+            ebi: feedback.ebi,
+            guidance_id: guidanceId,
+        },
+    });
+    return newFeedback;
 };

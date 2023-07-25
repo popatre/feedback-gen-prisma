@@ -4,7 +4,10 @@ import client from "../../db/connection";
 import { selectAllBlocks, selectSingleBlock } from "../../models/block.model";
 import { selectTicketByIdWithEmail } from "../../models/ticket.model";
 import { selectAllGuidance } from "../../models/guidance.model";
-import { updateFeedbackByFeedbackId } from "../../models/feedback.model";
+import {
+    createFeedback,
+    updateFeedbackByFeedbackId,
+} from "../../models/feedback.model";
 import getTableIds from "../../db/utils/getTableIds";
 import { postUser } from "../../models/user.model";
 
@@ -231,5 +234,21 @@ describe("users", () => {
         const newEmail = "test999@gmail.com";
         const newUser = await postUser(newEmail);
         expect(newUser).toEqual({ email: newEmail });
+    });
+});
+
+describe("feedback", () => {
+    test("should add new feedback with user id and guidance id", async () => {
+        const email = "test3@gmail.com";
+        const guidanceId = "12";
+        const feedback = { www: "This is good", ebi: "This is bad" };
+        const newFeedback = await createFeedback(feedback, guidanceId, email);
+        console.log(newFeedback);
+        expect(newFeedback).toMatchObject({
+            guidance_id: "12",
+            user_email: "test3@gmail.com",
+            www: "This is good",
+            ebi: "This is bad",
+        });
     });
 });
