@@ -41,3 +41,14 @@ export const createFeedback = async (
         return null;
     }
 };
+
+export const isExistingFeedback = async (email: string, guidanceId: string) => {
+    const isExisting = await prisma.feedback.findFirst({
+        where: {
+            guidance_id: guidanceId,
+            user_email: email,
+        },
+    });
+
+    return isExisting !== null;
+};

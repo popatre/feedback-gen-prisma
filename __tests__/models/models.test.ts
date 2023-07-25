@@ -6,6 +6,7 @@ import { selectTicketByIdWithEmail } from "../../models/ticket.model";
 import { selectAllGuidance } from "../../models/guidance.model";
 import {
     createFeedback,
+    isExistingFeedback,
     updateFeedbackByFeedbackId,
 } from "../../models/feedback.model";
 import getTableIds from "../../db/utils/getTableIds";
@@ -197,38 +198,6 @@ describe("guidance", () => {
     });
 });
 
-describe("patchFeedback", () => {
-    test("should add feedback to given guidance", async () => {
-        const patch = { www: "im a new www", ebi: "im a new ebi" };
-        const feedbackIds = await getTableIds("Feedback", "feedback_id");
-        const currentId = feedbackIds[0];
-        const updatedFeedback = await updateFeedbackByFeedbackId(
-            +currentId,
-            patch
-        );
-        expect(updatedFeedback).toMatchObject({ ...patch });
-    });
-    test("should update when passed single key", async () => {
-        const patch = { www: "im a new www" } as { www: string; ebi: string };
-        const feedbackIds = await getTableIds("Feedback", "feedback_id");
-        const currentId = feedbackIds[0];
-        const updatedFeedback = await updateFeedbackByFeedbackId(
-            +currentId,
-            patch
-        );
-        expect(updatedFeedback).toMatchObject({ ...patch });
-    });
-    test("should return null for id not in db", async () => {
-        const patch = { www: "im a new www", ebi: "im a new ebi" };
-        const notCurrentId = "0";
-        const failedPatch = await updateFeedbackByFeedbackId(
-            +notCurrentId,
-            patch
-        );
-        expect(failedPatch).toBeNull();
-    });
-});
-
 describe("users", () => {
     test("should add user", async () => {
         const newEmail = "test999@gmail.com";
@@ -238,40 +207,100 @@ describe("users", () => {
 });
 
 describe("feedback", () => {
-    test("should add new feedback with user id and guidance id", async () => {
-        const email = "test3@gmail.com";
-        const guidanceId = "12";
-        const feedback = { www: "This is good", ebi: "This is bad" };
-        const newFeedback = await createFeedback(feedback, guidanceId, email);
-        expect(newFeedback).toMatchObject({
-            guidance_id: "12",
-            user_email: "test3@gmail.com",
-            www: "This is good",
-            ebi: "This is bad",
+    describe("postFeedback", () => {
+        test("should add new feedback with user id and guidance id", async () => {
+            const email = "test3@gmail.com";
+            const guidanceId = "12";
+            const feedback = { www: "This is good", ebi: "This is bad" };
+            const newFeedback = await createFeedback(
+                feedback,
+                guidanceId,
+                email
+            );
+            expect(newFeedback).toMatchObject({
+                guidance_id: "12",
+                user_email: "test3@gmail.com",
+                www: "This is good",
+                ebi: "This is bad",
+            });
+        });
+        test("should return null for not found userEmail", async () => {
+            const email = "notEmail@gmail.com";
+            const guidanceId = "12";
+            const feedback = { www: "This is good", ebi: "This is bad" };
+            const isNull = await createFeedback(feedback, guidanceId, email);
+            expect(isNull).toBeNull();
+        });
+        test("should return null for guidanceId not in the db", async () => {
+            const email = "test3@gmail.com";
+            const guidanceId = "0000000000";
+            const feedback = { www: "This is good", ebi: "This is bad" };
+            const isNull = await createFeedback(feedback, guidanceId, email);
+            expect(isNull).toBeNull();
+        });
+        test("should return null when missing keys from post object", async () => {
+            const email = "test3@gmail.com";
+            const guidanceId = "12";
+            const feedback = { www: "This is good" } as {
+                www: string;
+                ebi: string;
+            };
+            const isNull = await createFeedback(feedback, guidanceId, email);
+            expect(isNull).toBeNull();
         });
     });
-    test("should return null for not found userEmail", async () => {
-        const email = "notEmail@gmail.com";
-        const guidanceId = "12";
-        const feedback = { www: "This is good", ebi: "This is bad" };
-        const isNull = await createFeedback(feedback, guidanceId, email);
-        expect(isNull).toBeNull();
+    describe("patchFeedback", () => {
+        test("should add feedback to given guidance", async () => {
+            const patch = { www: "im a new www", ebi: "im a new ebi" };
+            const feedbackIds = await getTableIds("Feedback", "feedback_id");
+            const currentId = feedbackIds[0];
+            const updatedFeedback = await updateFeedbackByFeedbackId(
+                +currentId,
+                patch
+            );
+            expect(updatedFeedback).toMatchObject({ ...patch });
+        });
+        test("should update when passed single key", async () => {
+            const patch = { www: "im a new www" } as {
+                www: string;
+                ebi: string;
+            };
+            const feedbackIds = await getTableIds("Feedback", "feedback_id");
+            const currentId = feedbackIds[0];
+            const updatedFeedback = await updateFeedbackByFeedbackId(
+                +currentId,
+                patch
+            );
+            expect(updatedFeedback).toMatchObject({ ...patch });
+        });
+        test("should return null for id not in db", async () => {
+            const patch = { www: "im a new www", ebi: "im a new ebi" };
+            const notCurrentId = "0";
+            const failedPatch = await updateFeedbackByFeedbackId(
+                +notCurrentId,
+                patch
+            );
+            expect(failedPatch).toBeNull();
+        });
     });
-    test("should return null for guidanceId not in the db", async () => {
-        const email = "test3@gmail.com";
-        const guidanceId = "0000000000";
-        const feedback = { www: "This is good", ebi: "This is bad" };
-        const isNull = await createFeedback(feedback, guidanceId, email);
-        expect(isNull).toBeNull();
-    });
-    test("should return null when missing keys from post object", async () => {
-        const email = "test3@gmail.com";
-        const guidanceId = "12";
-        const feedback = { www: "This is good" } as {
-            www: string;
-            ebi: string;
-        };
-        const isNull = await createFeedback(feedback, guidanceId, email);
-        expect(isNull).toBeNull();
+    describe("checkIfFeedbackExists", () => {
+        test("should check if feedback exists for user and guidanceId", async () => {
+            const email = "test@gmail.com";
+            const guidanceId = "1";
+            const isFeedbackExisting = await isExistingFeedback(
+                email,
+                guidanceId
+            );
+            expect(isFeedbackExisting).toBe(true);
+        });
+        test("should confirm feedback does not already exist", async () => {
+            const email = "test3@gmail.com";
+            const guidanceId = "1";
+            const isFeedbackExisting = await isExistingFeedback(
+                email,
+                guidanceId
+            );
+            expect(isFeedbackExisting).toBe(false);
+        });
     });
 });
