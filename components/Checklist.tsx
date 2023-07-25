@@ -1,6 +1,7 @@
 "use client";
 
 import { Guidance } from "../types/types";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 type Props = {
     title: string;
@@ -114,7 +115,7 @@ export default function Checklist({
                                 )
                             }
                         >
-                            Edit
+                            <AiOutlinePlusCircle />
                         </button>
                     </CheckBoxWrapper>
                 );
