@@ -99,7 +99,7 @@ const FeedbackForm = ({
                 ) : (
                     <h2 className="font-bold text-xl">Feedback Updated!</h2>
                 )}
-                {!isSuccess && (
+                {!isSuccess && !isLoading && (
                     <button
                         className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
                         onClick={closeModal}
