@@ -37,7 +37,6 @@ export const createFeedback = async (
         });
         return newFeedback;
     } catch (error) {
-        console.log("in here");
         return null;
     }
 };
