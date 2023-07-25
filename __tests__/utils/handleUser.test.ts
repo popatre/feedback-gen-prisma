@@ -6,9 +6,10 @@ import checkIfExists from "../../db/utils/checkIfExists";
 beforeEach(() => seed(data));
 
 describe("handleUser", () => {
-    test("should add newUser and blank feedback", async () => {
-        const email = "jonathan.mcguire@northcoders.com";
-        await handleUser(email);
+    test("should add new User", async () => {
+        const email = "newuser@northcoders.com";
+        const newUser = await handleUser(email);
+        expect(newUser).toMatchObject({ email: "newuser@northcoders.com" });
         const isUserAdded = await checkIfExists("User", "email", email);
         expect(isUserAdded).toBe(true);
     });
