@@ -1,7 +1,9 @@
-import { selectAllBlocks, selectSingleBlock } from "@/models/block.model";
 import { publicProcedure, router } from "../trpc";
 import { z } from "zod";
-import { updateFeedbackByFeedbackId } from "@/models/feedback.model";
+import {
+    createFeedback,
+    updateFeedbackByFeedbackId,
+} from "@/models/feedback.model";
 
 type FeedbackUpdate = { www: string; ebi: string };
 
@@ -15,6 +17,17 @@ export const feedbackRouter = router({
         )
         .mutation(({ input }) =>
             updateFeedbackByFeedbackId(input.id, input.update)
+        ),
+    postFeedback: publicProcedure
+        .input(
+            z.object({
+                email: z.string(),
+                feedback: z.object({ www: z.string(), ebi: z.string() }),
+                guidanceId: z.string(),
+            })
+        )
+        .mutation(({ input }) =>
+            createFeedback(input.feedback, input.guidanceId, input.email)
         ),
 });
 
