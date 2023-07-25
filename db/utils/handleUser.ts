@@ -3,7 +3,7 @@ import checkIfExists from "./checkIfExists";
 
 export default async function handleUser(email: string) {
     const doesExist = await checkIfExists("User", "email", email);
-    if (doesExist) return;
+    if (doesExist) return true;
     else {
         const user = await postUser(email);
         return user;

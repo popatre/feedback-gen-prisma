@@ -13,4 +13,9 @@ describe("handleUser", () => {
         const isUserAdded = await checkIfExists("User", "email", email);
         expect(isUserAdded).toBe(true);
     });
+    test("should return true is user already exists", async () => {
+        const email = "test@gmail.com";
+        const isExists = await handleUser(email);
+        expect(isExists).toBe(true);
+    });
 });
