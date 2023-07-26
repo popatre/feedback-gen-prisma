@@ -1,6 +1,6 @@
 "use client";
 
-import { Guidance } from "../types/types";
+import { Guidance, Feedback } from "../types/types";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 type Props = {
@@ -31,31 +31,39 @@ export default function Checklist({
     const feedbackIdRef = useRef<number | null>(null);
     const guidanceIdRef = useRef<string | null>(null);
 
-    const updateFeedback = (
-        feedbackId: number,
-        updateObj: { www?: string; ebi?: string }
-    ) => {
+    const updateFeedback = (feedbackObj: Feedback) => {
         setFeedback((prevFeedback) => {
-            return prevFeedback.map((element) => {
-                if (
-                    element.feedback.some(
-                        (feedback) => feedback.feedback_id === feedbackId
-                    )
-                ) {
+            const existingGuidanceIndex = prevFeedback.findIndex(
+                (guidance) => guidance.guidance_id === feedbackObj.guidance_id
+            );
+
+            const existingFeedbackIndex = prevFeedback[
+                existingGuidanceIndex
+            ].feedback.findIndex(
+                (feedback) => feedback.feedback_id === feedbackObj.feedback_id
+            );
+
+            if (existingFeedbackIndex !== -1) {
+                // If feedback already exists, update it
+                return prevFeedback.map((guidance) => {
                     return {
-                        ...element,
-                        feedback: element.feedback.map((feedback) => {
-                            if (feedback.feedback_id === feedbackId) {
-                                return { ...feedback, ...updateObj };
-                            } else {
-                                return feedback;
-                            }
-                        }),
+                        ...guidance,
+                        feedback: guidance.feedback.map((feedback, fIndex) =>
+                            fIndex === existingFeedbackIndex
+                                ? { ...feedback, ...feedbackObj }
+                                : feedback
+                        ),
                     };
-                } else {
-                    return element;
-                }
-            });
+                });
+            } else {
+                // If feedback doesn't exist, add it to the existing guidance's feedback array
+                return prevFeedback.map((guidance, index) => {
+                    return {
+                        ...guidance,
+                        feedback: [...guidance.feedback, feedbackObj],
+                    };
+                });
+            }
         });
     };
 

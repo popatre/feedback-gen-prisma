@@ -1,4 +1,5 @@
 import useUpdateFeedback from "@/hooks/useUpdateFeedback";
+import { Feedback } from "@prisma/client";
 import React, { ChangeEvent, MutableRefObject, useEffect } from "react";
 
 type Props = {
@@ -14,10 +15,7 @@ type Props = {
     closeModal: () => void;
     feedbackIdRef: MutableRefObject<number | null>;
     guidanceIdRef: MutableRefObject<string | null>;
-    updateFeedback: (
-        feedbackId: number,
-        updateObj: { www?: string; ebi?: string }
-    ) => void;
+    updateFeedback: (feedbackObj: Feedback) => void;
 };
 
 const FeedbackForm = ({
@@ -35,8 +33,7 @@ const FeedbackForm = ({
 
     useEffect(() => {
         if (feedback) {
-            //take the whole object and add to array?
-            updateFeedback(feedback.feedback_id, feedbackInput);
+            updateFeedback(feedback);
             setEditTitle("");
             setFeedbackinput({ www: "", ebi: "" });
             feedbackIdRef.current = null;
