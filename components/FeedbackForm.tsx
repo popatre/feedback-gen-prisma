@@ -28,7 +28,7 @@ const FeedbackForm = ({
     guidanceIdRef,
     updateFeedback,
 }: Props) => {
-    const { handleFeedbackUpdate, isLoading, isSuccess, feedback } =
+    const { handleFeedbackUpdate, isLoading, isSuccess, feedback, isError } =
         useUpdateFeedback();
 
     useEffect(() => {
@@ -64,6 +64,8 @@ const FeedbackForm = ({
             return { ...prevInput, [id]: value };
         });
     };
+
+    if (isError) return <h2>Something Went Wrong</h2>;
 
     return (
         <form className="my-10 mx-10 " onSubmit={handleSubmit}>
