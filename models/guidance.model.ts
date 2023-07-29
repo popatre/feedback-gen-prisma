@@ -14,7 +14,11 @@ export const insertGuidance = async (
     const validTypes = ["must", "should", "could"];
     const { guidance, type } = guidanceData;
 
-    if (!validTypes.includes(type)) return null;
+    if (!validTypes.includes(type))
+        return Promise.reject({
+            status: 400,
+            msg: "Bad type",
+        });
 
     try {
         const newGuidance = await prisma.guidance.create({
@@ -27,6 +31,12 @@ export const insertGuidance = async (
         });
         return newGuidance;
     } catch (error) {
-        return null;
+        if (error instanceof Error) {
+            if ("code" in error && error.code === "P2003") {
+                return Promise.reject({ status: 404, msg: "ID not found" });
+            } else {
+                return Promise.reject({ status: 400, msg: "Bad Post request" });
+            }
+        }
     }
 };
