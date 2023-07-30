@@ -10,12 +10,12 @@ type Ticket = { url: string; description: string };
 type Props = { params: { block: string } };
 
 export default function Page({ params }: Props) {
-    const { isLoading, block, isError } = useSingleBlockQuery(params.block);
-
-    console.log(process.env.NEXT_PUBLIC_FIREBASEAPIIIIII, "*******");
+    const { isLoading, block, isError, error } = useSingleBlockQuery(
+        params.block
+    );
 
     if (isLoading) return <Loading />;
-    if (block == null)
+    if (block == null || isError)
         return (
             <p className="text-bold text-xl flex justify-center">
                 Something went wrong :(

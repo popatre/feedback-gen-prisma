@@ -5,6 +5,7 @@ export default function useSingleBlockQuery(blockId: string) {
         data: block,
         isLoading,
         isError,
+        error,
     } = trpc.block.getBlockById.useQuery(blockId);
-    return { block, isLoading, isError };
+    return { block, isLoading, isError, error };
 }
