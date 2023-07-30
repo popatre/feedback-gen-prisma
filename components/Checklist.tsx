@@ -31,6 +31,8 @@ export default function Checklist({
     const feedbackIdRef = useRef<number | null>(null);
     const guidanceIdRef = useRef<string | null>(null);
 
+    console.log(feedback, "**************");
+
     const updateFeedback = (feedbackObj: Feedback) => {
         setFeedback((prevFeedback) => {
             const existingGuidanceIndex = prevFeedback.findIndex(
@@ -44,24 +46,29 @@ export default function Checklist({
             );
 
             if (existingFeedbackIndex !== -1) {
-                // If feedback already exists, update it
+                // If feedback already exists
                 return prevFeedback.map((guidance) => {
                     return {
                         ...guidance,
                         feedback: guidance.feedback.map((feedback, fIndex) =>
-                            fIndex === existingFeedbackIndex
+                            fIndex === existingFeedbackIndex &&
+                            guidance.guidance_id === feedbackObj.guidance_id
                                 ? { ...feedback, ...feedbackObj }
                                 : feedback
                         ),
                     };
                 });
             } else {
-                // If feedback doesn't exist, add it to the existing guidance's feedback array
-                return prevFeedback.map((guidance, index) => {
-                    return {
-                        ...guidance,
-                        feedback: [...guidance.feedback, feedbackObj],
-                    };
+                // If feedback doesn't exist
+                return prevFeedback.map((guidance) => {
+                    if (guidance.guidance_id === feedbackObj.guidance_id) {
+                        return {
+                            ...guidance,
+                            feedback: [...guidance.feedback, feedbackObj],
+                        };
+                    } else {
+                        return { ...guidance, feedback: [] };
+                    }
                 });
             }
         });
