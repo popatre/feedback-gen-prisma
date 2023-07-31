@@ -15,10 +15,10 @@ export default function Page({ params }: Props) {
     );
 
     if (isLoading) return <Loading />;
-    if (block == null || isError)
+    if (isError)
         return (
             <p className="text-bold text-xl flex justify-center">
-                Something went wrong :(
+                404 - Block not found
             </p>
         );
 
