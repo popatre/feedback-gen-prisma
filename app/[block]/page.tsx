@@ -18,7 +18,7 @@ export default function Page({ params }: Props) {
     if (error?.data?.httpStatus === 404)
         return (
             <p className="text-bold text-xl flex justify-center">
-                {error?.data.httpStatus} - Block not found
+                {error?.data.httpStatus} - {error.message}
             </p>
         );
 
