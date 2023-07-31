@@ -1,5 +1,6 @@
 import { Ticket, Block } from "@prisma/client";
 import prisma from "../db/connection";
+import { v4 as uuidv4 } from "uuid";
 
 export const selectTicketByIdWithEmail = async (
     ticketId: string,
@@ -23,4 +24,20 @@ export const selectTicketByIdWithEmail = async (
     });
 
     return ticket;
+};
+
+export const insertTicket = async (
+    blockName: string,
+    ticketNumber: number,
+    description: string
+) => {
+    const newTicket = await prisma.ticket.create({
+        data: {
+            ticket_id: uuidv4(),
+            block_name: blockName,
+            ticket_number: ticketNumber,
+            description: description,
+        },
+    });
+    return newTicket;
 };

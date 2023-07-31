@@ -2,7 +2,10 @@ import * as data from "../../db/data/test-data/index";
 import seed from "../../db/seeds/seed";
 import client from "../../db/connection";
 import { selectAllBlocks, selectSingleBlock } from "../../models/block.model";
-import { selectTicketByIdWithEmail } from "../../models/ticket.model";
+import {
+    insertTicket,
+    selectTicketByIdWithEmail,
+} from "../../models/ticket.model";
 import { insertGuidance, selectAllGuidance } from "../../models/guidance.model";
 import {
     createFeedback,
@@ -326,5 +329,22 @@ describe("feedback", () => {
             );
             expect(isFeedbackExisting).toBe(false);
         });
+    });
+});
+
+describe("tickets", () => {
+    describe("postTicket", () => {
+        test.only("should add new ticket to relevant block", async () => {
+            const newTicket = await insertTicket("be", 5, "Im a new ticket");
+
+            expect(newTicket).toMatchObject({
+                block_name: "be",
+                ticket_number: 5,
+                description: "Im a new ticket",
+            });
+        });
+    });
+    describe("editTicket", () => {
+        test("should edit ticket by ticket_id", () => {});
     });
 });
