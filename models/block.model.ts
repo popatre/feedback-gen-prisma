@@ -12,7 +12,11 @@ export const selectSingleBlock = async (blockName: string) => {
             block_name: blockName,
         },
         include: {
-            tickets: true,
+            tickets: {
+                orderBy: {
+                    ticket_number: "asc",
+                },
+            },
         },
     });
 
