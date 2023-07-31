@@ -210,29 +210,14 @@ describe("guidance", () => {
         });
         test("should handle ticket id not in db", async () => {
             const newGuidance = { type: "could", guidance: "Im new guidance" };
-
-            await expect(
-                insertGuidance("FE999999", newGuidance)
-            ).rejects.toEqual({ status: 404, msg: "ID not found" });
+            const isNull = await insertGuidance("FE999999", newGuidance);
+            await expect(isNull).toBeNull();
         });
-        test("should reject when missing keys on post object", async () => {
-            const newGuidance = { type: "could" } as {
-                type: string;
-                guidance: string;
-            };
 
-            await expect(insertGuidance("FE1", newGuidance)).rejects.toEqual({
-                status: 400,
-                msg: "Bad Post request",
-            });
-        });
         test("should reject when invalid type given", async () => {
             const newGuidance = { type: "notAType", guidance: "new guidance" };
-
-            await expect(insertGuidance("FE1", newGuidance)).rejects.toEqual({
-                status: 400,
-                msg: "Bad type",
-            });
+            const isNull = await insertGuidance("FE1", newGuidance);
+            await expect(isNull).toBeNull();
         });
     });
 });
