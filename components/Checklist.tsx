@@ -31,8 +31,6 @@ export default function Checklist({
     const feedbackIdRef = useRef<number | null>(null);
     const guidanceIdRef = useRef<string | null>(null);
 
-    console.log(feedback, "**************");
-
     const updateFeedback = (feedbackObj: Feedback) => {
         setFeedback((prevFeedback) => {
             const existingGuidanceIndex = prevFeedback.findIndex(
@@ -94,7 +92,7 @@ export default function Checklist({
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
                 style={customStyles}
-                contentLabel="Example Modal"
+                contentLabel="Feedback form"
                 ariaHideApp={false}
             >
                 <FeedbackForm

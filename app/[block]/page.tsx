@@ -2,6 +2,7 @@
 
 import Loading from "@/components/Loading";
 import NavCard from "@/components/NavCard";
+import TicketAdder from "@/components/TicketAdder";
 import useSingleBlockQuery from "@/hooks/useSingleBlockQuery";
 import React from "react";
 
@@ -24,18 +25,19 @@ export default function Page({ params }: Props) {
 
     return (
         block && (
-            <section className="grid-flow-row nav__grid  pb-20">
+            <section className="grid-flow-row nav__grid pb-20">
                 {block.tickets.map(
                     ({ ticket_id, description, block_name, ticket_number }) => {
                         return (
                             <NavCard
                                 key={ticket_id}
                                 description={description}
-                                url={`/${block_name}/${ticket_number}`}
+                                url={`/${block_name}/${ticket_id}`}
                             />
                         );
                     }
                 )}
+                <TicketAdder text="Add New Ticket +" block={params.block} />
             </section>
         )
     );

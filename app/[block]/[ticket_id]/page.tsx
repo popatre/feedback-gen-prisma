@@ -9,12 +9,11 @@ import Loading from "@/components/Loading";
 export default function Page({
     params,
 }: {
-    params: { ticket_num: string; block: string };
+    params: { ticket_id: string; block: string };
 }) {
     const { email } = useContext(UserContext) ?? { email: "" };
 
-    const ticketId = params.block.toUpperCase() + params.ticket_num;
-    const { isLoading, ticket } = useGetTicketById(ticketId, email);
+    const { isLoading, ticket } = useGetTicketById(params.ticket_id, email);
 
     if (!email) return <p>Must be logged in</p>;
 

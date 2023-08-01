@@ -334,7 +334,7 @@ describe("feedback", () => {
 
 describe("tickets", () => {
     describe("postTicket", () => {
-        test.only("should add new ticket to relevant block", async () => {
+        test("should add new ticket to relevant block", async () => {
             const newTicket = await insertTicket("be", 5, "Im a new ticket");
 
             expect(newTicket).toMatchObject({
