@@ -11,3 +11,10 @@ export type Guidance = {
     guidance: string;
     feedback: Feedback[];
 };
+
+export type Ticket = {
+    ticket_id: string;
+    ticket_number: number;
+    block_name: string;
+    description: string;
+};

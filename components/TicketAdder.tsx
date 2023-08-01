@@ -1,11 +1,31 @@
 import useModal from "@/hooks/useModal";
 import Modal from "react-modal";
 import TicketForm from "./TicketForm";
+import { Ticket } from "@/types/types";
 
-type Props = { text: string; block: string };
+type Props = {
+    text: string;
+    block: string;
+    setBlock: React.Dispatch<
+        React.SetStateAction<
+            { tickets: Ticket[]; block_name: string } | undefined
+        >
+    >;
+};
 
-export default function TicketAdder({ text, block }: Props) {
+export default function TicketAdder({ text, block, setBlock }: Props) {
     const { modalIsOpen, openModal, closeModal, customStyles } = useModal();
+
+    const handleNewTicket = (ticket: Ticket) => {
+        setBlock((prevBlock) => {
+            if (prevBlock !== undefined) {
+                return {
+                    ...prevBlock,
+                    tickets: [...prevBlock.tickets, ticket],
+                };
+            }
+        });
+    };
 
     return (
         <>
@@ -22,7 +42,11 @@ export default function TicketAdder({ text, block }: Props) {
                 contentLabel="Example Modal"
                 ariaHideApp={false}
             >
-                <TicketForm closeModal={closeModal} block={block} />
+                <TicketForm
+                    closeModal={closeModal}
+                    block={block}
+                    handleNewTicket={handleNewTicket}
+                />
             </Modal>
         </>
     );

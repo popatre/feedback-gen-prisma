@@ -1,15 +1,25 @@
 import usePostTicket from "@/hooks/usePostTicket";
+import { Ticket } from "@/types/types";
 import { useState, ChangeEvent, useEffect } from "react";
 
-type Props = { closeModal: () => void; block: string };
+type Props = {
+    closeModal: () => void;
+    block: string;
+    handleNewTicket: (ticket: Ticket) => void;
+};
 
-export default function TicketForm({ closeModal, block }: Props) {
+export default function TicketForm({
+    closeModal,
+    block,
+    handleNewTicket,
+}: Props) {
     const [input, setInput] = useState({ ticketNumber: 0, description: "" });
 
     const { ticket, isLoading, handleTicketPost } = usePostTicket(block);
 
     useEffect(() => {
         if (ticket) {
+            handleNewTicket(ticket);
             closeModal();
         }
     }, [ticket]);
