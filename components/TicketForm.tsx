@@ -59,15 +59,20 @@ export default function TicketForm({ closeModal, block }: Props) {
                 ></textarea>
             </div>
             <div className="form-btns flex justify-around">
-                <button className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1">
-                    Add Ticket
-                </button>
                 <button
-                    className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
-                    onClick={closeModal}
+                    disabled={isLoading}
+                    className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
                 >
-                    Cancel
+                    {isLoading ? `Working on it...` : `Add Ticket`}
                 </button>
+                {!isLoading && (
+                    <button
+                        className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
+                        onClick={closeModal}
+                    >
+                        Cancel
+                    </button>
+                )}
             </div>
         </form>
     );
