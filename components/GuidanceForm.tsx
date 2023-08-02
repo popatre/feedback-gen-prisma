@@ -1,6 +1,7 @@
 import useFormState from "@/hooks/useForm";
 import usePostGuidance from "@/hooks/usePostGuidance";
 import { Guidance } from "@/types/types";
+import ModalFormWrapper from "@/wrappers/ModalFormWrapper";
 
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
@@ -40,8 +41,12 @@ export default function GuidanceForm({
     };
 
     return (
-        <form className="my-10 mx-10 w-[400px]" onSubmit={handleSubmit}>
-            <h2 className="font-bold mb-10 text-lg">Create New Guidance</h2>
+        <ModalFormWrapper
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
+            closeModal={closeModal}
+            title="Add New Guidance"
+        >
             <div className="flex flex-col">
                 <label className="font-semibold" htmlFor="type">
                     Guidance Type
@@ -67,22 +72,6 @@ export default function GuidanceForm({
                     required
                 ></textarea>
             </div>
-            <div className="form-btns flex justify-around">
-                <button
-                    disabled={isLoading}
-                    className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
-                >
-                    {isLoading ? `Working on it...` : `Add Ticket`}
-                </button>
-                {!isLoading && (
-                    <button
-                        className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
-                        onClick={closeModal}
-                    >
-                        Cancel
-                    </button>
-                )}
-            </div>
-        </form>
+        </ModalFormWrapper>
     );
 }
