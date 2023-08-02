@@ -14,7 +14,8 @@ export const insertGuidance = async (
     const validTypes = ["must", "should", "could"];
     const { guidance, type } = guidanceData;
 
-    if (!validTypes.includes(type)) return null;
+    if (!validTypes.includes(type.toLowerCase()))
+        return Promise.reject({ status: 400, msg: "Bad type" });
 
     try {
         const newGuidance = await prisma.guidance.create({
@@ -22,7 +23,7 @@ export const insertGuidance = async (
                 guidance_id: uuidv4(),
                 ticket_id: ticketId,
                 guidance: guidance,
-                type: type,
+                type: type.toLowerCase(),
             },
         });
         return newGuidance;

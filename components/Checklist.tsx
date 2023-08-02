@@ -14,6 +14,7 @@ import CheckBoxWrapper from "@/wrappers/CheckBoxWrapper";
 import useModal from "@/hooks/useModal";
 import FeedbackForm from "./FeedbackForm";
 import { useState, useRef } from "react";
+import GuidanceAdder from "./GuidanceAdder";
 
 export default function Checklist({
     title,
@@ -139,11 +140,13 @@ export default function Checklist({
                     </CheckBoxWrapper>
                 );
             })}
+            <GuidanceAdder guidanceType={title} />
         </section>
     ) : (
         <section>
             <h2 className="feedback__title">{title}</h2>
             <p>No {title} criteria for this ticket</p>
+            {/* <GuidanceAdder title={title} /> */}
         </section>
     );
 }
