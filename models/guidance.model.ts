@@ -25,6 +25,9 @@ export const insertGuidance = async (
                 guidance: guidance,
                 type: type.toLowerCase(),
             },
+            include: {
+                feedback: true,
+            },
         });
         return newGuidance;
     } catch (error) {

@@ -1,5 +1,6 @@
 import useFormState from "@/hooks/useForm";
 import usePostGuidance from "@/hooks/usePostGuidance";
+import { Guidance } from "@/types/types";
 
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
@@ -7,9 +8,14 @@ import { useEffect } from "react";
 type Props = {
     closeModal: () => void;
     guidanceType: string;
+    handleNewGuidance: (guidance: Guidance) => void;
 };
 
-export default function GuidanceForm({ closeModal, guidanceType }: Props) {
+export default function GuidanceForm({
+    closeModal,
+    guidanceType,
+    handleNewGuidance,
+}: Props) {
     const { ticket_id } = useParams();
 
     const { guidance, handleGuidancePost, isLoading, isSuccess } =
@@ -22,7 +28,7 @@ export default function GuidanceForm({ closeModal, guidanceType }: Props) {
 
     useEffect(() => {
         if (guidance) {
-            // handleNewGuidance(guidance);
+            handleNewGuidance(guidance);
             closeModal();
             resetForm();
         }

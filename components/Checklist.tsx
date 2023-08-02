@@ -32,6 +32,12 @@ export default function Checklist({
     const feedbackIdRef = useRef<number | null>(null);
     const guidanceIdRef = useRef<string | null>(null);
 
+    const handleNewGuidance = (guidance: Guidance) => {
+        setFeedback((prevGuidance) => {
+            return [...prevGuidance, guidance];
+        });
+    };
+
     const updateFeedback = (feedbackObj: Feedback) => {
         setFeedback((prevFeedback) => {
             const existingGuidanceIndex = prevFeedback.findIndex(
@@ -140,7 +146,10 @@ export default function Checklist({
                     </CheckBoxWrapper>
                 );
             })}
-            <GuidanceAdder guidanceType={title} />
+            <GuidanceAdder
+                guidanceType={title}
+                handleNewGuidance={handleNewGuidance}
+            />
         </section>
     ) : (
         <section>

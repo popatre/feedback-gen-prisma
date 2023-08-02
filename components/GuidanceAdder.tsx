@@ -2,10 +2,17 @@ import React from "react";
 import useModal from "@/hooks/useModal";
 import Modal from "react-modal";
 import GuidanceForm from "./GuidanceForm";
+import { Guidance } from "@/types/types";
 
-type Props = { guidanceType: string };
+type Props = {
+    guidanceType: string;
+    handleNewGuidance: (guidance: Guidance) => void;
+};
 
-export default function GuidanceAdder({ guidanceType }: Props) {
+export default function GuidanceAdder({
+    guidanceType,
+    handleNewGuidance,
+}: Props) {
     const { modalIsOpen, openModal, closeModal, customStyles } = useModal();
 
     const handleClick = () => {
@@ -25,6 +32,7 @@ export default function GuidanceAdder({ guidanceType }: Props) {
                 <GuidanceForm
                     closeModal={closeModal}
                     guidanceType={guidanceType}
+                    handleNewGuidance={handleNewGuidance}
                 />
             </Modal>
             <section onClick={handleClick} className="ticket__add">
