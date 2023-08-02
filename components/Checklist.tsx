@@ -155,7 +155,10 @@ export default function Checklist({
         <section>
             <h2 className="feedback__title">{title}</h2>
             <p>No {title} criteria for this ticket</p>
-            {/* <GuidanceAdder title={title} /> */}
+            <GuidanceAdder
+                guidanceType={title}
+                handleNewGuidance={handleNewGuidance}
+            />
         </section>
     );
 }
