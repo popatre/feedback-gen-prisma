@@ -1,6 +1,7 @@
+import useFormState from "@/hooks/useForm";
 import usePostTicket from "@/hooks/usePostTicket";
 import { Ticket } from "@/types/types";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useEffect } from "react";
 
 type Props = {
     closeModal: () => void;
@@ -13,30 +14,23 @@ export default function TicketForm({
     block,
     handleNewTicket,
 }: Props) {
-    const [input, setInput] = useState({ ticketNumber: 0, description: "" });
-
     const { ticket, isLoading, handleTicketPost } = usePostTicket(block);
+    const { formState, handleChange, resetForm } = useFormState({
+        ticketNumber: 0,
+        description: "",
+    });
 
     useEffect(() => {
         if (ticket) {
             handleNewTicket(ticket);
             closeModal();
+            resetForm();
         }
     }, [ticket]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await handleTicketPost(+input.ticketNumber, input.description);
-    };
-
-    const handleChange = (
-        e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        const { value, name } = e.target;
-
-        setInput((prevInput) => {
-            return { ...prevInput, [name]: value };
-        });
+        await handleTicketPost(+formState.ticketNumber, formState.description);
     };
 
     return (
@@ -51,7 +45,7 @@ export default function TicketForm({
                     type="number"
                     required
                     onChange={handleChange}
-                    value={input.ticketNumber}
+                    value={formState.ticketNumber}
                     className="mb-5 border-2"
                 ></input>
             </div>
@@ -63,7 +57,7 @@ export default function TicketForm({
                     name="description"
                     className="mb-5 border-2"
                     onChange={handleChange}
-                    value={input.description}
+                    value={formState.description}
                     rows={4}
                     required
                 ></textarea>
