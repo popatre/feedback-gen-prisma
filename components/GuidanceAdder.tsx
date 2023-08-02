@@ -15,11 +15,6 @@ export default function GuidanceAdder({
 }: Props) {
     const { modalIsOpen, openModal, closeModal, customStyles } = useModal();
 
-    const handleClick = () => {
-        console.log("ive been clicked", guidanceType);
-        openModal();
-    };
-
     return (
         <>
             <Modal
@@ -35,7 +30,7 @@ export default function GuidanceAdder({
                     handleNewGuidance={handleNewGuidance}
                 />
             </Modal>
-            <section onClick={handleClick} className="ticket__add">
+            <section onClick={openModal} className="ticket__add">
                 Add {guidanceType} Guidance
             </section>
         </>
