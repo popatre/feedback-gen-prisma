@@ -1,7 +1,6 @@
 import useFormState from "@/hooks/useForm";
 import usePostGuidance from "@/hooks/usePostGuidance";
-import usePostTicket from "@/hooks/usePostTicket";
-import { Ticket } from "@/types/types";
+
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
@@ -23,7 +22,7 @@ export default function GuidanceForm({ closeModal, guidanceType }: Props) {
 
     useEffect(() => {
         if (guidance) {
-            // handleNewTicket(guidance);
+            // handleNewGuidance(guidance);
             closeModal();
             resetForm();
         }

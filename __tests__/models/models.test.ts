@@ -219,8 +219,10 @@ describe("guidance", () => {
 
         test("should reject when invalid type given", async () => {
             const newGuidance = { type: "notAType", guidance: "new guidance" };
-            const isNull = await insertGuidance("FE1", newGuidance);
-            await expect(isNull).toBeNull();
+            await expect(insertGuidance("FE1", newGuidance)).rejects.toEqual({
+                msg: "Bad type",
+                status: 400,
+            });
         });
     });
 });
