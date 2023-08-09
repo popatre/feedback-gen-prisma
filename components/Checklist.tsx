@@ -15,6 +15,7 @@ import useModal from "@/hooks/useModal";
 import FeedbackForm from "./FeedbackForm";
 import { useState, useRef } from "react";
 import GuidanceAdder from "./GuidanceAdder";
+import useUserContext from "@/hooks/useUserContext";
 
 export default function Checklist({
     title,
@@ -31,6 +32,8 @@ export default function Checklist({
     const [feedback, setFeedback] = useState(feedbackData);
     const feedbackIdRef = useRef<number | null>(null);
     const guidanceIdRef = useRef<string | null>(null);
+
+    const { adminMode } = useUserContext();
 
     const handleNewGuidance = (guidance: Guidance) => {
         setFeedback((prevGuidance) => {
@@ -146,19 +149,23 @@ export default function Checklist({
                     </CheckBoxWrapper>
                 );
             })}
-            <GuidanceAdder
-                guidanceType={title}
-                handleNewGuidance={handleNewGuidance}
-            />
+            {adminMode && (
+                <GuidanceAdder
+                    guidanceType={title}
+                    handleNewGuidance={handleNewGuidance}
+                />
+            )}
         </section>
     ) : (
         <section>
             <h2 className="feedback__title">{title}</h2>
             <p>No {title} criteria for this ticket</p>
-            <GuidanceAdder
-                guidanceType={title}
-                handleNewGuidance={handleNewGuidance}
-            />
+            {adminMode && (
+                <GuidanceAdder
+                    guidanceType={title}
+                    handleNewGuidance={handleNewGuidance}
+                />
+            )}
         </section>
     );
 }

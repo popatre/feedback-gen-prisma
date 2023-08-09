@@ -4,6 +4,7 @@ import Loading from "@/components/Loading";
 import NavCard from "@/components/NavCard";
 import TicketAdder from "@/components/TicketAdder";
 import useSingleBlockQuery from "@/hooks/useSingleBlockQuery";
+import useUserContext from "@/hooks/useUserContext";
 import { Ticket } from "@/types/types";
 import React, { useEffect, useState } from "react";
 
@@ -23,6 +24,8 @@ export default function Page({ params }: Props) {
           }
         | undefined
     >(blockData);
+
+    const { adminMode } = useUserContext();
 
     useEffect(() => {
         setBlock(blockData);
@@ -52,11 +55,13 @@ export default function Page({ params }: Props) {
                     }
                 )}
 
-                <TicketAdder
-                    text="Add New Ticket +"
-                    block={params.block}
-                    setBlock={setBlock}
-                />
+                {adminMode && (
+                    <TicketAdder
+                        text="Add New Ticket +"
+                        block={params.block}
+                        setBlock={setBlock}
+                    />
+                )}
             </section>
         )
     );

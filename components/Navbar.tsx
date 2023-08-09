@@ -2,34 +2,31 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import { UserContext } from "@/lib/context";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import useHandleUserLogin from "@/hooks/useHandleUserLogin";
 import Loading from "./Loading";
+import useUserContext from "@/hooks/useUserContext";
 
 type Props = {};
 
 export default function Navbar({}: Props) {
-    const user = useContext(UserContext);
     const router = useRouter();
+    const { email, displayName, adminMode, setAdminMode } = useUserContext();
 
     const { handleLogin, isLoading, isError } = useHandleUserLogin();
 
     useEffect(() => {
-        if (user) {
+        if (email) {
             const login = async () => {
-                if (user !== null) {
-                    const userEmail = user.email ?? "";
-                    try {
-                        await handleLogin(userEmail);
-                    } catch (error) {}
-                }
+                try {
+                    await handleLogin(email);
+                } catch (error) {}
             };
             login();
         }
-    }, [user]);
+    }, [email]);
 
     const handleSignOut = () => {
         signOut(auth)
@@ -41,9 +38,16 @@ export default function Navbar({}: Props) {
             });
     };
 
+    const handleAdminMode = () => {
+        if (setAdminMode) {
+            setAdminMode((prevMode) => !prevMode);
+        }
+    };
+
     const pages = [
         { name: "Home", url: "/" },
-        { name: "Front End", url: "/fe" },
+        { name: "BE", url: "/be" },
+        { name: "FE", url: "/fe" },
     ];
 
     if (isLoading) return <Loading />;
@@ -51,7 +55,7 @@ export default function Navbar({}: Props) {
     return (
         <nav className="mb-10 nav-bar">
             <ul className="flex flex-row justify-around py-5">
-                {user &&
+                {email &&
                     pages.map((page) => {
                         return (
                             <li
@@ -63,11 +67,21 @@ export default function Navbar({}: Props) {
                         );
                     })}
             </ul>
+            <button
+                className={
+                    adminMode
+                        ? "bg-green-600 hover:bg-blue-700 text-xs text-white font-bold py-1 px-2 rounded my-1  max-w-fit"
+                        : "bg-red-600 hover:bg-blue-700 text-xs text-white font-bold py-1 px-2 rounded my-1  max-w-fit"
+                }
+                onClick={handleAdminMode}
+            >
+                {adminMode ? "Admin On" : "Admin Off"}
+            </button>
             <aside className="flex flex-row justify-end mr-10">
-                {!user?.email ? null : (
+                {!email ? null : (
                     <>
                         <p className="mr-10 self-center text-white">
-                            Hi, {user?.displayName}
+                            Hi, {displayName}
                         </p>
                         <button
                             onClick={handleSignOut}
