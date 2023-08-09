@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction } from "react";
+import { User } from "firebase/auth";
+
 export type Feedback = {
     feedback_id: number;
     www: string;
@@ -18,3 +21,12 @@ export type Ticket = {
     block_name: string;
     description: string;
 };
+
+export type UserFirebase = User | null;
+
+export interface UserContextData {
+    adminMode: boolean;
+    setAdminMode: Dispatch<SetStateAction<boolean>>;
+    email: string;
+    displayName: string;
+}
