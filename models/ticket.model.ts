@@ -1,4 +1,3 @@
-import { Ticket, Block } from "@prisma/client";
 import prisma from "../db/connection";
 import { v4 as uuidv4 } from "uuid";
 
@@ -41,3 +40,6 @@ export const insertTicket = async (
     });
     return newTicket;
 };
+
+export const updateTicket = () => {};
+export const deleteTicket = () => {};

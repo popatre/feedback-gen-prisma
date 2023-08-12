@@ -34,3 +34,6 @@ export const insertGuidance = async (
         return null;
     }
 };
+
+export const updateGuidance = () => {};
+export const deleteGuidance = () => {};
