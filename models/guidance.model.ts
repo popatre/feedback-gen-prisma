@@ -35,5 +35,27 @@ export const insertGuidance = async (
     }
 };
 
-export const updateGuidance = () => {};
+export const updateGuidance = async (
+    guidanceId: string,
+    guidanceUpdate: { guidance: string }
+) => {
+    try {
+        const updatedGuidance = await prisma.guidance.update({
+            where: {
+                guidance_id: guidanceId,
+            },
+            data: {
+                ...guidanceUpdate,
+            },
+        });
+        return updatedGuidance;
+    } catch (error: any) {
+        if (error.meta) {
+            return Promise.reject({ msg: error.meta.cause });
+        } else {
+            return Promise.reject({ msg: "bad request" });
+        }
+    }
+};
+
 export const deleteGuidance = () => {};

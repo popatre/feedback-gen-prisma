@@ -6,7 +6,11 @@ import {
     insertTicket,
     selectTicketByIdWithEmail,
 } from "../../models/ticket.model";
-import { insertGuidance, selectAllGuidance } from "../../models/guidance.model";
+import {
+    insertGuidance,
+    selectAllGuidance,
+    updateGuidance,
+} from "../../models/guidance.model";
 import {
     createFeedback,
     isExistingFeedback,
@@ -186,16 +190,18 @@ describe("tickets", () => {
 });
 
 describe("guidance", () => {
-    test("should return all guidance for all tickets", async () => {
-        const guidance = await selectAllGuidance();
-        expect(guidance).toBeInstanceOf(Array);
-        expect(guidance).toHaveLength(30);
-        guidance.forEach((criterion) => {
-            expect(criterion).toMatchObject({
-                guidance_id: expect.any(String),
-                ticket_id: expect.any(String),
-                type: expect.any(String),
-                guidance: expect.any(String),
+    describe("selectAllGuidance", () => {
+        test("should return all guidance for all tickets", async () => {
+            const guidance = await selectAllGuidance();
+            expect(guidance).toBeInstanceOf(Array);
+            expect(guidance).toHaveLength(30);
+            guidance.forEach((criterion) => {
+                expect(criterion).toMatchObject({
+                    guidance_id: expect.any(String),
+                    ticket_id: expect.any(String),
+                    type: expect.any(String),
+                    guidance: expect.any(String),
+                });
             });
         });
     });
@@ -222,6 +228,26 @@ describe("guidance", () => {
             await expect(insertGuidance("FE1", newGuidance)).rejects.toEqual({
                 msg: "Bad type",
                 status: 400,
+            });
+        });
+    });
+    describe("updateGuidance", () => {
+        test("should update guidance by id", async () => {
+            const guidanceId = "1";
+            const update = { guidance: "Im an update" };
+            const updatedGuidance = await updateGuidance(guidanceId, update);
+            expect(updatedGuidance).toMatchObject({
+                guidance_id: guidanceId,
+                guidance: update.guidance,
+                ticket_id: "FE1",
+                type: "must",
+            });
+        });
+        test("should handle guidance id not in db", async () => {
+            const guidanceId = "99999";
+            const update = { guidance: "Im an update" };
+            await expect(updateGuidance(guidanceId, update)).rejects.toEqual({
+                msg: "Record to update not found.",
             });
         });
     });
