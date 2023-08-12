@@ -67,16 +67,18 @@ export default function Navbar({}: Props) {
                         );
                     })}
             </ul>
-            <button
-                className={
-                    adminMode
-                        ? "bg-green-600 hover:bg-blue-700 text-xs text-white font-bold py-1 px-2 rounded my-1  max-w-fit"
-                        : "bg-red-600 hover:bg-blue-700 text-xs text-white font-bold py-1 px-2 rounded my-1  max-w-fit"
-                }
-                onClick={handleAdminMode}
-            >
-                {adminMode ? "Admin On" : "Admin Off"}
-            </button>
+            {email && (
+                <button
+                    className={
+                        adminMode
+                            ? "bg-green-500 hover:bg-green-600 text-xs text-white font-bold py-1 px-2 rounded my-1  max-w-fit"
+                            : "bg-slate-500 hover:bg-slate-600 text-xs text-white font-bold py-1 px-2 rounded my-1  max-w-fit"
+                    }
+                    onClick={handleAdminMode}
+                >
+                    {adminMode ? "Admin On" : "Admin Off"}
+                </button>
+            )}
             <aside className="flex flex-row justify-end mr-10">
                 {!email ? null : (
                     <>
@@ -85,7 +87,7 @@ export default function Navbar({}: Props) {
                         </p>
                         <button
                             onClick={handleSignOut}
-                            className="bg-green-600 hover:bg-blue-700 text-xs text-white font-bold py-1 px-2 rounded my-1"
+                            className="bg-slate-400 hover:bg-blue-700 text-xs text-white font-bold py-1 px-2 rounded my-1"
                         >
                             Sign Out
                         </button>

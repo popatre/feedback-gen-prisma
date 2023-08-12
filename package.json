@@ -10,7 +10,8 @@
         "seed": "ts-node ./db/seeds/run-seed.ts",
         "seed:prod": "NODE_ENV=production ts-node ./db/seeds/run-prod-seed.ts",
         "test": "jest --runInBand",
-        "postinstall": "prisma generate"
+        "postinstall": "prisma generate",
+        "setup-db": "psql -f ./db/setup-dbs.sql"
     },
     "dependencies": {
         "@prisma/client": "^5.0.0",
