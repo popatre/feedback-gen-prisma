@@ -248,6 +248,7 @@ describe("guidance", () => {
             const update = { guidance: "Im an update" };
             await expect(updateGuidance(guidanceId, update)).rejects.toEqual({
                 msg: "Record to update not found.",
+                status: 404,
             });
         });
     });

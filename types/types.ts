@@ -30,3 +30,5 @@ export interface UserContextData {
     email: string;
     displayName: string;
 }
+
+export type TrpcErrorCodes = "BAD_REQUEST" | "NOT_FOUND";

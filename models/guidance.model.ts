@@ -51,9 +51,16 @@ export const updateGuidance = async (
         return updatedGuidance;
     } catch (error: any) {
         if (error.meta) {
-            return Promise.reject({ msg: error.meta.cause });
+            const prismaCodes: { [key: string]: number } = {
+                P2025: 404,
+            } as const;
+            const code: string = error.code;
+            return Promise.reject({
+                status: prismaCodes[code],
+                msg: error.meta.cause,
+            });
         } else {
-            return Promise.reject({ msg: "bad request" });
+            return Promise.reject({ status: 400, msg: "bad request" });
         }
     }
 };
