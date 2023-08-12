@@ -16,6 +16,7 @@ import FeedbackForm from "./FeedbackForm";
 import { useState, useRef } from "react";
 import GuidanceAdder from "./GuidanceAdder";
 import useUserContext from "@/hooks/useUserContext";
+import EditGuidanceForm from "./EditGuidanceForm";
 
 export default function Checklist({
     title,
@@ -32,6 +33,9 @@ export default function Checklist({
     const [feedback, setFeedback] = useState(feedbackData);
     const feedbackIdRef = useRef<number | null>(null);
     const guidanceIdRef = useRef<string | null>(null);
+    const currentGuidanceRef = useRef<{ guidance: string; id: string } | null>(
+        null
+    );
 
     const { adminMode } = useUserContext();
 
@@ -96,6 +100,14 @@ export default function Checklist({
         openModal();
     };
 
+    const editGuidance = (currentGuidance: string, guidanceId: string) => {
+        currentGuidanceRef.current = {
+            guidance: currentGuidance,
+            id: guidanceId,
+        };
+        openModal();
+    };
+
     return feedback.length > 0 ? (
         <section>
             <Modal
@@ -105,16 +117,25 @@ export default function Checklist({
                 contentLabel="Feedback form"
                 ariaHideApp={false}
             >
-                <FeedbackForm
-                    editTitle={editTitle}
-                    feedbackInput={feedbackInput}
-                    setFeedbackinput={setFeedbackinput}
-                    setEditTitle={setEditTitle}
-                    closeModal={closeModal}
-                    feedbackIdRef={feedbackIdRef}
-                    guidanceIdRef={guidanceIdRef}
-                    updateFeedback={updateFeedback}
-                />
+                {!adminMode && (
+                    <FeedbackForm
+                        editTitle={editTitle}
+                        feedbackInput={feedbackInput}
+                        setFeedbackinput={setFeedbackinput}
+                        setEditTitle={setEditTitle}
+                        closeModal={closeModal}
+                        feedbackIdRef={feedbackIdRef}
+                        guidanceIdRef={guidanceIdRef}
+                        updateFeedback={updateFeedback}
+                    />
+                )}
+                {adminMode && (
+                    <EditGuidanceForm
+                        closeModal={closeModal}
+                        handleNewGuidance={() => {}}
+                        currentGuidance={currentGuidanceRef}
+                    />
+                )}
             </Modal>
             <h2 className="feedback__title">{title}</h2>
             <div className="box-labels">
@@ -133,19 +154,34 @@ export default function Checklist({
                     >
                         <p>{element.guidance}</p>
 
-                        <button
-                            onClick={() =>
-                                editFeedback(
-                                    element.guidance,
-                                    element.feedback[0]?.www,
-                                    element.feedback[0]?.ebi,
-                                    element.feedback[0]?.feedback_id,
-                                    element.guidance_id
-                                )
-                            }
-                        >
-                            <AiOutlinePlusCircle />
-                        </button>
+                        {!adminMode && (
+                            <button
+                                onClick={() =>
+                                    editFeedback(
+                                        element.guidance,
+                                        element.feedback[0]?.www,
+                                        element.feedback[0]?.ebi,
+                                        element.feedback[0]?.feedback_id,
+                                        element.guidance_id
+                                    )
+                                }
+                            >
+                                <AiOutlinePlusCircle />
+                            </button>
+                        )}
+                        {adminMode && (
+                            <button
+                                onClick={() =>
+                                    editGuidance(
+                                        element.guidance,
+                                        element.guidance_id
+                                    )
+                                }
+                                className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-1 px-2 rounded "
+                            >
+                                Edit{" "}
+                            </button>
+                        )}
                     </CheckBoxWrapper>
                 );
             })}
