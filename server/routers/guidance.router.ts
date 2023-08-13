@@ -1,4 +1,8 @@
-import { insertGuidance, updateGuidance } from "@/models/guidance.model";
+import {
+    deleteGuidance,
+    insertGuidance,
+    updateGuidance,
+} from "@/models/guidance.model";
 import { publicProcedure, router } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
@@ -71,6 +75,19 @@ export const guidanceRouter = router({
                     });
                 }
             }
+        }),
+    deleteGuidance: publicProcedure
+        .input(z.string())
+        .mutation(async ({ input }) => {
+            const isDeleted = await deleteGuidance(input);
+
+            if (!isDeleted) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "guidance not found",
+                });
+            }
+            return isDeleted;
         }),
 });
 
