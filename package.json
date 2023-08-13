@@ -14,11 +14,6 @@
         "setup-db": "psql -f ./db/setup-dbs.sql",
         "prepare": "husky install"
     },
-    "husky": {
-        "hooks": {
-            "pre-push": "npm run test"
-        }
-    },
     "dependencies": {
         "@prisma/client": "^5.0.0",
         "@tanstack/react-query": "^4.32.0",
