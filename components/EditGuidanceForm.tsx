@@ -46,6 +46,7 @@ export default function EditGuidanceForm({
             isLoading={isLoading}
             closeModal={closeModal}
             title="Edit Guidance"
+            confirmButtonLabel="Add Ticket"
         >
             <div className="flex flex-col">
                 <label className="font-semibold" htmlFor="guidance">
