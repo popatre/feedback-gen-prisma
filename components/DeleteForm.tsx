@@ -5,14 +5,20 @@ import React, { MutableRefObject, useEffect } from "react";
 type Props = {
     closeModal: () => void;
     guidanceIdRef: MutableRefObject<string | null>;
+    deleteGuidance: (guidanceId: string) => void;
 };
 
-export default function DeleteForm({ closeModal, guidanceIdRef }: Props) {
+export default function DeleteForm({
+    closeModal,
+    guidanceIdRef,
+    deleteGuidance,
+}: Props) {
     const { isDeleted, handleDeleteGuidance, isLoading, isError } =
         useDeleteGuidance();
 
     useEffect(() => {
-        if (isDeleted) {
+        if (isDeleted && guidanceIdRef.current) {
+            deleteGuidance(guidanceIdRef.current);
             closeModal();
         }
     }, [isDeleted]);

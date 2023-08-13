@@ -2,13 +2,6 @@
 
 import { Guidance, Feedback } from "../types/types";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-
-type Props = {
-    title: string;
-    feedbackData: Guidance[];
-    addPositiveFeedback: (feedback: string, isChecked: boolean) => void;
-    addEbiFeedback: (feedback: string, isChecked: boolean) => void;
-};
 import Modal from "react-modal";
 import CheckBoxWrapper from "@/wrappers/CheckBoxWrapper";
 import useModal from "@/hooks/useModal";
@@ -17,9 +10,15 @@ import { useState, useRef } from "react";
 import GuidanceAdder from "./GuidanceAdder";
 import useUserContext from "@/hooks/useUserContext";
 import EditGuidanceForm from "./EditGuidanceForm";
-import useDeleteGuidance from "@/hooks/useDeleteGuidance";
-import DeleteButton from "./DeleteButton";
+import Button from "./Button";
 import DeleteForm from "./DeleteForm";
+
+type Props = {
+    title: string;
+    feedbackData: Guidance[];
+    addPositiveFeedback: (feedback: string, isChecked: boolean) => void;
+    addEbiFeedback: (feedback: string, isChecked: boolean) => void;
+};
 
 export default function Checklist({
     title,
@@ -64,6 +63,14 @@ export default function Checklist({
         });
     };
 
+    const deleteGuidance = (guidanceId: string) => {
+        setFeedback((prevGuidance) => {
+            return prevGuidance.filter(
+                (guide) => guide.guidance_id !== guidanceId
+            );
+        });
+    };
+
     const updateFeedback = (feedbackObj: Feedback) => {
         setFeedback((prevFeedback) => {
             const existingGuidanceIndex = prevFeedback.findIndex(
@@ -105,12 +112,6 @@ export default function Checklist({
         });
     };
 
-    const handleDeleteModal = (guidanceId: string) => {
-        openModal();
-        setConfirmDelete(true);
-        guidanceIdRef.current = guidanceId;
-    };
-
     const editFeedback = (
         guidance: string,
         www: string,
@@ -122,14 +123,6 @@ export default function Checklist({
         setFeedbackinput({ www, ebi });
         feedbackIdRef.current = feedbackId;
         guidanceIdRef.current = guidanceId;
-        openModal();
-    };
-
-    const editGuidance = (currentGuidance: string, guidanceId: string) => {
-        currentGuidanceRef.current = {
-            guidance: currentGuidance,
-            id: guidanceId,
-        };
         openModal();
     };
 
@@ -166,6 +159,7 @@ export default function Checklist({
                     <DeleteForm
                         closeModal={closeModal}
                         guidanceIdRef={guidanceIdRef}
+                        deleteGuidance={deleteGuidance}
                     />
                 )}
             </Modal>
@@ -203,21 +197,26 @@ export default function Checklist({
                         )}
                         {adminMode && (
                             <div className="flex gap-3">
-                                <button
-                                    onClick={() =>
-                                        editGuidance(
-                                            element.guidance,
-                                            element.guidance_id
-                                        )
-                                    }
+                                <Button
                                     className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-1 px-2 rounded max-h-6"
-                                >
-                                    Edit{" "}
-                                </button>
-                                <DeleteButton
-                                    handleClick={() =>
-                                        handleDeleteModal(element.guidance_id)
-                                    }
+                                    label="edit"
+                                    handleClick={() => {
+                                        currentGuidanceRef.current = {
+                                            guidance: element.guidance,
+                                            id: element.guidance_id,
+                                        };
+                                        openModal();
+                                    }}
+                                />
+                                <Button
+                                    className="bg-red-600 hover:bg-red-700 text-xs text-white font-bold py-1 px-2 rounded max-h-6"
+                                    label="del"
+                                    handleClick={() => {
+                                        openModal();
+                                        setConfirmDelete(true);
+                                        guidanceIdRef.current =
+                                            element.guidance_id;
+                                    }}
                                 />
                             </div>
                         )}
