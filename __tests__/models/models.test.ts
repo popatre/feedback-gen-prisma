@@ -7,6 +7,7 @@ import {
     selectTicketByIdWithEmail,
 } from "../../models/ticket.model";
 import {
+    deleteGuidance,
     insertGuidance,
     selectAllGuidance,
     updateGuidance,
@@ -250,6 +251,24 @@ describe("guidance", () => {
                 msg: "Record to update not found.",
                 status: 404,
             });
+        });
+    });
+    describe("deleteGuidance", () => {
+        test("should delete guidance by guidance id", async () => {
+            const guidanceId = "1";
+            const isDeleted = await deleteGuidance("1");
+            expect(isDeleted).toBe(true);
+            const response = await client.feedback.findMany({
+                where: {
+                    guidance_id: guidanceId,
+                },
+            });
+            expect(response).toHaveLength(0);
+        });
+        test("should handle deletion of of guidance id not in db", async () => {
+            const notId = "99999";
+            const deletionResponse = await deleteGuidance(notId);
+            expect(deletionResponse).toBeNull();
         });
     });
 });

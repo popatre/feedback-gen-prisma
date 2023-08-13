@@ -65,4 +65,15 @@ export const updateGuidance = async (
     }
 };
 
-export const deleteGuidance = () => {};
+export const deleteGuidance = async (guidanceId: string) => {
+    try {
+        await prisma.guidance.delete({
+            where: {
+                guidance_id: guidanceId,
+            },
+        });
+        return true;
+    } catch (error) {
+        return null;
+    }
+};
