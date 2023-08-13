@@ -5,12 +5,14 @@ export default function useDeleteGuidance() {
         data: isDeleted,
         isLoading,
         isSuccess,
+        isError,
         mutateAsync,
     } = trpc.guidance.deleteGuidance.useMutation();
 
     const handleDeleteGuidance = async (guidanceId: string) => {
-        await mutateAsync(guidanceId);
+        const isDeleted = await mutateAsync(guidanceId);
+        return isDeleted;
     };
 
-    return { isDeleted, handleDeleteGuidance, isLoading, isSuccess };
+    return { isDeleted, handleDeleteGuidance, isLoading, isSuccess, isError };
 }

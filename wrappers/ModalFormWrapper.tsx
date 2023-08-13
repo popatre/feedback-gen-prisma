@@ -6,6 +6,7 @@ type Props = {
     isLoading: boolean;
     closeModal: () => void;
     children: ReactNode;
+    confirmButtonLabel: string;
 };
 
 export default function ModalFormWrapper({
@@ -14,6 +15,7 @@ export default function ModalFormWrapper({
     isLoading,
     closeModal,
     children,
+    confirmButtonLabel = "Add Ticket",
 }: Props) {
     return (
         <form className="my-10 mx-10 w-[400px]" onSubmit={handleSubmit}>
@@ -24,7 +26,7 @@ export default function ModalFormWrapper({
                     disabled={isLoading}
                     className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
                 >
-                    {isLoading ? `Working on it...` : `Add Ticket`}
+                    {isLoading ? `Working on it...` : `${confirmButtonLabel}`}
                 </button>
                 {!isLoading && (
                     <button

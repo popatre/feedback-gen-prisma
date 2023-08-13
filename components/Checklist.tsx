@@ -17,6 +17,9 @@ import { useState, useRef } from "react";
 import GuidanceAdder from "./GuidanceAdder";
 import useUserContext from "@/hooks/useUserContext";
 import EditGuidanceForm from "./EditGuidanceForm";
+import useDeleteGuidance from "@/hooks/useDeleteGuidance";
+import DeleteButton from "./DeleteButton";
+import DeleteForm from "./DeleteForm";
 
 export default function Checklist({
     title,
@@ -25,7 +28,9 @@ export default function Checklist({
     addEbiFeedback,
 }: Props) {
     const { modalIsOpen, openModal, closeModal, customStyles } = useModal();
+
     const [editTitle, setEditTitle] = useState("Default");
+    const [confirmDelete, setConfirmDelete] = useState(false);
     const [feedbackInput, setFeedbackinput] = useState({
         www: "",
         ebi: "",
@@ -100,6 +105,12 @@ export default function Checklist({
         });
     };
 
+    const handleDeleteModal = (guidanceId: string) => {
+        openModal();
+        setConfirmDelete(true);
+        guidanceIdRef.current = guidanceId;
+    };
+
     const editFeedback = (
         guidance: string,
         www: string,
@@ -143,11 +154,18 @@ export default function Checklist({
                         updateFeedback={updateFeedback}
                     />
                 )}
-                {adminMode && (
+                {adminMode && !confirmDelete && (
                     <EditGuidanceForm
                         closeModal={closeModal}
                         currentGuidance={currentGuidanceRef}
                         handleEditGuidance={handleEditGuidance}
+                    />
+                )}
+
+                {confirmDelete && (
+                    <DeleteForm
+                        closeModal={closeModal}
+                        guidanceIdRef={guidanceIdRef}
                     />
                 )}
             </Modal>
@@ -196,9 +214,11 @@ export default function Checklist({
                                 >
                                     Edit{" "}
                                 </button>
-                                <button className="bg-red-600 hover:bg-red-700 text-xs text-white font-bold py-1 px-2 rounded max-h-6">
-                                    Del
-                                </button>
+                                <DeleteButton
+                                    handleClick={() =>
+                                        handleDeleteModal(element.guidance_id)
+                                    }
+                                />
                             </div>
                         )}
                     </CheckBoxWrapper>
