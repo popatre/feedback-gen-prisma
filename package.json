@@ -11,7 +11,8 @@
         "seed:prod": "NODE_ENV=production ts-node ./db/seeds/run-prod-seed.ts",
         "test": "jest --runInBand",
         "postinstall": "prisma generate",
-        "setup-db": "psql -f ./db/setup-dbs.sql"
+        "setup-db": "psql -f ./db/setup-dbs.sql",
+        "prepare": "husky install"
     },
     "husky": {
         "hooks": {
