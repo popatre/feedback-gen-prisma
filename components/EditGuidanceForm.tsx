@@ -1,7 +1,5 @@
 import useFormState from "@/hooks/useForm";
-import usePostGuidance from "@/hooks/usePostGuidance";
 import useUpdateGuidance from "@/hooks/useUpdateGuidance";
-import { Guidance } from "@/types/types";
 import ModalFormWrapper from "@/wrappers/ModalFormWrapper";
 
 import { MutableRefObject, useEffect } from "react";
@@ -9,15 +7,15 @@ import { MutableRefObject, useEffect } from "react";
 type Props = {
     closeModal: () => void;
     currentGuidance: MutableRefObject<{ guidance: string; id: string } | null>;
-    handleNewGuidance: (guidance: Guidance) => void;
+    handleEditGuidance: (guidance: string, guidance_id: string) => void;
 };
 
 export default function EditGuidanceForm({
     closeModal,
     currentGuidance,
-    handleNewGuidance,
+    handleEditGuidance,
 }: Props) {
-    const { guidance, handleGuidanceUpdate, isLoading, isSuccess } =
+    const { guidance, handleGuidanceUpdate, isLoading, isSuccess, isError } =
         useUpdateGuidance();
 
     const { formState, handleChange, resetForm } = useFormState({
@@ -25,8 +23,8 @@ export default function EditGuidanceForm({
     });
 
     useEffect(() => {
-        if (guidance) {
-            // handleNewGuidance(guidance);
+        if (guidance && currentGuidance.current) {
+            handleEditGuidance(guidance.guidance, currentGuidance.current.id);
             closeModal();
             resetForm();
         }
@@ -41,11 +39,11 @@ export default function EditGuidanceForm({
             );
         }
     };
-
+    if (isError) return <p>Something went wrong</p>;
     return (
         <ModalFormWrapper
             handleSubmit={handleSubmit}
-            isLoading={false}
+            isLoading={isLoading}
             closeModal={closeModal}
             title="Edit Guidance"
         >

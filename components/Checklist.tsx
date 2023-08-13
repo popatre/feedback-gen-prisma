@@ -45,6 +45,20 @@ export default function Checklist({
         });
     };
 
+    const handleEditGuidance = (guidanceBody: string, guidanceId: string) => {
+        setFeedback((prevGuidance) => {
+            return prevGuidance.map((guidanceElement) => {
+                if (guidanceElement.guidance_id === guidanceId) {
+                    const guidanceClone = { ...guidanceElement };
+                    guidanceClone.guidance = guidanceBody;
+                    return guidanceClone;
+                } else {
+                    return guidanceElement;
+                }
+            });
+        });
+    };
+
     const updateFeedback = (feedbackObj: Feedback) => {
         setFeedback((prevFeedback) => {
             const existingGuidanceIndex = prevFeedback.findIndex(
@@ -132,8 +146,8 @@ export default function Checklist({
                 {adminMode && (
                     <EditGuidanceForm
                         closeModal={closeModal}
-                        handleNewGuidance={() => {}}
                         currentGuidance={currentGuidanceRef}
+                        handleEditGuidance={handleEditGuidance}
                     />
                 )}
             </Modal>
@@ -170,17 +184,22 @@ export default function Checklist({
                             </button>
                         )}
                         {adminMode && (
-                            <button
-                                onClick={() =>
-                                    editGuidance(
-                                        element.guidance,
-                                        element.guidance_id
-                                    )
-                                }
-                                className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-1 px-2 rounded "
-                            >
-                                Edit{" "}
-                            </button>
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() =>
+                                        editGuidance(
+                                            element.guidance,
+                                            element.guidance_id
+                                        )
+                                    }
+                                    className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-1 px-2 rounded max-h-6"
+                                >
+                                    Edit{" "}
+                                </button>
+                                <button className="bg-red-600 hover:bg-red-700 text-xs text-white font-bold py-1 px-2 rounded max-h-6">
+                                    Del
+                                </button>
+                            </div>
                         )}
                     </CheckBoxWrapper>
                 );
