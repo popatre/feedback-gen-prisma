@@ -1,4 +1,4 @@
-import { selectAllBlocks, selectSingleBlock } from "@/models/block.model";
+import { selectAllBlocks, selectSingleBlock } from "../../models/block.model";
 import { publicProcedure, router } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";

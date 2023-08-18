@@ -1,4 +1,7 @@
-import { insertTicket, selectTicketByIdWithEmail } from "@/models/ticket.model";
+import {
+    insertTicket,
+    selectTicketByIdWithEmail,
+} from "../../models/ticket.model";
 import { publicProcedure, router } from "../trpc";
 import { z } from "zod";
 

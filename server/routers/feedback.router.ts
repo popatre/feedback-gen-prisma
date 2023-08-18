@@ -3,7 +3,7 @@ import { z } from "zod";
 import {
     createFeedback,
     updateFeedbackByFeedbackId,
-} from "@/models/feedback.model";
+} from "../../models/feedback.model";
 import { handleFeedback } from "../../db/utils/handleFeedback";
 
 type FeedbackUpdate = { www: string; ebi: string };
