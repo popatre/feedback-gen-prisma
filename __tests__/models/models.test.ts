@@ -62,131 +62,148 @@ describe("blocks", () => {
 });
 
 describe("tickets", () => {
-    test("should return ticket data for id given", async () => {
-        const feTicketOne = await selectTicketByIdWithEmail(
-            "BE1",
-            "test@gmail.com"
-        );
-        expect(feTicketOne).toBeInstanceOf(Object);
-        expect(feTicketOne).toMatchObject({
-            ticket_id: "BE1",
-            ticket_number: expect.any(Number),
-            block_name: "be",
-            description: expect.any(String),
-            guidance: expect.any(Array),
-        });
-    });
-    test("should return ticket guidance for requested ticket", async () => {
-        const feTicketOne = await selectTicketByIdWithEmail(
-            "BE1",
-            "test@gmail.com"
-        );
-        expect(feTicketOne).toBeInstanceOf(Object);
-        expect(feTicketOne).toMatchObject({
-            ticket_id: "BE1",
-            ticket_number: expect.any(Number),
-            block_name: "be",
-            description: expect.any(String),
-            guidance: expect.any(Array),
-        });
-        if (feTicketOne) {
-            expect(feTicketOne.guidance).toHaveLength(6);
-            feTicketOne.guidance.forEach((criterion) => {
-                expect(criterion).toMatchObject({
-                    guidance_id: expect.any(String),
-                    ticket_id: "BE1",
-                    type: expect.any(String),
-                    guidance: expect.any(String),
-                });
+    describe("getTicket", () => {
+        test("should return ticket data for id given", async () => {
+            const feTicketOne = await selectTicketByIdWithEmail(
+                "BE1",
+                "test@gmail.com"
+            );
+            expect(feTicketOne).toBeInstanceOf(Object);
+            expect(feTicketOne).toMatchObject({
+                ticket_id: "BE1",
+                ticket_number: expect.any(Number),
+                block_name: "be",
+                description: expect.any(String),
+                guidance: expect.any(Array),
             });
-        }
-    });
-    test("should return null when passed ticket id not in db", async () => {
-        const nonTicket = await selectTicketByIdWithEmail(
-            "not_a_ticket",
-            "test@gmail.com"
-        );
-        expect(nonTicket).toBeNull();
-    });
-    test("should return ticket with feedback from email", async () => {
-        const feTicketOne = await selectTicketByIdWithEmail(
-            "BE1",
-            "test@gmail.com"
-        );
-        expect(feTicketOne).toBeInstanceOf(Object);
-        if (feTicketOne) {
-            expect(feTicketOne.guidance).toHaveLength(6);
-            feTicketOne.guidance.forEach((criterion) => {
-                expect(criterion).toMatchObject({
-                    guidance_id: expect.any(String),
-                    ticket_id: "BE1",
-                    type: expect.any(String),
-                    guidance: expect.any(String),
-                    feedback: expect.any(Array),
-                });
-                criterion.feedback.forEach((feedback) => {
-                    expect(feedback).toMatchObject({
-                        feedback_id: expect.any(Number),
-                        www: expect.any(String),
-                        ebi: expect.any(String),
-                        user_email: "test@gmail.com",
+        });
+        test("should return ticket guidance for requested ticket", async () => {
+            const feTicketOne = await selectTicketByIdWithEmail(
+                "BE1",
+                "test@gmail.com"
+            );
+            expect(feTicketOne).toBeInstanceOf(Object);
+            expect(feTicketOne).toMatchObject({
+                ticket_id: "BE1",
+                ticket_number: expect.any(Number),
+                block_name: "be",
+                description: expect.any(String),
+                guidance: expect.any(Array),
+            });
+            if (feTicketOne) {
+                expect(feTicketOne.guidance).toHaveLength(6);
+                feTicketOne.guidance.forEach((criterion) => {
+                    expect(criterion).toMatchObject({
                         guidance_id: expect.any(String),
+                        ticket_id: "BE1",
+                        type: expect.any(String),
+                        guidance: expect.any(String),
                     });
                 });
-                expect(criterion.feedback).toHaveLength(1);
-            });
-        }
-    });
-    test("should handle ticket with not feedback", async () => {
-        const feTicketOne = await selectTicketByIdWithEmail(
-            "BE1",
-            "test2@gmail.com"
-        );
-        expect(feTicketOne).toBeInstanceOf(Object);
-        if (feTicketOne) {
-            expect(feTicketOne.guidance).toHaveLength(6);
-            feTicketOne.guidance.forEach((criterion) => {
-                expect(criterion).toMatchObject({
-                    guidance_id: expect.any(String),
-                    ticket_id: "BE1",
-                    type: expect.any(String),
-                    guidance: expect.any(String),
-                    feedback: expect.any(Array),
-                });
-                expect(criterion.feedback).toHaveLength(0);
-            });
-        }
-    });
-    test("should handle ticket with partial feedback for some guidance criteria", async () => {
-        const feTicketOne = await selectTicketByIdWithEmail(
-            "FE1",
-            "test2@gmail.com"
-        );
-        expect(feTicketOne).toBeInstanceOf(Object);
-        if (feTicketOne) {
-            expect(feTicketOne.guidance).toHaveLength(6);
-            feTicketOne.guidance.forEach((criterion) => {
-                expect(criterion).toMatchObject({
-                    guidance_id: expect.any(String),
-                    ticket_id: "FE1",
-                    type: expect.any(String),
-                    guidance: expect.any(String),
-                    feedback: expect.any(Array),
-                });
-                if (criterion.feedback.length !== 0) {
+            }
+        });
+        test("should return null when passed ticket id not in db", async () => {
+            const nonTicket = await selectTicketByIdWithEmail(
+                "not_a_ticket",
+                "test@gmail.com"
+            );
+            expect(nonTicket).toBeNull();
+        });
+        test("should return ticket with feedback from email", async () => {
+            const feTicketOne = await selectTicketByIdWithEmail(
+                "BE1",
+                "test@gmail.com"
+            );
+            expect(feTicketOne).toBeInstanceOf(Object);
+            if (feTicketOne) {
+                expect(feTicketOne.guidance).toHaveLength(6);
+                feTicketOne.guidance.forEach((criterion) => {
+                    expect(criterion).toMatchObject({
+                        guidance_id: expect.any(String),
+                        ticket_id: "BE1",
+                        type: expect.any(String),
+                        guidance: expect.any(String),
+                        feedback: expect.any(Array),
+                    });
+                    criterion.feedback.forEach((feedback) => {
+                        expect(feedback).toMatchObject({
+                            feedback_id: expect.any(Number),
+                            www: expect.any(String),
+                            ebi: expect.any(String),
+                            user_email: "test@gmail.com",
+                            guidance_id: expect.any(String),
+                        });
+                    });
                     expect(criterion.feedback).toHaveLength(1);
-                }
-                criterion.feedback.forEach((feedback) => {
-                    expect(feedback).toMatchObject({
-                        feedback_id: expect.any(Number),
-                        www: expect.any(String),
-                        ebi: expect.any(String),
-                        user_email: "test2@gmail.com",
+                });
+            }
+        });
+        test("should handle ticket with not feedback", async () => {
+            const feTicketOne = await selectTicketByIdWithEmail(
+                "BE1",
+                "test2@gmail.com"
+            );
+            expect(feTicketOne).toBeInstanceOf(Object);
+            if (feTicketOne) {
+                expect(feTicketOne.guidance).toHaveLength(6);
+                feTicketOne.guidance.forEach((criterion) => {
+                    expect(criterion).toMatchObject({
                         guidance_id: expect.any(String),
+                        ticket_id: "BE1",
+                        type: expect.any(String),
+                        guidance: expect.any(String),
+                        feedback: expect.any(Array),
+                    });
+                    expect(criterion.feedback).toHaveLength(0);
+                });
+            }
+        });
+        test("should handle ticket with partial feedback for some guidance criteria", async () => {
+            const feTicketOne = await selectTicketByIdWithEmail(
+                "FE1",
+                "test2@gmail.com"
+            );
+            expect(feTicketOne).toBeInstanceOf(Object);
+            if (feTicketOne) {
+                expect(feTicketOne.guidance).toHaveLength(6);
+                feTicketOne.guidance.forEach((criterion) => {
+                    expect(criterion).toMatchObject({
+                        guidance_id: expect.any(String),
+                        ticket_id: "FE1",
+                        type: expect.any(String),
+                        guidance: expect.any(String),
+                        feedback: expect.any(Array),
+                    });
+                    if (criterion.feedback.length !== 0) {
+                        expect(criterion.feedback).toHaveLength(1);
+                    }
+                    criterion.feedback.forEach((feedback) => {
+                        expect(feedback).toMatchObject({
+                            feedback_id: expect.any(Number),
+                            www: expect.any(String),
+                            ebi: expect.any(String),
+                            user_email: "test2@gmail.com",
+                            guidance_id: expect.any(String),
+                        });
                     });
                 });
+            }
+        });
+    });
+
+    describe("postTicket", () => {
+        test("should add new ticket to relevant block", async () => {
+            const newTicket = await insertTicket("be", 5, "Im a new ticket");
+
+            expect(newTicket).toMatchObject({
+                block_name: "be",
+                ticket_number: 5,
+                description: "Im a new ticket",
             });
-        }
+        });
+    });
+    describe("editTicket", () => {
+        test("should edit ticket by ticket_id", () => {});
     });
 });
 
@@ -377,22 +394,5 @@ describe("feedback", () => {
             );
             expect(isFeedbackExisting).toBe(false);
         });
-    });
-});
-
-describe("tickets", () => {
-    describe("postTicket", () => {
-        test("should add new ticket to relevant block", async () => {
-            const newTicket = await insertTicket("be", 5, "Im a new ticket");
-
-            expect(newTicket).toMatchObject({
-                block_name: "be",
-                ticket_number: 5,
-                description: "Im a new ticket",
-            });
-        });
-    });
-    describe("editTicket", () => {
-        test("should edit ticket by ticket_id", () => {});
     });
 });

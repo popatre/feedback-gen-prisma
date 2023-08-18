@@ -36,7 +36,7 @@ describe("handleFeedback", () => {
             email,
             feedbackId
         );
-        console.log(feedbackPatch, "****");
+
         expect(feedbackPatch).toMatchObject({
             guidance_id: "1",
             user_email: "test@gmail.com",
