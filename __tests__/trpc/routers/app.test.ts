@@ -1,10 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { appRouter } from "../../server/routers/_app";
-import seed from "../../db/seeds/seed";
-import * as data from "../../db/data/test-data/index";
+import { appRouter } from "../../../server/routers/_app";
+import seed from "../../../db/seeds/seed";
+import * as data from "../../../db/data/test-data/index";
 
-import client from "../../db/connection";
-import getTableIds from "../../db/utils/getTableIds";
+import client from "../../../db/connection";
+import getTableIds from "../../../db/utils/getTableIds";
 
 beforeEach(() => seed(data));
 
