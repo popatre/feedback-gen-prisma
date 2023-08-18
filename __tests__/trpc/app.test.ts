@@ -1,5 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { appRouter } from "../../server/routers/_app";
+import seed from "../../db/seeds/seed";
+import * as data from "../../db/data/test-data/index";
+
+import client from "../../db/connection";
+
+beforeEach(() => seed(data));
 
 describe("blocks", () => {
     test("should get all blocks", async () => {
@@ -214,5 +220,107 @@ describe("tickets", () => {
     });
     describe("editTicket", () => {
         test("should edit ticket by ticket_id", () => {});
+    });
+});
+
+describe("guidance", () => {
+    describe("insertGuidance", () => {
+        test("should insert new guidance by ticket id", async () => {
+            const newGuidance = { type: "could", guidance: "Im new guidance" };
+
+            const caller = appRouter.createCaller({});
+            const postedGuidance = await caller.guidance.postGuidance({
+                ticketId: "FE1",
+                guidanceData: newGuidance,
+            });
+
+            expect(postedGuidance).toMatchObject({
+                guidance_id: expect.any(String),
+                ticket_id: "FE1",
+                type: "could",
+                guidance: "Im new guidance",
+            });
+        });
+        test("should handle ticket id not in db", async () => {
+            const newGuidance = { type: "could", guidance: "Im new guidance" };
+
+            const caller = appRouter.createCaller({});
+            const isNull = await caller.guidance.postGuidance({
+                ticketId: "FE999999",
+                guidanceData: newGuidance,
+            });
+
+            await expect(isNull).toBeNull();
+        });
+
+        test("should reject when invalid type given", async () => {
+            const newGuidance = { type: "notAType", guidance: "new guidance" };
+
+            const caller = appRouter.createCaller({});
+            await caller.guidance
+                .postGuidance({
+                    ticketId: "FE1",
+                    guidanceData: newGuidance,
+                })
+                .catch((error) => {
+                    expect(error).toBeInstanceOf(TRPCError);
+                });
+        });
+    });
+    describe("updateGuidance", () => {
+        test("should update guidance by id", async () => {
+            const guidanceId = "1";
+            const update = { guidance: "Im an update" };
+
+            const caller = appRouter.createCaller({});
+            const updatedGuidance = await caller.guidance.patchGuidance({
+                guidanceId: guidanceId,
+                guidanceData: update,
+            });
+
+            expect(updatedGuidance).toMatchObject({
+                guidance_id: guidanceId,
+                guidance: update.guidance,
+                ticket_id: "FE1",
+                type: "must",
+            });
+        });
+        test("should handle guidance id not in db", async () => {
+            const guidanceId = "99999";
+            const update = { guidance: "Im an update" };
+
+            const caller = appRouter.createCaller({});
+            await caller.guidance
+                .patchGuidance({
+                    guidanceId: guidanceId,
+                    guidanceData: update,
+                })
+                .catch((error) => {
+                    expect(error).toBeInstanceOf(TRPCError);
+                });
+        });
+    });
+    describe("deleteGuidance", () => {
+        test("should delete guidance by guidance id", async () => {
+            const guidanceId = "1";
+
+            const caller = appRouter.createCaller({});
+            await caller.guidance.deleteGuidance(guidanceId);
+
+            const response = await client.feedback.findMany({
+                where: {
+                    guidance_id: guidanceId,
+                },
+            });
+            expect(response).toHaveLength(0);
+        });
+        test("should handle deletion of of guidance id not in db", async () => {
+            const notId = "99999";
+
+            const caller = appRouter.createCaller({});
+            await caller.guidance.deleteGuidance(notId).catch((error) => {
+                expect(error).toBeInstanceOf(TRPCError);
+            });
+        });
     });
 });
