@@ -1,5 +1,4 @@
 import prisma from "../../db/connection";
-import { PrismaClient } from "@prisma/client";
 
 type PrismaTableNames = "Block" | "Feedback" | "Ticket" | "User" | "Guidance";
 

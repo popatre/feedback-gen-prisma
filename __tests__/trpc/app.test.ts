@@ -4,6 +4,7 @@ import seed from "../../db/seeds/seed";
 import * as data from "../../db/data/test-data/index";
 
 import client from "../../db/connection";
+import getTableIds from "../../db/utils/getTableIds";
 
 beforeEach(() => seed(data));
 
@@ -321,6 +322,122 @@ describe("guidance", () => {
             await caller.guidance.deleteGuidance(notId).catch((error) => {
                 expect(error).toBeInstanceOf(TRPCError);
             });
+        });
+    });
+});
+
+describe("feedback", () => {
+    describe("postFeedback", () => {
+        test("should add new feedback with user id and guidance id", async () => {
+            const email = "test3@gmail.com";
+            const guidanceId = "12";
+            const feedback = { www: "This is good", ebi: "This is bad" };
+
+            const caller = appRouter.createCaller({});
+            const newFeedback = await caller.feedback.postFeedback({
+                email: email,
+                feedback: feedback,
+                guidanceId: guidanceId,
+            });
+
+            expect(newFeedback).toMatchObject({
+                guidance_id: "12",
+                user_email: "test3@gmail.com",
+                www: "This is good",
+                ebi: "This is bad",
+            });
+        });
+        test("should return null for not found userEmail", async () => {
+            const email = "notEmail@gmail.com";
+            const guidanceId = "12";
+            const feedback = { www: "This is good", ebi: "This is bad" };
+
+            const caller = appRouter.createCaller({});
+            const isNull = await caller.feedback.postFeedback({
+                email: email,
+                feedback: feedback,
+                guidanceId: guidanceId,
+            });
+
+            expect(isNull).toBeNull();
+        });
+        test("should return null for guidanceId not in the db", async () => {
+            const email = "test3@gmail.com";
+            const guidanceId = "0000000000";
+            const feedback = { www: "This is good", ebi: "This is bad" };
+
+            const caller = appRouter.createCaller({});
+            const isNull = await caller.feedback.postFeedback({
+                email: email,
+                feedback: feedback,
+                guidanceId: guidanceId,
+            });
+
+            expect(isNull).toBeNull();
+        });
+        test("should return reject when missing keys from post object", async () => {
+            const email = "test3@gmail.com";
+            const guidanceId = "12";
+            const feedback = { www: "This is good" } as {
+                www: string;
+                ebi: string;
+            };
+
+            const caller = appRouter.createCaller({});
+            await caller.feedback
+                .postFeedback({
+                    email: email,
+                    feedback: feedback,
+                    guidanceId: guidanceId,
+                })
+                .catch((error) => {
+                    expect(error).toBeInstanceOf(TRPCError);
+                });
+        });
+    });
+    describe("patchFeedback", () => {
+        test("should add feedback to given guidance", async () => {
+            const patch = { www: "im a new www", ebi: "im a new ebi" };
+            const feedbackIds = await getTableIds("Feedback", "feedback_id");
+            const currentId = feedbackIds[0];
+
+            const caller = appRouter.createCaller({});
+            const updatedFeedback = await caller.feedback.patchFeedback({
+                id: +currentId,
+                update: patch,
+            });
+
+            expect(updatedFeedback).toMatchObject({ ...patch });
+        });
+        test("should reject when missing keys", async () => {
+            const patch = { www: "im a new www" } as {
+                www: string;
+                ebi: string;
+            };
+            const feedbackIds = await getTableIds("Feedback", "feedback_id");
+            const currentId = feedbackIds[0];
+
+            const caller = appRouter.createCaller({});
+            await caller.feedback
+                .patchFeedback({
+                    id: +currentId,
+                    update: patch,
+                })
+                .catch((error) => {
+                    expect(error).toBeInstanceOf(TRPCError);
+                });
+        });
+        test("should return null for id not in db", async () => {
+            const patch = { www: "im a new www", ebi: "im a new ebi" };
+            const notCurrentId = "0";
+
+            const caller = appRouter.createCaller({});
+            const failedPatch = await caller.feedback.patchFeedback({
+                id: +notCurrentId,
+                update: patch,
+            });
+
+            expect(failedPatch).toBeNull();
         });
     });
 });
