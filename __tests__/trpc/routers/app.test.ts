@@ -220,7 +220,27 @@ describe("tickets", () => {
         });
     });
     describe("editTicket", () => {
-        test("should edit ticket by ticket_id", () => {});
+        test("should edit ticket by ticket_id", async () => {
+            const ticketId = "FE1";
+            const ticketNumber = 12;
+            const description = "Im new";
+
+            const caller = appRouter.createCaller({});
+            const editedTicket = await caller.ticket.patchTicket({
+                ticketId,
+                ticketNumber,
+                description,
+            });
+            expect(editedTicket).toMatchObject({
+                ticket_id: ticketId,
+                ticket_number: ticketNumber,
+                description,
+                block_name: "fe",
+            });
+        });
+    });
+    describe("deleteTicket", () => {
+        test.todo("delete ticket");
     });
 });
 

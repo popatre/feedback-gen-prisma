@@ -10,6 +10,8 @@ NEXT_PUBLIC_FIREBASEAPI - ask for api key.
 
 npm run setup-db
 
+npm run prepare
+
 npx prisma migrate reset
 
 npx prisma generate

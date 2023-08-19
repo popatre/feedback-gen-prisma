@@ -1,6 +1,7 @@
 import {
     insertTicket,
     selectTicketByIdWithEmail,
+    updateTicket,
 } from "../../models/ticket.model";
 import { publicProcedure, router } from "../trpc";
 import { z } from "zod";
@@ -24,6 +25,20 @@ export const ticketRouter = router({
                 input.description
             );
             return newTicket;
+        }),
+    patchTicket: publicProcedure
+        .input(
+            z.object({
+                ticketId: z.string(),
+                ticketNumber: z.number(),
+                description: z.string(),
+            })
+        )
+        .mutation(async ({ input }) => {
+            return updateTicket(input.ticketId, {
+                ticket_number: input.ticketNumber,
+                description: input.description,
+            });
         }),
 });
 

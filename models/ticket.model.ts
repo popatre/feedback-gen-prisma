@@ -41,5 +41,21 @@ export const insertTicket = async (
     return newTicket;
 };
 
-export const updateTicket = () => {};
+export const updateTicket = async (
+    ticketId: string,
+    ticketUpdate: {
+        ticket_number: number;
+        description: string;
+    }
+) => {
+    const updatedTicket = await prisma.ticket.update({
+        where: {
+            ticket_id: ticketId,
+        },
+        data: {
+            ...ticketUpdate,
+        },
+    });
+    return updatedTicket;
+};
 export const deleteTicket = () => {};
