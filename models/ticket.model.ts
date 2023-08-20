@@ -48,15 +48,19 @@ export const updateTicket = async (
         description: string;
     }
 ) => {
-    const updatedTicket = await prisma.ticket.update({
-        where: {
-            ticket_id: ticketId,
-        },
-        data: {
-            ...ticketUpdate,
-        },
-    });
-    return updatedTicket;
+    try {
+        const updatedTicket = await prisma.ticket.update({
+            where: {
+                ticket_id: ticketId,
+            },
+            data: {
+                ...ticketUpdate,
+            },
+        });
+        return updatedTicket;
+    } catch (error) {
+        return null;
+    }
 };
 export const deleteTicket = async (ticketId: string): Promise<boolean> => {
     try {

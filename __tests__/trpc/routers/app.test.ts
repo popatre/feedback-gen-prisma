@@ -238,7 +238,24 @@ describe("tickets", () => {
                 block_name: "fe",
             });
         });
-        test.todo("should throw error when editing not found ticket id");
+        test("should throw error when editing not found ticket id", async () => {
+            const ticketId = "FE99999999999";
+            const ticketNumber = 12;
+            const description = "Im new";
+
+            const caller = appRouter.createCaller({});
+            try {
+                await caller.ticket.patchTicket({
+                    ticketId,
+                    ticketNumber,
+                    description,
+                });
+            } catch (error: any) {
+                expect(error).toBeInstanceOf(TRPCError);
+                expect(error.code).toBe("NOT_FOUND");
+                expect(error.message).toBe("ticket not found");
+            }
+        });
     });
     describe("deleteTicket", () => {
         test("should delete ticket by ticket id", async () => {

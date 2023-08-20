@@ -37,10 +37,18 @@ export const ticketRouter = router({
             })
         )
         .mutation(async ({ input }) => {
-            return updateTicket(input.ticketId, {
+            const response = await updateTicket(input.ticketId, {
                 ticket_number: input.ticketNumber,
                 description: input.description,
             });
+            if (!response) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "ticket not found",
+                });
+            } else {
+                return response;
+            }
         }),
     deleteTicket: publicProcedure
         .input(z.string())
