@@ -58,4 +58,15 @@ export const updateTicket = async (
     });
     return updatedTicket;
 };
-export const deleteTicket = () => {};
+export const deleteTicket = async (ticketId: string): Promise<boolean> => {
+    try {
+        await prisma.ticket.delete({
+            where: {
+                ticket_id: ticketId,
+            },
+        });
+        return true;
+    } catch (error) {
+        return false;
+    }
+};

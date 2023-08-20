@@ -1,4 +1,6 @@
+import { TRPCError } from "@trpc/server";
 import {
+    deleteTicket,
     insertTicket,
     selectTicketByIdWithEmail,
     updateTicket,
@@ -39,6 +41,19 @@ export const ticketRouter = router({
                 ticket_number: input.ticketNumber,
                 description: input.description,
             });
+        }),
+    deleteTicket: publicProcedure
+        .input(z.string())
+        .mutation(async ({ input }) => {
+            const isDeleted = await deleteTicket(input);
+
+            if (!isDeleted) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "ticket not found",
+                });
+            }
+            return isDeleted;
         }),
 });
 

@@ -33,7 +33,7 @@ model Block  {
     model Guidance {
         guidance_id String @id 
         ticket_id String 
-        ticket Ticket @relation(fields:[ticket_id], references:[ticket_id])
+        ticket Ticket @relation(fields:[ticket_id], references:[ticket_id], onDelete: Cascade)
         type String
         guidance String
         feedback Feedback[] 
