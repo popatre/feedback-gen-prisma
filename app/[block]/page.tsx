@@ -1,8 +1,10 @@
 "use client";
 
+import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import NavCard from "@/components/NavCard";
 import TicketAdder from "@/components/TicketAdder";
+import useDeleteTicket from "@/hooks/useDeleteTicket";
 import useSingleBlockQuery from "@/hooks/useSingleBlockQuery";
 import useUserContext from "@/hooks/useUserContext";
 import { Ticket } from "@/types/types";
@@ -17,6 +19,12 @@ export default function Page({ params }: Props) {
         isError,
         error,
     } = useSingleBlockQuery(params.block);
+    const {
+        deleteTicket,
+        isLoading: isDeleteLoading,
+        isError: isDeleteError,
+    } = useDeleteTicket();
+
     const [block, setBlock] = useState<
         | {
               tickets: Ticket[];
@@ -46,11 +54,29 @@ export default function Page({ params }: Props) {
                 {block.tickets.map(
                     ({ ticket_id, description, block_name, ticket_number }) => {
                         return (
-                            <NavCard
-                                key={ticket_id}
-                                description={description}
-                                url={`/${block_name}/${ticket_id}`}
-                            />
+                            <section>
+                                <NavCard
+                                    key={ticket_id}
+                                    description={description}
+                                    url={`/${block_name}/${ticket_id}`}
+                                />
+                                {adminMode && (
+                                    <div className="flex justify-between">
+                                        <Button
+                                            label="edit"
+                                            className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
+                                            handleClick={() => {}}
+                                        />
+                                        <Button
+                                            label="Del"
+                                            className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
+                                            handleClick={() =>
+                                                deleteTicket(ticket_id)
+                                            }
+                                        />
+                                    </div>
+                                )}
+                            </section>
                         );
                     }
                 )}
