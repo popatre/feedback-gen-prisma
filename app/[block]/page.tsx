@@ -50,11 +50,11 @@ export default function Page({ params }: Props) {
 
     return (
         block && (
-            <section className="grid-flow-row nav__grid pb-20">
+            <section className="nav__grid pb-20">
                 {block.tickets.map(
                     ({ ticket_id, description, block_name, ticket_number }) => {
                         return (
-                            <section>
+                            <section className="nav__grid__item mb-10">
                                 <NavCard
                                     key={ticket_id}
                                     description={description}
