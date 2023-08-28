@@ -115,7 +115,10 @@ export default function Page({ params }: Props) {
                 {block.tickets.map(
                     ({ ticket_id, description, block_name, ticket_number }) => {
                         return (
-                            <section className="nav__grid__item mb-10">
+                            <section
+                                className="nav__grid__item mb-10"
+                                key={ticket_id}
+                            >
                                 <NavCard
                                     key={ticket_id}
                                     description={description}
