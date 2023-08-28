@@ -22,6 +22,11 @@ export type Ticket = {
     description: string;
 };
 
+export type Block = {
+    tickets: Ticket[];
+    block_name: string;
+};
+
 export type UserFirebase = User | null;
 
 export interface UserContextData {
