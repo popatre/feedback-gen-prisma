@@ -61,7 +61,7 @@ export default function EditTicketForm({
             isLoading={isLoading}
             closeModal={closeModal}
             title="Edit Guidance"
-            confirmButtonLabel="Add Ticket"
+            confirmButtonLabel="Update"
         >
             <div className="flex flex-col">
                 <label className="font-semibold" htmlFor="ticketNumber">
