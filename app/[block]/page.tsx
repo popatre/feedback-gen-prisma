@@ -2,6 +2,7 @@
 
 import Button from "@/components/Button";
 import DeleteTicketForm from "@/components/DeleteTicketForm";
+import EditTicketForm from "@/components/EditTicketForm";
 import Loading from "@/components/Loading";
 import NavCard from "@/components/NavCard";
 import TicketAdder from "@/components/TicketAdder";
@@ -12,6 +13,11 @@ import { Block, Ticket } from "@/types/types";
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 
+export type TicketRef = {
+    ticketId: string;
+    ticketNumber: number;
+    description: string;
+};
 type Props = { params: { block: string } };
 
 export default function Page({ params }: Props) {
@@ -23,10 +29,11 @@ export default function Page({ params }: Props) {
     } = useSingleBlockQuery(params.block);
 
     const { modalIsOpen, closeModal, openModal, customStyles } = useModal();
-    const ticketIdRef = useRef<string | null>(null);
+    const ticketRef = useRef<TicketRef | null>(null);
     const { adminMode } = useUserContext();
 
     const [block, setBlock] = useState<Block | undefined>(blockData);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         setBlock(blockData);
@@ -65,10 +72,18 @@ export default function Page({ params }: Props) {
                     contentLabel="Delete confirmation"
                     ariaHideApp={false}
                 >
-                    <DeleteTicketForm
+                    {isDeleting && (
+                        <DeleteTicketForm
+                            closeModal={closeModal}
+                            ticketIdRef={ticketRef}
+                            handleDeletedTicketRender={
+                                handleDeletedTicketRender
+                            }
+                        />
+                    )}
+                    <EditTicketForm
                         closeModal={closeModal}
-                        ticketIdRef={ticketIdRef}
-                        handleDeletedTicketRender={handleDeletedTicketRender}
+                        currentTicket={ticketRef}
                     />
                 </Modal>
                 {block.tickets.map(
@@ -85,13 +100,25 @@ export default function Page({ params }: Props) {
                                         <Button
                                             label="edit"
                                             className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
-                                            handleClick={() => {}}
+                                            handleClick={() => {
+                                                openModal();
+                                                ticketRef.current = {
+                                                    ticketId: ticket_id,
+                                                    ticketNumber: ticket_number,
+                                                    description: description,
+                                                };
+                                            }}
                                         />
                                         <Button
                                             label="Del"
                                             className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
                                             handleClick={() => {
-                                                ticketIdRef.current = ticket_id;
+                                                ticketRef.current = {
+                                                    ticketId: ticket_id,
+                                                    ticketNumber: ticket_number,
+                                                    description: description,
+                                                };
+                                                setIsDeleting(true);
                                                 openModal();
                                             }}
                                         />

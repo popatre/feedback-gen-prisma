@@ -1,10 +1,11 @@
+import { TicketRef } from "@/app/[block]/page";
 import useDeleteTicket from "@/hooks/useDeleteTicket";
 import ModalFormWrapper from "@/wrappers/ModalFormWrapper";
 import React, { MutableRefObject, useEffect } from "react";
 
 type Props = {
     closeModal: () => void;
-    ticketIdRef: MutableRefObject<string | null>;
+    ticketIdRef: MutableRefObject<TicketRef | null>;
     handleDeletedTicketRender: (ticketId: string) => void;
 };
 
@@ -17,7 +18,7 @@ export default function DeleteTicketForm({
 
     useEffect(() => {
         if (isDeleted && ticketIdRef.current) {
-            handleDeletedTicketRender(ticketIdRef.current);
+            handleDeletedTicketRender(ticketIdRef.current.ticketId);
             closeModal();
         }
     }, [isDeleted]);
@@ -25,7 +26,7 @@ export default function DeleteTicketForm({
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (ticketIdRef.current) {
-            deleteTicket(ticketIdRef.current);
+            deleteTicket(ticketIdRef.current.ticketId);
         }
     };
     if (isError) return <p>Something Went Wrong</p>;
