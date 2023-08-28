@@ -51,12 +51,37 @@ export default function Page({ params }: Props) {
     const handleDeletedTicketRender = (ticketId: string) => {
         if (block && block.tickets.length) {
             setBlock((prevBlock) => {
-                const filteredTickets = prevBlock!.tickets.filter((ticket) => {
-                    return ticket.ticket_id !== ticketId;
-                });
                 return {
                     block_name: prevBlock!.block_name,
-                    tickets: [...filteredTickets],
+                    tickets: prevBlock!.tickets.filter((ticket) => {
+                        return ticket.ticket_id !== ticketId;
+                    }),
+                };
+            });
+        }
+    };
+
+    const handleEditTicketRender = (
+        ticketId: string,
+        ticketNumber: number,
+        description: string
+    ) => {
+        if (block && block.tickets.length) {
+            setBlock((prevBlock) => {
+                return {
+                    block_name: prevBlock!.block_name,
+                    tickets: prevBlock!.tickets.map((ticket) => {
+                        if (ticket.ticket_id === ticketId) {
+                            return {
+                                ...ticket,
+                                ticket_id: ticketId,
+                                ticket_number: ticketNumber,
+                                description,
+                            };
+                        } else {
+                            return ticket;
+                        }
+                    }),
                 };
             });
         }
@@ -84,6 +109,7 @@ export default function Page({ params }: Props) {
                     <EditTicketForm
                         closeModal={closeModal}
                         currentTicket={ticketRef}
+                        handleEditTicketRender={handleEditTicketRender}
                     />
                 </Modal>
                 {block.tickets.map(

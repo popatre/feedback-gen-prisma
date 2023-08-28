@@ -11,14 +11,18 @@ type Props = {
         ticketNumber: number;
         description: string;
     } | null>;
-    // handleEditTicketRender: (guidance: string, guidance_id: string) => void;
+    handleEditTicketRender: (
+        ticketId: string,
+        ticketNumber: number,
+        description: string
+    ) => void;
 };
 
 export default function EditTicketForm({
     closeModal,
     currentTicket,
-}: //handleEditTicketRender
-Props) {
+    handleEditTicketRender,
+}: Props) {
     const { ticket, updateTicket, isLoading, isSuccess, isError } =
         useUpdateTicket();
 
@@ -29,7 +33,11 @@ Props) {
 
     useEffect(() => {
         if (ticket && currentTicket.current) {
-            // handleEditGuidance(guidance.guidance, currentGuidance.current.id);
+            handleEditTicketRender(
+                currentTicket.current.ticketId,
+                +formState.ticketNumber,
+                formState.description
+            );
             closeModal();
             resetForm();
         }
