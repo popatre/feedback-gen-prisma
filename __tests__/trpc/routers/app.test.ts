@@ -244,17 +244,23 @@ describe("tickets", () => {
             const description = "Im new";
 
             const caller = appRouter.createCaller({});
-            try {
-                await caller.ticket.patchTicket({
+            await expect(
+                caller.ticket.patchTicket({
                     ticketId,
                     ticketNumber,
                     description,
-                });
-            } catch (error: any) {
-                expect(error).toBeInstanceOf(TRPCError);
-                expect(error.code).toBe("NOT_FOUND");
-                expect(error.message).toBe("ticket not found");
-            }
+                })
+            ).rejects.toBeInstanceOf(TRPCError);
+            await expect(
+                caller.ticket.patchTicket({
+                    ticketId,
+                    ticketNumber,
+                    description,
+                })
+            ).rejects.toMatchObject({
+                code: "NOT_FOUND",
+                message: "ticket not found",
+            });
         });
     });
     describe("deleteTicket", () => {
@@ -267,13 +273,16 @@ describe("tickets", () => {
         test("should throw error when trying to delete id not found", async () => {
             const ticketId = "FE999999999";
             const caller = appRouter.createCaller({});
-            try {
-                await caller.ticket.deleteTicket(ticketId);
-            } catch (error: any) {
-                expect(error).toBeInstanceOf(TRPCError);
-                expect(error.code).toBe("NOT_FOUND");
-                expect(error.message).toBe("ticket not found");
-            }
+
+            await expect(
+                caller.ticket.deleteTicket(ticketId)
+            ).rejects.toBeInstanceOf(TRPCError);
+            await expect(
+                caller.ticket.deleteTicket(ticketId)
+            ).rejects.toMatchObject({
+                code: "NOT_FOUND",
+                message: "ticket not found",
+            });
         });
     });
 });
