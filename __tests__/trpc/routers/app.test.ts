@@ -43,12 +43,13 @@ describe("blocks", () => {
     test("should return null for non-existing block", async () => {
         const caller = appRouter.createCaller({});
 
-        await caller.block
-            .getBlockById("non_existing_block_id")
-            .catch((error) => {
-                expect(error).toBeInstanceOf(TRPCError);
-                expect(error.code).toBe("NOT_FOUND");
-            });
+        await expect(
+            caller.block.getBlockById("non_existing_block_id")
+        ).rejects.toBeInstanceOf(TRPCError);
+
+        await expect(
+            caller.block.getBlockById("non_existing_block_id")
+        ).rejects.toMatchObject({ code: "NOT_FOUND" });
     });
 });
 
@@ -321,14 +322,13 @@ describe("guidance", () => {
             const newGuidance = { type: "notAType", guidance: "new guidance" };
 
             const caller = appRouter.createCaller({});
-            await caller.guidance
-                .postGuidance({
+
+            await expect(
+                caller.guidance.postGuidance({
                     ticketId: "FE1",
                     guidanceData: newGuidance,
                 })
-                .catch((error) => {
-                    expect(error).toBeInstanceOf(TRPCError);
-                });
+            ).rejects.toBeInstanceOf(TRPCError);
         });
     });
     describe("updateGuidance", () => {
@@ -354,14 +354,13 @@ describe("guidance", () => {
             const update = { guidance: "Im an update" };
 
             const caller = appRouter.createCaller({});
-            await caller.guidance
-                .patchGuidance({
+
+            await expect(
+                caller.guidance.patchGuidance({
                     guidanceId: guidanceId,
                     guidanceData: update,
                 })
-                .catch((error) => {
-                    expect(error).toBeInstanceOf(TRPCError);
-                });
+            ).rejects.toBeInstanceOf(TRPCError);
         });
     });
     describe("deleteGuidance", () => {
@@ -382,9 +381,10 @@ describe("guidance", () => {
             const notId = "99999";
 
             const caller = appRouter.createCaller({});
-            await caller.guidance.deleteGuidance(notId).catch((error) => {
-                expect(error).toBeInstanceOf(TRPCError);
-            });
+
+            await expect(
+                caller.guidance.deleteGuidance(notId)
+            ).rejects.toBeInstanceOf(TRPCError);
         });
     });
 });
@@ -447,15 +447,14 @@ describe("feedback", () => {
             };
 
             const caller = appRouter.createCaller({});
-            await caller.feedback
-                .postFeedback({
+
+            await expect(
+                caller.feedback.postFeedback({
                     email: email,
                     feedback: feedback,
                     guidanceId: guidanceId,
                 })
-                .catch((error) => {
-                    expect(error).toBeInstanceOf(TRPCError);
-                });
+            ).rejects.toBeInstanceOf(TRPCError);
         });
     });
     describe("patchFeedback", () => {
@@ -481,14 +480,13 @@ describe("feedback", () => {
             const currentId = feedbackIds[0];
 
             const caller = appRouter.createCaller({});
-            await caller.feedback
-                .patchFeedback({
+
+            await expect(
+                caller.feedback.patchFeedback({
                     id: +currentId,
                     update: patch,
                 })
-                .catch((error) => {
-                    expect(error).toBeInstanceOf(TRPCError);
-                });
+            ).rejects.toBeInstanceOf(TRPCError);
         });
         test("should return null for id not in db", async () => {
             const patch = { www: "im a new www", ebi: "im a new ebi" };
