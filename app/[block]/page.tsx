@@ -43,9 +43,9 @@ export default function Page({ params }: Props) {
 
     if (error?.data?.httpStatus === 404)
         return (
-            <p className="text-bold text-xl flex justify-center">
+            <h2 className="text-bold text-xl flex justify-center">
                 {error?.data.httpStatus} - {error.message}
-            </p>
+            </h2>
         );
 
     const handleDeletedTicketRender = (ticketId: string) => {
@@ -89,7 +89,7 @@ export default function Page({ params }: Props) {
 
     return (
         block && (
-            <section className="nav__grid pb-20">
+            <ul className="nav__grid pb-20">
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
@@ -115,7 +115,8 @@ export default function Page({ params }: Props) {
                 {block.tickets.map(
                     ({ ticket_id, description, block_name, ticket_number }) => {
                         return (
-                            <section
+                            <li
+                                role="listitem"
                                 className="nav__grid__item mb-10"
                                 key={ticket_id}
                             >
@@ -153,7 +154,7 @@ export default function Page({ params }: Props) {
                                         />
                                     </div>
                                 )}
-                            </section>
+                            </li>
                         );
                     }
                 )}
@@ -165,7 +166,7 @@ export default function Page({ params }: Props) {
                         setBlock={setBlock}
                     />
                 )}
-            </section>
+            </ul>
         )
     );
 }
