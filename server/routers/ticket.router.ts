@@ -11,7 +11,20 @@ import { z } from "zod";
 export const ticketRouter = router({
     getTicketById: publicProcedure
         .input(z.object({ id: z.string(), email: z.string() }))
-        .query(({ input }) => selectTicketByIdWithEmail(input.id, input.email)),
+        .query(async ({ input }) => {
+            const response = await selectTicketByIdWithEmail(
+                input.id,
+                input.email
+            );
+
+            if (!response) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "ticket not found",
+                });
+            }
+            return response;
+        }),
     postTicketByBlockName: publicProcedure
         .input(
             z.object({

@@ -40,7 +40,7 @@ describe("blocks", () => {
             });
         }
     });
-    test("should return null for non-existing block", async () => {
+    test("should return error for non-existing block", async () => {
         const caller = appRouter.createCaller({});
 
         await expect(
@@ -95,6 +95,7 @@ describe("tickets", () => {
                 description: expect.any(String),
                 guidance: expect.any(Array),
             });
+            expect(feTicketOne.guidance).toBeTruthy();
             if (feTicketOne) {
                 expect(feTicketOne.guidance).toHaveLength(6);
                 feTicketOne.guidance.forEach((criterion) => {
@@ -107,16 +108,17 @@ describe("tickets", () => {
                 });
             }
         });
-        test("should return null when passed ticket id not in db", async () => {
+        test("should return error when passed ticket id not in db", async () => {
             const caller = appRouter.createCaller({});
-            const nonTicket = await caller.ticket.getTicketById({
-                id: "not_a_ticket",
-                email: "test@gmail.com",
-            });
 
-            expect(nonTicket).toBeNull();
+            await expect(
+                caller.ticket.getTicketById({
+                    id: "not_a_ticket",
+                    email: "test@gmail.com",
+                })
+            ).rejects.toBeInstanceOf(TRPCError);
         });
-        test("should return ticket with feedback from email", async () => {
+        test("should return ticket with associated feedback from email", async () => {
             const caller = appRouter.createCaller({});
             const feTicketOne = await caller.ticket.getTicketById({
                 id: "BE1",
@@ -147,7 +149,7 @@ describe("tickets", () => {
                 });
             }
         });
-        test("should handle ticket with not feedback", async () => {
+        test("should handle ticket with no feedback", async () => {
             const caller = appRouter.createCaller({});
             const feTicketOne = await caller.ticket.getTicketById({
                 id: "BE1",
@@ -169,7 +171,7 @@ describe("tickets", () => {
                 });
             }
         });
-        test("should handle ticket with partial feedback for some guidance criteria", async () => {
+        test("should handle ticket with partial feedback for guidance criteria", async () => {
             const caller = appRouter.createCaller({});
             const feTicketOne = await caller.ticket.getTicketById({
                 id: "FE1",
@@ -214,11 +216,13 @@ describe("tickets", () => {
             });
 
             expect(newTicket).toMatchObject({
+                ticket_id: expect.any(String),
                 block_name: "be",
                 ticket_number: 5,
                 description: "Im a new ticket",
             });
         });
+        test.todo("post ticket to block name not found");
     });
     describe("editTicket", () => {
         test("should edit ticket by ticket_id", async () => {
@@ -291,7 +295,10 @@ describe("tickets", () => {
 describe("guidance", () => {
     describe("insertGuidance", () => {
         test("should insert new guidance by ticket id", async () => {
-            const newGuidance = { type: "could", guidance: "Im new guidance" };
+            const newGuidance: { type: "could"; guidance: string } = {
+                type: "could",
+                guidance: "Im new guidance",
+            };
 
             const caller = appRouter.createCaller({});
             const postedGuidance = await caller.guidance.postGuidance({
@@ -306,29 +313,29 @@ describe("guidance", () => {
                 guidance: "Im new guidance",
             });
         });
-        test("should handle ticket id not in db", async () => {
-            const newGuidance = { type: "could", guidance: "Im new guidance" };
-
-            const caller = appRouter.createCaller({});
-            const isNull = await caller.guidance.postGuidance({
-                ticketId: "FE999999",
-                guidanceData: newGuidance,
-            });
-
-            await expect(isNull).toBeNull();
-        });
-
-        test("should reject when invalid type given", async () => {
-            const newGuidance = { type: "notAType", guidance: "new guidance" };
+        test("should throw error for ticket id not in db", async () => {
+            const newGuidance: { type: "could"; guidance: string } = {
+                type: "could",
+                guidance: "Im new guidance",
+            };
 
             const caller = appRouter.createCaller({});
 
             await expect(
                 caller.guidance.postGuidance({
-                    ticketId: "FE1",
+                    ticketId: "FE999999",
                     guidanceData: newGuidance,
                 })
             ).rejects.toBeInstanceOf(TRPCError);
+
+            await expect(
+                caller.guidance.postGuidance({
+                    ticketId: "FE999999",
+                    guidanceData: newGuidance,
+                })
+            ).rejects.toMatchObject({
+                code: "NOT_FOUND",
+            });
         });
     });
     describe("updateGuidance", () => {

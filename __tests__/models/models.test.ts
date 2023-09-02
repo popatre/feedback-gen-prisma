@@ -19,6 +19,8 @@ import {
 } from "../../models/feedback.model";
 import getTableIds from "../../db/utils/getTableIds";
 import { postUser } from "../../models/user.model";
+import { TRPCError } from "@trpc/server";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 beforeEach(() => seed(data));
 afterAll(() => client.$disconnect());
@@ -225,7 +227,10 @@ describe("guidance", () => {
     });
     describe("insertGuidance", () => {
         test("should insert new guidance by ticket id", async () => {
-            const newGuidance = { type: "could", guidance: "Im new guidance" };
+            const newGuidance: { type: "could"; guidance: string } = {
+                type: "could",
+                guidance: "Im new guidance",
+            };
 
             const postedGuidance = await insertGuidance("FE1", newGuidance);
             expect(postedGuidance).toMatchObject({
@@ -236,17 +241,13 @@ describe("guidance", () => {
             });
         });
         test("should handle ticket id not in db", async () => {
-            const newGuidance = { type: "could", guidance: "Im new guidance" };
-            const isNull = await insertGuidance("FE999999", newGuidance);
-            await expect(isNull).toBeNull();
-        });
-
-        test("should reject when invalid type given", async () => {
-            const newGuidance = { type: "notAType", guidance: "new guidance" };
-            await expect(insertGuidance("FE1", newGuidance)).rejects.toEqual({
-                msg: "Bad type",
-                status: 400,
-            });
+            const newGuidance: { type: "could"; guidance: string } = {
+                type: "could",
+                guidance: "Im new guidance",
+            };
+            await expect(
+                insertGuidance("FE999999", newGuidance)
+            ).rejects.toBeInstanceOf(PrismaClientKnownRequestError);
         });
     });
     describe("updateGuidance", () => {

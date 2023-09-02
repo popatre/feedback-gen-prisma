@@ -8,13 +8,15 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { TrpcErrorCodes } from "@/types/types";
 
+const validTypes = ["must", "should", "could"] as const;
+
 export const guidanceRouter = router({
     postGuidance: publicProcedure
         .input(
             z.object({
                 ticketId: z.string(),
                 guidanceData: z.object({
-                    type: z.string(),
+                    type: z.enum(validTypes),
                     guidance: z.string(),
                 }),
             })
@@ -25,6 +27,7 @@ export const guidanceRouter = router({
                     input.ticketId,
                     input.guidanceData
                 );
+
                 return newGuidance;
             } catch (error: any) {
                 if (error.msg) {
@@ -34,12 +37,11 @@ export const guidanceRouter = router({
                             message: error.msg,
                         });
                     }
-                } else {
-                    throw new TRPCError({
-                        code: "NOT_FOUND",
-                        message: "Not found ",
-                    });
                 }
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "Not found ",
+                });
             }
         }),
     patchGuidance: publicProcedure

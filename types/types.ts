@@ -37,3 +37,5 @@ export interface UserContextData {
 }
 
 export type TrpcErrorCodes = "BAD_REQUEST" | "NOT_FOUND";
+
+export type GuidanceType = "must" | "should" | "could";

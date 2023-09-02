@@ -1,6 +1,7 @@
 import { Guidance } from "@prisma/client";
 import prisma from "../db/connection";
 import { v4 as uuidv4 } from "uuid";
+import { GuidanceType } from "@/types/types";
 
 export const selectAllGuidance = async (): Promise<Guidance[]> => {
     const guidance = await prisma.guidance.findMany();
@@ -9,30 +10,30 @@ export const selectAllGuidance = async (): Promise<Guidance[]> => {
 
 export const insertGuidance = async (
     ticketId: string,
-    guidanceData: { type: string; guidance: string }
+    guidanceData: { type: GuidanceType; guidance: string }
 ) => {
-    const validTypes = ["must", "should", "could"];
+    const validTypes: GuidanceType[] = ["must", "should", "could"];
     const { guidance, type } = guidanceData;
 
-    if (!validTypes.includes(type.toLowerCase()))
-        return Promise.reject({ status: 400, msg: "Bad type" });
+    const lowercaseType = type.toLowerCase() as GuidanceType;
 
-    try {
-        const newGuidance = await prisma.guidance.create({
-            data: {
-                guidance_id: uuidv4(),
-                ticket_id: ticketId,
-                guidance: guidance,
-                type: type.toLowerCase(),
-            },
-            include: {
-                feedback: true,
-            },
-        });
-        return newGuidance;
-    } catch (error) {
-        return null;
+    if (!validTypes.includes(lowercaseType)) {
+        return Promise.reject({ status: 400, msg: "Bad type" });
     }
+
+    const newGuidance = await prisma.guidance.create({
+        data: {
+            guidance_id: uuidv4(),
+            ticket_id: ticketId,
+            guidance: guidance,
+            type: type.toLowerCase(),
+        },
+        include: {
+            feedback: true,
+        },
+    });
+
+    return newGuidance;
 };
 
 export const updateGuidance = async (
