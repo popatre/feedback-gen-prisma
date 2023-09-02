@@ -1,3 +1,4 @@
+import { GuidanceType } from "@/types/types";
 import { trpc } from "@/utils/trpc";
 
 export default function usePostGuidance() {
@@ -10,7 +11,7 @@ export default function usePostGuidance() {
 
     const handleGuidancePost = async (
         ticketId: string,
-        type: string,
+        type: GuidanceType,
         guidance: string
     ) => {
         await mutateAsync({ ticketId, guidanceData: { type, guidance } });

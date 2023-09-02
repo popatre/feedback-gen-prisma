@@ -1,6 +1,6 @@
 "use client";
 
-import { Guidance, Feedback } from "../types/types";
+import { Guidance, Feedback, GuidanceType } from "../types/types";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Modal from "react-modal";
 import CheckBoxWrapper from "@/wrappers/CheckBoxWrapper";
@@ -14,7 +14,7 @@ import Button from "./Button";
 import DeleteForm from "./DeleteForm";
 
 type Props = {
-    title: string;
+    title: GuidanceType;
     feedbackData: Guidance[];
     addPositiveFeedback: (feedback: string, isChecked: boolean) => void;
     addEbiFeedback: (feedback: string, isChecked: boolean) => void;

@@ -1,6 +1,6 @@
 import useFormState from "@/hooks/useForm";
 import usePostGuidance from "@/hooks/usePostGuidance";
-import { Guidance } from "@/types/types";
+import { Guidance, GuidanceType } from "@/types/types";
 import ModalFormWrapper from "@/wrappers/ModalFormWrapper";
 
 import { useParams } from "next/navigation";
@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 type Props = {
     closeModal: () => void;
-    guidanceType: string;
+    guidanceType: GuidanceType;
     handleNewGuidance: (guidance: Guidance) => void;
 };
 

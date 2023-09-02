@@ -2,10 +2,10 @@ import React from "react";
 import useModal from "@/hooks/useModal";
 import Modal from "react-modal";
 import GuidanceForm from "./GuidanceForm";
-import { Guidance } from "@/types/types";
+import { Guidance, GuidanceType } from "@/types/types";
 
 type Props = {
-    guidanceType: string;
+    guidanceType: GuidanceType;
     handleNewGuidance: (guidance: Guidance) => void;
 };
 

@@ -48,19 +48,19 @@ export default function GuidanceGrid({
         <main className="container">
             <div className="container__checkboxes">
                 <Checklist
-                    title="Must"
+                    title="must"
                     feedbackData={mustData}
                     addPositiveFeedback={addPositiveFeedback}
                     addEbiFeedback={addEbiFeedback}
                 />
                 <Checklist
-                    title="Should"
+                    title="should"
                     feedbackData={shouldData}
                     addPositiveFeedback={addPositiveFeedback}
                     addEbiFeedback={addEbiFeedback}
                 />
                 <Checklist
-                    title="Could"
+                    title="could"
                     feedbackData={couldData}
                     addPositiveFeedback={addPositiveFeedback}
                     addEbiFeedback={addEbiFeedback}
