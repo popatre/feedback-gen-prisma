@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+echo "running tests"
+
 npm test
+
+echo "Checking for TypeScript complier issues"
 
 npx tsc
