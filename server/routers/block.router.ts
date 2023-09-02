@@ -17,5 +17,3 @@ export const blockRouter = router({
         }
     }),
 });
-
-export type BlockRouter = typeof blockRouter;

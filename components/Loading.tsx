@@ -10,7 +10,10 @@ type Props = {};
 
 export default function Loading({}: Props) {
     return (
-        <div className="aside min-h-screen flex flex-col items-center justify-center">
+        <div
+            role="alert"
+            className="aside min-h-screen flex flex-col items-center justify-center"
+        >
             <RingLoader
                 loading={true}
                 cssOverride={override}

@@ -7,7 +7,7 @@ import Loading from "@/components/Loading";
 import NavCard from "@/components/NavCard";
 import TicketAdder from "@/components/TicketAdder";
 import useModal from "@/hooks/useModal";
-import useSingleBlockQuery from "@/hooks/useSingleBlockQuery";
+import { useSingleBlockQuery } from "@/hooks/useSingleBlockQuery";
 import useUserContext from "@/hooks/useUserContext";
 import { Block, Ticket } from "@/types/types";
 import React, { useEffect, useRef, useState } from "react";
