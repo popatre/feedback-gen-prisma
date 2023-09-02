@@ -417,35 +417,36 @@ describe("feedback", () => {
                 ebi: "This is bad",
             });
         });
-        test("should return null for not found userEmail", async () => {
+        test("should throw error for not found userEmail", async () => {
             const email = "notEmail@gmail.com";
             const guidanceId = "12";
             const feedback = { www: "This is good", ebi: "This is bad" };
 
             const caller = appRouter.createCaller({});
-            const isNull = await caller.feedback.postFeedback({
-                email: email,
-                feedback: feedback,
-                guidanceId: guidanceId,
-            });
-
-            expect(isNull).toBeNull();
+            await expect(
+                caller.feedback.postFeedback({
+                    email: email,
+                    feedback: feedback,
+                    guidanceId: guidanceId,
+                })
+            ).rejects.toBeInstanceOf(TRPCError);
         });
-        test("should return null for guidanceId not in the db", async () => {
+        test("should throw error for guidanceId not in the db", async () => {
             const email = "test3@gmail.com";
             const guidanceId = "0000000000";
             const feedback = { www: "This is good", ebi: "This is bad" };
 
             const caller = appRouter.createCaller({});
-            const isNull = await caller.feedback.postFeedback({
-                email: email,
-                feedback: feedback,
-                guidanceId: guidanceId,
-            });
 
-            expect(isNull).toBeNull();
+            await expect(
+                caller.feedback.postFeedback({
+                    email: email,
+                    feedback: feedback,
+                    guidanceId: guidanceId,
+                })
+            ).rejects.toBeInstanceOf(TRPCError);
         });
-        test("should return reject when missing keys from post object", async () => {
+        test("should reject when missing keys from post object", async () => {
             const email = "test3@gmail.com";
             const guidanceId = "12";
             const feedback = { www: "This is good" } as {
@@ -495,17 +496,18 @@ describe("feedback", () => {
                 })
             ).rejects.toBeInstanceOf(TRPCError);
         });
-        test("should return null for id not in db", async () => {
+        test("should return throw error for id not in db", async () => {
             const patch = { www: "im a new www", ebi: "im a new ebi" };
             const notCurrentId = "0";
 
             const caller = appRouter.createCaller({});
-            const failedPatch = await caller.feedback.patchFeedback({
-                id: +notCurrentId,
-                update: patch,
-            });
 
-            expect(failedPatch).toBeNull();
+            await expect(
+                caller.feedback.patchFeedback({
+                    id: +notCurrentId,
+                    update: patch,
+                })
+            ).rejects.toBeInstanceOf(TRPCError);
         });
     });
 });

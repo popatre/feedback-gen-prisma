@@ -5,6 +5,7 @@ import {
     updateFeedbackByFeedbackId,
 } from "../../models/feedback.model";
 import { handleFeedback } from "../../db/utils/handleFeedback";
+import { TRPCError } from "@trpc/server";
 
 type FeedbackUpdate = { www: string; ebi: string };
 
@@ -16,9 +17,17 @@ export const feedbackRouter = router({
                 update: z.object({ www: z.string(), ebi: z.string() }),
             })
         )
-        .mutation(({ input }) =>
-            updateFeedbackByFeedbackId(input.id, input.update)
-        ),
+        .mutation(async ({ input }) => {
+            const response = await updateFeedbackByFeedbackId(
+                input.id,
+                input.update
+            );
+
+            if (!response) {
+                throw new TRPCError({ code: "NOT_FOUND" });
+            }
+            return response;
+        }),
     postFeedback: publicProcedure
         .input(
             z.object({
@@ -27,9 +36,17 @@ export const feedbackRouter = router({
                 guidanceId: z.string(),
             })
         )
-        .mutation(({ input }) =>
-            createFeedback(input.feedback, input.guidanceId, input.email)
-        ),
+        .mutation(async ({ input }) => {
+            const newFeedback = await createFeedback(
+                input.feedback,
+                input.guidanceId,
+                input.email
+            );
+            if (!newFeedback) {
+                throw new TRPCError({ code: "NOT_FOUND" });
+            }
+            return newFeedback;
+        }),
     processFeedback: publicProcedure
         .input(
             z.object({
