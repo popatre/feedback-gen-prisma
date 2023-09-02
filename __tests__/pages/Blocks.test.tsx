@@ -18,6 +18,10 @@ export const useSingleBlockQuerySpy = jest.spyOn(
     "useSingleBlockQuery"
 );
 
+beforeEach(() => {
+    jest.resetAllMocks();
+});
+
 describe("BlockPage", () => {
     test("should render block tickets", () => {
         const block = { block: "be" };
