@@ -12,6 +12,7 @@ import useUserContext from "@/hooks/useUserContext";
 import EditGuidanceForm from "./EditGuidanceForm";
 import Button from "./Button";
 import DeleteForm from "./DeleteForm";
+import * as _ from "lodash";
 
 type Props = {
     title: GuidanceType;
@@ -163,7 +164,7 @@ export default function Checklist({
                     />
                 )}
             </Modal>
-            <h2 className="feedback__title">{title}</h2>
+            <h2 className="feedback__title">{_.capitalize(title)}</h2>
             <div className="box-labels">
                 <p>✅</p>
                 <p>👏</p>
