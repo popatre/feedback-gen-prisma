@@ -1,4 +1,5 @@
 import useUpdateFeedback from "@/hooks/useUpdateFeedback";
+import useUserContext from "@/hooks/useUserContext";
 import { Feedback } from "@prisma/client";
 import React, { ChangeEvent, MutableRefObject, useEffect } from "react";
 
@@ -31,6 +32,8 @@ const FeedbackForm = ({
     const { handleFeedbackUpdate, isLoading, isSuccess, feedback, isError } =
         useUpdateFeedback();
 
+    const { email } = useUserContext();
+
     useEffect(() => {
         if (feedback) {
             updateFeedback(feedback);
@@ -49,13 +52,15 @@ const FeedbackForm = ({
         const feedbackId = feedbackIdRef.current;
         const guidanceId = String(guidanceIdRef.current);
 
-        await handleFeedbackUpdate(
-            "jonathan.mcguire@northcoders.com",
-            feedbackInput.www,
-            feedbackInput.ebi,
-            guidanceId,
-            feedbackId
-        );
+        if (email) {
+            await handleFeedbackUpdate(
+                email,
+                feedbackInput.www,
+                feedbackInput.ebi,
+                guidanceId,
+                feedbackId
+            );
+        }
     };
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
