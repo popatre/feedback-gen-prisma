@@ -1,17 +1,8 @@
-import {
-    render,
-    renderHook,
-    screen,
-    waitFor,
-    within,
-} from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import BlockPage from "../../app/[block]/page";
 import userEvent from "@testing-library/user-event";
+import { createBlockTicketsData } from "@/db/data/utils/createBlockData";
 import * as useSingleBlockQuery from "../../hooks/useSingleBlockQuery";
-import {
-    createBlockTicketsData,
-    createTicketData,
-} from "@/db/data/utils/createBlockData";
 import * as useUserContext from "../../hooks/useUserContext";
 import * as useUpdateTicket from "../../hooks/useUpdateTicket";
 import * as useDeleteTicket from "../../hooks/useDeleteTicket";
@@ -251,6 +242,69 @@ describe("BlockPage", () => {
 
         //reset mock to edit ticket?
     });
+    test("should disable submit button whilst submitting", async () => {
+        const user = userEvent.setup();
+        const block = { block: "be" };
+        useSingleBlockQuerySpy.mockReturnValue({
+            block: {
+                tickets: createBlockTicketsData("be"),
+                block_name: "be",
+            },
+            isLoading: false,
+            isError: false,
+            error: null,
+        });
+        useUserContextSpy.mockReturnValue({
+            adminMode: true,
+            email: "hi@email.com",
+            displayName: "JB",
+            setAdminMode: () => {},
+        });
+        const updateTicketMock = jest.fn();
+
+        useUpdateTicketSpy.mockReturnValue({
+            // ticket: createTicketData("be"),
+            ticket: undefined,
+            isLoading: true,
+            isError: false,
+            isSuccess: false,
+            updateTicket: updateTicketMock,
+        });
+
+        Modal.setAppElement("body");
+
+        render(<BlockPage params={block} />);
+
+        const editButtons = screen.getAllByRole("button", { name: "edit" });
+        await user.click(editButtons[0]);
+        const editModal = await screen.findByRole("dialog", { hidden: true });
+
+        const modalTitle = within(editModal).queryByText("Edit Ticket");
+        expect(modalTitle).toBeInTheDocument();
+
+        const ticketNumLabel = within(editModal).queryByText("Ticket Number");
+        const ticketDescLabel =
+            within(editModal).getByText("Ticket Description");
+
+        const ticketNumberInput = within(editModal).queryByRole("spinbutton", {
+            hidden: true,
+        });
+
+        const descriptionInput = within(editModal).queryByRole("textbox", {
+            hidden: true,
+        });
+        expect(ticketNumLabel).toBeInTheDocument();
+        expect(ticketDescLabel).toBeInTheDocument();
+        expect(ticketNumberInput).toBeInTheDocument();
+        expect(descriptionInput).toBeInTheDocument();
+
+        expect(
+            within(editModal).getByRole("button", {
+                name: "Working on it...",
+                hidden: true,
+            })
+        ).toBeDisabled();
+    });
 });
 test("can cancel and confirm ticket deletion", async () => {
     const user = userEvent.setup();
@@ -417,4 +471,5 @@ test("should provide modal to add new ticket", async () => {
     expect(handleTicketMock).toHaveBeenCalledTimes(1);
     expect(handleTicketMock).toHaveBeenCalledWith(2, "Im a new ticket");
 });
+test.todo("loading states");
 test.todo("error states");
