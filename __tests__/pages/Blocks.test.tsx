@@ -254,7 +254,7 @@ describe("BlockPage", () => {
 
             //reset mock to edit ticket?
         });
-        test("should disable submit button whilst submitting", async () => {
+        test("should disable submit button whilst submitting/loading", async () => {
             const user = userEvent.setup();
             const block = { block: "be" };
             useSingleBlockQuerySpy.mockReturnValue({
@@ -489,7 +489,55 @@ describe("BlockPage", () => {
             expect(deleteTicketMock).toHaveBeenCalledWith("1");
             //reset mock here to add a ticket?
         });
-        test.todo("loading");
+        test("should disable submit button whilst submitting/loading", async () => {
+            const user = userEvent.setup();
+            const block = { block: "be" };
+            useSingleBlockQuerySpy.mockReturnValue({
+                block: {
+                    tickets: createBlockTicketsData("be"),
+                    block_name: "be",
+                },
+                isLoading: false,
+                isError: false,
+                error: null,
+            });
+            useUserContextSpy.mockReturnValue({
+                adminMode: true,
+                email: "hi@email.com",
+                displayName: "JB",
+                setAdminMode: () => {},
+            });
+
+            const deleteTicketMock = jest.fn();
+
+            useDeleteTicketSpy.mockReturnValue({
+                // ticket: createTicketData("be"),
+                isDeleted: undefined,
+                isLoading: true,
+                isError: false,
+                isSuccess: false,
+                deleteTicket: deleteTicketMock,
+            });
+
+            Modal.setAppElement("body");
+
+            render(<BlockPage params={block} />);
+
+            const deleteButtons = screen.getAllByRole("button", {
+                name: "Del",
+            });
+            await user.click(deleteButtons[0]);
+            const deleteModal = await screen.findByRole("dialog", {
+                hidden: true,
+            });
+
+            expect(
+                within(deleteModal).getByRole("button", {
+                    name: "Working on it...",
+                    hidden: true,
+                })
+            ).toBeDisabled();
+        });
         test.todo("error");
     });
     describe("adminMode - add new ticket", () => {
