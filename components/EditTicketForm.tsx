@@ -23,7 +23,7 @@ export default function EditTicketForm({
     currentTicket,
     handleEditTicketRender,
 }: Props) {
-    const { ticket, updateTicket, isLoading, isSuccess, isError } =
+    const { ticket, updateTicket, isLoading, isSuccess, isError, error } =
         useUpdateTicket();
 
     const { formState, handleChange, resetForm } = useFormState({
@@ -54,7 +54,12 @@ export default function EditTicketForm({
             );
         }
     };
-    if (isError) return <p>Something went wrong</p>;
+    if (isError)
+        return (
+            <h2>
+                {error?.data?.code} - {error?.message}{" "}
+            </h2>
+        );
     return (
         <ModalFormWrapper
             handleSubmit={handleSubmit}

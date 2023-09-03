@@ -7,6 +7,7 @@ export default function useUpdateTicket() {
         isSuccess,
         mutateAsync,
         isError,
+        error,
     } = trpc.ticket.patchTicket.useMutation();
 
     const updateTicket = async (
@@ -21,5 +22,5 @@ export default function useUpdateTicket() {
         });
     };
 
-    return { ticket, updateTicket, isLoading, isSuccess, isError };
+    return { ticket, updateTicket, isLoading, isSuccess, isError, error };
 }
