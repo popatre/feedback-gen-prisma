@@ -60,7 +60,7 @@ export default function EditTicketForm({
             handleSubmit={handleSubmit}
             isLoading={isLoading}
             closeModal={closeModal}
-            title="Edit Guidance"
+            title="Edit Ticket"
             confirmButtonLabel="Update"
         >
             <div className="flex flex-col">

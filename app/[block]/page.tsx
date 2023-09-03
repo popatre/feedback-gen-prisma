@@ -87,6 +87,10 @@ export default function Page({ params }: Props) {
         }
     };
 
+    if (process.env.NODE_ENV !== "test") {
+        Modal.setAppElement("#root");
+    }
+
     return (
         block && (
             <ul className="nav__grid pb-20">
@@ -95,7 +99,7 @@ export default function Page({ params }: Props) {
                     onRequestClose={closeModal}
                     style={customStyles}
                     contentLabel="Delete confirmation"
-                    ariaHideApp={false}
+                    // ariaHideApp={false}
                 >
                     {isDeleting && (
                         <DeleteTicketForm

@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`${roboto.variable} roboto.className`}>
+            <body id="root" className={`${roboto.variable} roboto.className`}>
                 <TrpcProvider>
                     <AuthContextProvider>{children}</AuthContextProvider>
                 </TrpcProvider>
