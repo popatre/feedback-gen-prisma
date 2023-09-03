@@ -34,6 +34,7 @@ export default function Page({ params }: Props) {
 
     const [block, setBlock] = useState<Block | undefined>(blockData);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         setBlock(blockData);
@@ -103,6 +104,7 @@ export default function Page({ params }: Props) {
                 >
                     {isDeleting && (
                         <DeleteTicketForm
+                            setIsDeleting={setIsDeleting}
                             closeModal={closeModal}
                             ticketIdRef={ticketRef}
                             handleDeletedTicketRender={
@@ -110,11 +112,13 @@ export default function Page({ params }: Props) {
                             }
                         />
                     )}
-                    <EditTicketForm
-                        closeModal={closeModal}
-                        currentTicket={ticketRef}
-                        handleEditTicketRender={handleEditTicketRender}
-                    />
+                    {isEditing && (
+                        <EditTicketForm
+                            closeModal={closeModal}
+                            currentTicket={ticketRef}
+                            handleEditTicketRender={handleEditTicketRender}
+                        />
+                    )}
                 </Modal>
                 {block.tickets.map(
                     ({ ticket_id, description, block_name, ticket_number }) => {
@@ -135,6 +139,7 @@ export default function Page({ params }: Props) {
                                             label="edit"
                                             className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
                                             handleClick={() => {
+                                                setIsEditing(true);
                                                 openModal();
                                                 ticketRef.current = {
                                                     ticketId: ticket_id,
