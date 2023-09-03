@@ -33,8 +33,7 @@ export default function Page({ params }: Props) {
     const { adminMode } = useUserContext();
 
     const [block, setBlock] = useState<Block | undefined>(blockData);
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
+    const [crudModal, setCrudModal] = useState<null | "edit" | "delete">(null);
 
     useEffect(() => {
         setBlock(blockData);
@@ -103,9 +102,8 @@ export default function Page({ params }: Props) {
                     contentLabel="Delete confirmation"
                     // ariaHideApp={false}
                 >
-                    {isDeleting && (
+                    {crudModal === "delete" && (
                         <DeleteTicketForm
-                            setIsDeleting={setIsDeleting}
                             closeModal={closeModal}
                             ticketIdRef={ticketRef}
                             handleDeletedTicketRender={
@@ -113,7 +111,7 @@ export default function Page({ params }: Props) {
                             }
                         />
                     )}
-                    {isEditing && (
+                    {crudModal === "edit" && (
                         <EditTicketForm
                             closeModal={closeModal}
                             currentTicket={ticketRef}
@@ -140,7 +138,7 @@ export default function Page({ params }: Props) {
                                             label="edit"
                                             className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
                                             handleClick={() => {
-                                                setIsEditing(true);
+                                                setCrudModal("edit");
                                                 openModal();
                                                 ticketRef.current = {
                                                     ticketId: ticket_id,
@@ -158,7 +156,7 @@ export default function Page({ params }: Props) {
                                                     ticketNumber: ticket_number,
                                                     description: description,
                                                 };
-                                                setIsDeleting(true);
+                                                setCrudModal("delete");
                                                 openModal();
                                             }}
                                         />
