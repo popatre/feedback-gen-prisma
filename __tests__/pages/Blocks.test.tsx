@@ -151,7 +151,7 @@ describe("BlockPage", () => {
         const ticketBoxes = screen.queryAllByRole("listitem");
         expect(ticketBoxes).toHaveLength(0);
     });
-    test("should allow tickets to be edited", async () => {
+    test("can cancel and confirm ticket editing", async () => {
         const user = userEvent.setup();
         const block = { block: "be" };
         useSingleBlockQuerySpy.mockReturnValue({
@@ -191,19 +191,33 @@ describe("BlockPage", () => {
         const editModal = await screen.findByRole("dialog", { hidden: true });
 
         const modalTitle = within(editModal).getByText("Edit Ticket");
-        const ticketNumLabel = within(editModal).getByText("Ticket Number");
-        const ticketDescLabel =
-            within(editModal).getByText("Ticket Description");
-
         expect(modalTitle).toBeInTheDocument();
+
+        await userEvent.click(
+            screen.getByRole("button", { name: "Cancel", hidden: true })
+        );
+
+        await waitFor(() => {
+            expect(editModal).not.toBeInTheDocument();
+        });
+
+        expect(updateTicketMock).not.toHaveBeenCalled();
+
+        await user.click(editButtons[0]);
+        const editModal2 = await screen.findByRole("dialog", { hidden: true });
+
+        const ticketNumLabel = within(editModal2).getByText("Ticket Number");
+        const ticketDescLabel =
+            within(editModal2).getByText("Ticket Description");
+
         expect(ticketNumLabel).toBeInTheDocument();
         expect(ticketDescLabel).toBeInTheDocument();
 
-        const ticketNumberInput = within(editModal).getByRole("spinbutton", {
+        const ticketNumberInput = within(editModal2).getByRole("spinbutton", {
             hidden: true,
         });
 
-        const descriptionInput = within(editModal).getByRole("textbox", {
+        const descriptionInput = within(editModal2).getByRole("textbox", {
             hidden: true,
         });
 
@@ -223,9 +237,8 @@ describe("BlockPage", () => {
             "1",
             "desc Im an edit"
         );
-        setTimeout(() => {
-            expect(editModal).not.toBeInTheDocument();
-        }, 2000);
+
+        //reset mock to edit ticket?
     });
 });
 test("can cancel and confirm ticket deletion", async () => {
