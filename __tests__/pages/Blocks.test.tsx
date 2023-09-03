@@ -431,6 +431,7 @@ describe("BlockPage", () => {
                 isError: false,
                 isSuccess: false,
                 deleteTicket: deleteTicketMock,
+                error: null,
             });
 
             Modal.setAppElement("body");
@@ -517,6 +518,7 @@ describe("BlockPage", () => {
                 isError: false,
                 isSuccess: false,
                 deleteTicket: deleteTicketMock,
+                error: null,
             });
 
             Modal.setAppElement("body");
@@ -538,7 +540,67 @@ describe("BlockPage", () => {
                 })
             ).toBeDisabled();
         });
-        test.todo("error");
+        test("delete modal handles and displays error", async () => {
+            const user = userEvent.setup();
+            const block = { block: "be" };
+            useSingleBlockQuerySpy.mockReturnValue({
+                block: {
+                    tickets: createBlockTicketsData("be"),
+                    block_name: "be",
+                },
+                isLoading: false,
+                isError: false,
+                error: null,
+            });
+            useUserContextSpy.mockReturnValue({
+                adminMode: true,
+                email: "hi@email.com",
+                displayName: "JB",
+                setAdminMode: () => {},
+            });
+
+            const deleteTicketMock = jest.fn();
+
+            useDeleteTicketSpy.mockReturnValue({
+                // ticket: createTicketData("be"),
+                isDeleted: undefined,
+                isLoading: false,
+                isError: true,
+                isSuccess: false,
+                error: {
+                    message: "something went wrong",
+                    data: {
+                        code: "BAD_REQUEST",
+                        httpStatus: 400,
+                        stack: "...",
+                        path: "user.notfound",
+                    },
+                    shape: null,
+                },
+                deleteTicket: deleteTicketMock,
+            });
+
+            Modal.setAppElement("body");
+
+            render(<BlockPage params={block} />);
+
+            const deleteButtons = screen.getAllByRole("button", {
+                name: "Del",
+            });
+
+            await user.click(deleteButtons[0]);
+            const deleteModal = await screen.findByRole("dialog", {
+                hidden: true,
+            });
+
+            expect(
+                within(deleteModal).getByRole("heading", {
+                    name: `BAD_REQUEST - something went wrong`,
+                    hidden: true,
+                    level: 2,
+                })
+            ).toBeInTheDocument();
+        });
     });
     describe("adminMode - add new ticket", () => {
         test("should provide modal to add new ticket", async () => {

@@ -1,12 +1,7 @@
 import { TicketRef } from "@/app/[block]/page";
 import useDeleteTicket from "@/hooks/useDeleteTicket";
 import ModalFormWrapper from "@/wrappers/ModalFormWrapper";
-import React, {
-    Dispatch,
-    MutableRefObject,
-    SetStateAction,
-    useEffect,
-} from "react";
+import React, { MutableRefObject, useEffect } from "react";
 
 type Props = {
     closeModal: () => void;
@@ -19,7 +14,8 @@ export default function DeleteTicketForm({
     ticketIdRef,
     handleDeletedTicketRender,
 }: Props) {
-    const { isDeleted, deleteTicket, isLoading, isError } = useDeleteTicket();
+    const { isDeleted, deleteTicket, isLoading, isError, error } =
+        useDeleteTicket();
 
     useEffect(() => {
         if (isDeleted && ticketIdRef.current) {
@@ -35,7 +31,12 @@ export default function DeleteTicketForm({
         }
     };
 
-    if (isError) return <p>Something Went Wrong</p>;
+    if (isError)
+        return (
+            <h2>
+                {error?.data?.code} - {error?.message}{" "}
+            </h2>
+        );
     return (
         <ModalFormWrapper
             handleSubmit={handleSubmit}

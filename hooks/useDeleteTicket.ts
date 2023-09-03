@@ -6,6 +6,7 @@ export default function useDeleteTicket() {
         isLoading,
         isSuccess,
         isError,
+        error,
         mutateAsync,
     } = trpc.ticket.deleteTicket.useMutation();
 
@@ -14,5 +15,5 @@ export default function useDeleteTicket() {
         return isDeleted;
     };
 
-    return { isDeleted, deleteTicket, isLoading, isSuccess, isError };
+    return { isDeleted, deleteTicket, isLoading, isSuccess, isError, error };
 }
