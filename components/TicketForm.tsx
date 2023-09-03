@@ -51,7 +51,7 @@ export default function TicketForm({
             </div>
             <div className="flex flex-col">
                 <label className="font-semibold" htmlFor="description">
-                    Description
+                    Ticket Description
                 </label>
                 <textarea
                     name="description"

@@ -5,6 +5,7 @@ export default function usePostTicket(blockName: string) {
         data: ticket,
         isLoading,
         isSuccess,
+        isError,
         mutateAsync,
     } = trpc.ticket.postTicketByBlockName.useMutation();
 
@@ -15,5 +16,5 @@ export default function usePostTicket(blockName: string) {
         await mutateAsync({ blockName, ticketNumber, description });
     };
 
-    return { ticket, handleTicketPost, isLoading, isSuccess };
+    return { ticket, handleTicketPost, isLoading, isSuccess, isError };
 }

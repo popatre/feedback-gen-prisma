@@ -15,6 +15,7 @@ import {
 import * as useUserContext from "../../hooks/useUserContext";
 import * as useUpdateTicket from "../../hooks/useUpdateTicket";
 import * as useDeleteTicket from "../../hooks/useDeleteTicket";
+import * as usePostTicket from "../../hooks/usePostTicket";
 import Modal from "react-modal";
 
 jest.mock(`../../hooks/useSingleBlockQuery`, () => {
@@ -60,6 +61,16 @@ jest.mock(`../../hooks/useDeleteTicket`, () => {
 });
 
 export const useDeleteTicketSpy = jest.spyOn(useDeleteTicket, "default");
+
+jest.mock(`../../hooks/usePostTicket`, () => {
+    const originalModule = jest.requireActual(`../../hooks/usePostTicket`);
+    return {
+        ...originalModule,
+        __esModule: true,
+    };
+});
+
+export const usePostTicketSpy = jest.spyOn(usePostTicket, "default");
 
 beforeEach(() => {
     jest.resetAllMocks();
@@ -321,3 +332,89 @@ test("can cancel and confirm ticket deletion", async () => {
     expect(deleteTicketMock).toHaveBeenCalledWith("1");
     //reset mock here to add a ticket?
 });
+
+test("should provide modal to add new ticket", async () => {
+    const user = userEvent.setup();
+    const block = { block: "be" };
+    useSingleBlockQuerySpy.mockReturnValue({
+        block: {
+            tickets: createBlockTicketsData("be"),
+            block_name: "be",
+        },
+        isLoading: false,
+        isError: false,
+        error: null,
+    });
+    useUserContextSpy.mockReturnValue({
+        adminMode: true,
+        email: "hi@email.com",
+        displayName: "JB",
+        setAdminMode: () => {},
+    });
+
+    const handleTicketMock = jest.fn();
+
+    usePostTicketSpy.mockReturnValue({
+        ticket: undefined,
+        isLoading: false,
+        isError: false,
+        isSuccess: false,
+        handleTicketPost: handleTicketMock,
+    });
+
+    Modal.setAppElement("body");
+
+    render(<BlockPage params={block} />);
+
+    const addTicketButton = screen.getByText(/Add New Ticket/);
+    expect(addTicketButton).toBeInTheDocument();
+
+    await userEvent.click(addTicketButton);
+
+    const addTicketModal = await screen.findByRole("dialog", { hidden: true });
+    const modalTitle = within(addTicketModal).getByText("Create New Ticket");
+    expect(modalTitle).toBeInTheDocument();
+
+    await userEvent.click(
+        screen.getByRole("button", { name: "Cancel", hidden: true })
+    );
+
+    await waitFor(() => {
+        expect(addTicketModal).not.toBeInTheDocument();
+    });
+
+    expect(handleTicketMock).not.toHaveBeenCalled();
+
+    await userEvent.click(addTicketButton);
+
+    const addTicketModal2 = await screen.findByRole("dialog", { hidden: true });
+
+    const ticketNumLabel = within(addTicketModal2).getByText("Ticket Number");
+    const ticketDescLabel =
+        within(addTicketModal2).getByText("Ticket Description");
+
+    expect(ticketNumLabel).toBeInTheDocument();
+    expect(ticketDescLabel).toBeInTheDocument();
+
+    const ticketNumberInput = within(addTicketModal2).getByRole("spinbutton", {
+        hidden: true,
+    });
+
+    const descriptionInput = within(addTicketModal2).getByRole("textbox", {
+        hidden: true,
+    });
+
+    await userEvent.type(descriptionInput, "Im a new ticket");
+    expect(descriptionInput).toHaveValue("Im a new ticket");
+
+    await userEvent.type(ticketNumberInput, "2");
+    expect(ticketNumberInput).toHaveValue(2);
+
+    await userEvent.click(
+        screen.getByRole("button", { name: "Add Ticket", hidden: true })
+    );
+
+    expect(handleTicketMock).toHaveBeenCalledTimes(1);
+    expect(handleTicketMock).toHaveBeenCalledWith(2, "Im a new ticket");
+});
+test.todo("error states");
