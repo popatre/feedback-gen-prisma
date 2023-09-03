@@ -206,7 +206,8 @@ describe("BlockPage", () => {
             "1",
             "desc Im an edit"
         );
-
-        screen.debug(editModal);
+        setTimeout(() => {
+            expect(editModal).not.toBeInTheDocument();
+        }, 2000);
     });
 });
