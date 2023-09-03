@@ -96,6 +96,7 @@ export default function Page({ params }: Props) {
         block && (
             <ul className="nav__grid pb-20">
                 <Modal
+                    key={modalIsOpen ? "modal-open" : "modal-closed"}
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
                     style={customStyles}

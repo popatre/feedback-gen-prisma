@@ -227,81 +227,84 @@ describe("BlockPage", () => {
             expect(editModal).not.toBeInTheDocument();
         }, 2000);
     });
-    test("can cancel and confirm ticket deletion", async () => {
-        const user = userEvent.setup();
-        const block = { block: "be" };
-        useSingleBlockQuerySpy.mockReturnValue({
-            block: {
-                tickets: createBlockTicketsData("be"),
-                block_name: "be",
-            },
-            isLoading: false,
-            isError: false,
-            error: null,
-        });
-        useUserContextSpy.mockReturnValue({
-            adminMode: true,
-            email: "hi@email.com",
-            displayName: "JB",
-            setAdminMode: () => {},
-        });
-
-        const deleteTicketMock = jest.fn();
-
-        useDeleteTicketSpy.mockReturnValue({
-            // ticket: createTicketData("be"),
-            isDeleted: undefined,
-            isLoading: false,
-            isError: false,
-            isSuccess: false,
-            deleteTicket: deleteTicketMock,
-        });
-
-        Modal.setAppElement("body");
-
-        render(<BlockPage params={block} />);
-
-        const deleteButtons = screen.getAllByRole("button", { name: "Del" });
-        expect(deleteButtons).toHaveLength(3);
-        await user.click(deleteButtons[0]);
-        const deleteModal = await screen.findByRole("dialog", { hidden: true });
-
-        const modalTitle = within(deleteModal).getByText(
-            "Are you sure you want to delete this ticket?"
-        );
-
-        expect(modalTitle).toBeInTheDocument();
-
-        const confirmButton = within(deleteModal).getByRole("button", {
-            name: "Confirm",
-            hidden: true,
-        });
-        const cancelButton = within(deleteModal).getByRole("button", {
-            name: "Cancel",
-            hidden: true,
-        });
-
-        expect(confirmButton).toBeInTheDocument();
-        expect(cancelButton).toBeInTheDocument();
-
-        await userEvent.click(cancelButton);
-
-        expect(deleteTicketMock).not.toHaveBeenCalled();
-
-        await waitFor(() => {
-            expect(deleteModal).not.toBeInTheDocument();
-        });
-
-        await user.click(deleteButtons[0]);
-
-        screen.debug(deleteModal);
-
-        await userEvent.click(confirmButton);
-
-        waitFor(() => {
-            expect(deleteTicketMock).toHaveBeenCalledTimes(1);
-            expect(deleteTicketMock).toHaveBeenCalledWith("1");
-            expect(deleteModal).not.toBeInTheDocument();
-        });
+});
+test("can cancel and confirm ticket deletion", async () => {
+    const user = userEvent.setup();
+    const block = { block: "be" };
+    useSingleBlockQuerySpy.mockReturnValue({
+        block: {
+            tickets: createBlockTicketsData("be"),
+            block_name: "be",
+        },
+        isLoading: false,
+        isError: false,
+        error: null,
     });
+    useUserContextSpy.mockReturnValue({
+        adminMode: true,
+        email: "hi@email.com",
+        displayName: "JB",
+        setAdminMode: () => {},
+    });
+
+    const deleteTicketMock = jest.fn();
+
+    useDeleteTicketSpy.mockReturnValue({
+        // ticket: createTicketData("be"),
+        isDeleted: undefined,
+        isLoading: false,
+        isError: false,
+        isSuccess: false,
+        deleteTicket: deleteTicketMock,
+    });
+
+    Modal.setAppElement("body");
+
+    render(<BlockPage params={block} />);
+
+    const deleteButtons = screen.getAllByRole("button", { name: "Del" });
+    expect(deleteButtons).toHaveLength(3);
+    await user.click(deleteButtons[0]);
+    const deleteModal = await screen.findByRole("dialog", { hidden: true });
+
+    const modalTitle = within(deleteModal).getByText(
+        "Are you sure you want to delete this ticket?"
+    );
+
+    expect(modalTitle).toBeInTheDocument();
+
+    const confirmButton = within(deleteModal).getByRole("button", {
+        name: "Confirm",
+        hidden: true,
+    });
+    const cancelButton = within(deleteModal).getByRole("button", {
+        name: "Cancel",
+        hidden: true,
+    });
+
+    expect(confirmButton).toBeInTheDocument();
+    expect(cancelButton).toBeInTheDocument();
+
+    await userEvent.click(cancelButton);
+
+    expect(deleteTicketMock).not.toHaveBeenCalled();
+
+    await waitFor(() => {
+        expect(deleteModal).not.toBeInTheDocument();
+    });
+
+    await user.click(deleteButtons[0]);
+
+    const deleteModal2 = await screen.findByRole("dialog", { hidden: true });
+
+    const confirmButton2 = within(deleteModal2).getByRole("button", {
+        name: "Confirm",
+        hidden: true,
+    });
+
+    await userEvent.click(confirmButton2);
+
+    expect(deleteTicketMock).toHaveBeenCalledTimes(1);
+    expect(deleteTicketMock).toHaveBeenCalledWith("1");
+    //reset mock here to add a ticket?
 });
