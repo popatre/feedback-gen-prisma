@@ -629,6 +629,7 @@ describe("BlockPage", () => {
                 isLoading: false,
                 isError: false,
                 isSuccess: false,
+                error: null,
                 handleTicketPost: handleTicketMock,
             });
 
@@ -639,7 +640,7 @@ describe("BlockPage", () => {
             const addTicketButton = screen.getByText(/Add New Ticket/);
             expect(addTicketButton).toBeInTheDocument();
 
-            await userEvent.click(addTicketButton);
+            await user.click(addTicketButton);
 
             const addTicketModal = await screen.findByRole("dialog", {
                 hidden: true,
@@ -699,7 +700,111 @@ describe("BlockPage", () => {
             expect(handleTicketMock).toHaveBeenCalledTimes(1);
             expect(handleTicketMock).toHaveBeenCalledWith(2, "Im a new ticket");
         });
-        test.todo("loading");
-        test.todo("error");
+        test("should render loading message during new ticket posting", async () => {
+            const user = userEvent.setup();
+            const block = { block: "be" };
+            useSingleBlockQuerySpy.mockReturnValue({
+                block: {
+                    tickets: createBlockTicketsData("be"),
+                    block_name: "be",
+                },
+                isLoading: false,
+                isError: false,
+                error: null,
+            });
+            useUserContextSpy.mockReturnValue({
+                adminMode: true,
+                email: "hi@email.com",
+                displayName: "JB",
+                setAdminMode: () => {},
+            });
+
+            const handleTicketMock = jest.fn();
+
+            usePostTicketSpy.mockReturnValue({
+                ticket: undefined,
+                isLoading: true,
+                isError: false,
+                isSuccess: false,
+                error: null,
+                handleTicketPost: handleTicketMock,
+            });
+
+            Modal.setAppElement("body");
+
+            render(<BlockPage params={block} />);
+
+            const addTicketButton = screen.getByText(/Add New Ticket/);
+
+            await user.click(addTicketButton);
+
+            const addTicketModal = await screen.findByRole("dialog", {
+                hidden: true,
+            });
+            expect(
+                within(addTicketModal).getByRole("button", {
+                    name: "Working on it...",
+                    hidden: true,
+                })
+            ).toBeDisabled();
+        });
+        test("should display error message when error occurs during posting", async () => {
+            const user = userEvent.setup();
+            const block = { block: "be" };
+            useSingleBlockQuerySpy.mockReturnValue({
+                block: {
+                    tickets: createBlockTicketsData("be"),
+                    block_name: "be",
+                },
+                isLoading: false,
+                isError: false,
+                error: null,
+            });
+            useUserContextSpy.mockReturnValue({
+                adminMode: true,
+                email: "hi@email.com",
+                displayName: "JB",
+                setAdminMode: () => {},
+            });
+
+            const handleTicketMock = jest.fn();
+
+            usePostTicketSpy.mockReturnValue({
+                ticket: undefined,
+                isLoading: false,
+                isError: true,
+                isSuccess: false,
+                error: {
+                    message: "something went wrong",
+                    data: {
+                        code: "BAD_REQUEST",
+                        httpStatus: 400,
+                        stack: "...",
+                        path: "user.notfound",
+                    },
+                    shape: null,
+                },
+                handleTicketPost: handleTicketMock,
+            });
+
+            Modal.setAppElement("body");
+
+            render(<BlockPage params={block} />);
+
+            const addTicketButton = screen.getByText(/Add New Ticket/);
+
+            await user.click(addTicketButton);
+
+            const addTicketModal = await screen.findByRole("dialog", {
+                hidden: true,
+            });
+            expect(
+                within(addTicketModal).getByRole("heading", {
+                    name: `BAD_REQUEST - something went wrong`,
+                    hidden: true,
+                    level: 2,
+                })
+            ).toBeInTheDocument();
+        });
     });
 });

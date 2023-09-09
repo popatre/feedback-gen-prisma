@@ -14,7 +14,7 @@ export default function TicketForm({
     block,
     handleNewTicket,
 }: Props) {
-    const { ticket, isLoading, handleTicketPost } = usePostTicket(block);
+    const { ticket, isLoading, handleTicketPost, error } = usePostTicket(block);
     const { formState, handleChange, resetForm } = useFormState({
         ticketNumber: 0,
         description: "",
@@ -32,6 +32,13 @@ export default function TicketForm({
         e.preventDefault();
         await handleTicketPost(+formState.ticketNumber, formState.description);
     };
+
+    if (error)
+        return (
+            <h2>
+                {error?.data?.code} - {error?.message}{" "}
+            </h2>
+        );
 
     return (
         <form className="my-10 mx-10 w-[400px]" onSubmit={handleSubmit}>
