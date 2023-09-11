@@ -2,19 +2,17 @@
 
 import GuidanceGrid from "@/components/GuidanceGrid";
 import useGetTicketById from "@/hooks/useGetTicketById";
-import React, { useContext } from "react";
-import { UserContext } from "@/lib/context";
+import React from "react";
 import Loading from "@/components/Loading";
+import useUserContext from "@/hooks/useUserContext";
 
-export default function Page({
+export default function TicketPage({
     params,
 }: {
-    params: { ticket_id: string; block: string };
+    params: { ticket_id: string };
 }) {
-    const { email } = useContext(UserContext) ?? { email: "" };
-
+    const { email } = useUserContext();
     const { isLoading, ticket } = useGetTicketById(params.ticket_id, email);
-
     if (!email) return <p>Must be logged in</p>;
 
     if (isLoading) return <Loading />;

@@ -2,7 +2,7 @@ import { trpc } from "@/utils/trpc";
 
 export default function useGetTicketById(
     ticketId: string,
-    userEmail: string | null
+    userEmail: string | undefined
 ) {
     userEmail ||= "";
 

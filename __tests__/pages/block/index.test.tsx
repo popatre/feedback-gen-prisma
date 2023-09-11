@@ -1,12 +1,12 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
-import BlockPage from "../../app/[block]/page";
+import BlockPage from "../../../app/[block]/page";
 import userEvent from "@testing-library/user-event";
 import { createBlockTicketsData } from "@/db/data/utils/createBlockData";
-import * as useSingleBlockQuery from "../../hooks/useSingleBlockQuery";
-import * as useUserContext from "../../hooks/useUserContext";
-import * as useUpdateTicket from "../../hooks/useUpdateTicket";
-import * as useDeleteTicket from "../../hooks/useDeleteTicket";
-import * as usePostTicket from "../../hooks/usePostTicket";
+import * as useSingleBlockQuery from "../../../hooks/useSingleBlockQuery";
+import * as useUserContext from "../../../hooks/useUserContext";
+import * as useUpdateTicket from "../../../hooks/useUpdateTicket";
+import * as useDeleteTicket from "../../../hooks/useDeleteTicket";
+import * as usePostTicket from "../../../hooks/usePostTicket";
 import Modal from "react-modal";
 
 jest.mock(`../../hooks/useSingleBlockQuery`, () => {

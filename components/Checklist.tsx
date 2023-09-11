@@ -179,7 +179,7 @@ export default function Checklist({
                         addPositiveFeedback={addPositiveFeedback}
                         addEbiFeedback={addEbiFeedback}
                     >
-                        <p>{element.guidance}</p>
+                        <li>{element.guidance}</li>
 
                         {!adminMode && (
                             <button
