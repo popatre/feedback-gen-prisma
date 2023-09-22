@@ -9,6 +9,8 @@ import Login from "@/components/Login";
 import Navbar from "@/components/Navbar";
 import Loading from "@/components/Loading";
 import { UserContextData, UserFirebase } from "@/types/types";
+import { isNorthcodersEmail } from "@/utils/helpers/isNorthcodersEmail";
+import Error from "@/components/Error";
 
 type Props = { children: ReactNode };
 
@@ -42,7 +44,16 @@ export default function AuthContextProvider({ children }: Props) {
     return (
         <UserContext.Provider value={value}>
             <Navbar />
-            {!user ? <Login /> : children}
+            {!user ? (
+                <Login />
+            ) : isNorthcodersEmail(user.email) ? (
+                children
+            ) : (
+                <Error
+                    statusCode={403}
+                    message="You must have a Northcoders email"
+                />
+            )}
         </UserContext.Provider>
     );
 }

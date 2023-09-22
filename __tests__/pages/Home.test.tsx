@@ -1,6 +1,17 @@
-import { render, renderHook, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import Home from "../../app/page";
+import * as useUserContext from "../../hooks/useUserContext";
+import RootLayout from "@/app/layout";
+
+jest.mock(`../../hooks/useUserContext`, () => {
+    const originalModule = jest.requireActual(`../../hooks/useUserContext`);
+    return {
+        ...originalModule,
+        __esModule: true,
+    };
+});
+
+export const useUserContextSpy = jest.spyOn(useUserContext, "default");
 
 describe("HomePage", () => {
     test("should render available blocks", () => {
@@ -9,14 +20,14 @@ describe("HomePage", () => {
         expect(getByText("Back End")).toBeInTheDocument();
         expect(getByText("Front End")).toBeInTheDocument();
     });
-    test.skip("should have clickable links to block pages", async () => {
-        /** How to do navigation?? */
-        const user = userEvent.setup();
+    test("should have links to block pages", async () => {
         render(<Home />);
 
-        const { getByText } = screen;
-        const backEndLink = getByText("Back End");
-        const frontEndLink = getByText("Front End");
-        await user.click(backEndLink);
+        const { getByRole } = screen;
+        const backEndLink = getByRole("link", { name: "Back End" });
+        const frontEndLink = getByRole("link", { name: "Front End" });
+
+        expect(backEndLink).toHaveAttribute("href", "/be");
+        expect(frontEndLink).toHaveAttribute("href", "/fe");
     });
 });

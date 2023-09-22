@@ -36,7 +36,7 @@ beforeEach(() => {
 test("should render ticket page with expected content", async () => {
     useUserContextSpy.mockReturnValue({
         adminMode: false,
-        email: "hi@email.com",
+        email: "hi@northcoders.com",
         displayName: "JB",
         setAdminMode: () => {},
     });
