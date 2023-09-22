@@ -8,6 +8,7 @@ import { auth } from "../lib/firebase";
 import useHandleUserLogin from "@/hooks/useHandleUserLogin";
 import Loading from "./Loading";
 import useUserContext from "@/hooks/useUserContext";
+import { isNorthcodersEmail } from "@/utils/helpers/isNorthcodersEmail";
 
 type Props = {};
 
@@ -18,7 +19,7 @@ export default function Navbar({}: Props) {
     const { handleLogin, isLoading, isError } = useHandleUserLogin();
 
     useEffect(() => {
-        if (email) {
+        if (email && isNorthcodersEmail(email)) {
             const login = async () => {
                 try {
                     await handleLogin(email);
@@ -56,6 +57,7 @@ export default function Navbar({}: Props) {
         <nav className="mb-10 nav-bar">
             <ul className="flex flex-row justify-around py-5">
                 {email &&
+                    isNorthcodersEmail(email) &&
                     pages.map((page) => {
                         return (
                             <li
@@ -67,7 +69,7 @@ export default function Navbar({}: Props) {
                         );
                     })}
             </ul>
-            {email && (
+            {email && isNorthcodersEmail(email) && (
                 <button
                     className={
                         adminMode
