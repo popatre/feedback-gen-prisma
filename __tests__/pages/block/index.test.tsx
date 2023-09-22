@@ -9,9 +9,9 @@ import * as useDeleteTicket from "../../../hooks/useDeleteTicket";
 import * as usePostTicket from "../../../hooks/usePostTicket";
 import Modal from "react-modal";
 
-jest.mock(`../../hooks/useSingleBlockQuery`, () => {
+jest.mock(`../../../hooks/useSingleBlockQuery`, () => {
     const originalModule = jest.requireActual(
-        `../../hooks/useSingleBlockQuery`
+        `../../../hooks/useSingleBlockQuery`
     );
     return {
         ...originalModule,
@@ -24,8 +24,8 @@ export const useSingleBlockQuerySpy = jest.spyOn(
     "useSingleBlockQuery"
 );
 
-jest.mock(`../../hooks/useUserContext`, () => {
-    const originalModule = jest.requireActual(`../../hooks/useUserContext`);
+jest.mock(`../../../hooks/useUserContext`, () => {
+    const originalModule = jest.requireActual(`../../../hooks/useUserContext`);
     return {
         ...originalModule,
         __esModule: true,
@@ -34,8 +34,8 @@ jest.mock(`../../hooks/useUserContext`, () => {
 
 export const useUserContextSpy = jest.spyOn(useUserContext, "default");
 
-jest.mock(`../../hooks/useUpdateTicket`, () => {
-    const originalModule = jest.requireActual(`../../hooks/useUpdateTicket`);
+jest.mock(`../../../hooks/useUpdateTicket`, () => {
+    const originalModule = jest.requireActual(`../../../hooks/useUpdateTicket`);
     return {
         ...originalModule,
         __esModule: true,
@@ -43,8 +43,8 @@ jest.mock(`../../hooks/useUpdateTicket`, () => {
 });
 export const useUpdateTicketSpy = jest.spyOn(useUpdateTicket, "default");
 
-jest.mock(`../../hooks/useDeleteTicket`, () => {
-    const originalModule = jest.requireActual(`../../hooks/useDeleteTicket`);
+jest.mock(`../../../hooks/useDeleteTicket`, () => {
+    const originalModule = jest.requireActual(`../../../hooks/useDeleteTicket`);
     return {
         ...originalModule,
         __esModule: true,
@@ -53,8 +53,8 @@ jest.mock(`../../hooks/useDeleteTicket`, () => {
 
 export const useDeleteTicketSpy = jest.spyOn(useDeleteTicket, "default");
 
-jest.mock(`../../hooks/usePostTicket`, () => {
-    const originalModule = jest.requireActual(`../../hooks/usePostTicket`);
+jest.mock(`../../../hooks/usePostTicket`, () => {
+    const originalModule = jest.requireActual(`../../../hooks/usePostTicket`);
     return {
         ...originalModule,
         __esModule: true,
