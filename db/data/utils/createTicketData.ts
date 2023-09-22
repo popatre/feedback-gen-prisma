@@ -25,18 +25,18 @@ export const createTicketGuidanceAndFeedback = (): SingleTicketGuidanceType => {
                 guidance: "Sample must 2",
             },
             {
-                feedback: createGuidanceFeedback(3, "guidance3"),
-                guidance_id: "guidance3",
-                ticket_id: "FE1",
-                type: "could",
-                guidance: "Sample could 3",
-            },
-            {
                 feedback: createGuidanceFeedback(4, "guidance4"),
                 guidance_id: "guidance4",
                 ticket_id: "FE1",
                 type: "should",
-                guidance: "Sample should 4",
+                guidance: "Sample should 3",
+            },
+            {
+                feedback: createGuidanceFeedback(3, "guidance3"),
+                guidance_id: "guidance3",
+                ticket_id: "FE1",
+                type: "could",
+                guidance: "Sample could 4",
             },
         ],
     };

@@ -41,8 +41,10 @@ test("should render ticket page with expected content", async () => {
         setAdminMode: () => {},
     });
 
+    const testTicketData = createTicketGuidanceAndFeedback();
+
     useGetTicketByIdSpy.mockReturnValue({
-        ticket: createTicketGuidanceAndFeedback(),
+        ticket: testTicketData,
         isLoading: false,
     });
 
@@ -67,6 +69,31 @@ test("should render ticket page with expected content", async () => {
         "listitem"
     );
     expect(mustGuidance).toHaveLength(2);
-    within(mustGuidanceForSection).getByText(/Sample must 1/);
-    within(mustGuidanceForSection).getByText(/Sample must 2/);
+    within(mustGuidanceForSection).getByText(
+        testTicketData.guidance[0].guidance
+    );
+    within(mustGuidanceForSection).getByText(
+        testTicketData.guidance[1].guidance
+    );
+
+    const shouldGuidanceForSection = shouldLabel.closest(
+        "section"
+    ) as HTMLElement;
+    const shouldGuidance = within(shouldGuidanceForSection).getAllByRole(
+        "listitem"
+    );
+    expect(shouldGuidance).toHaveLength(1);
+    within(shouldGuidanceForSection).getByText(
+        testTicketData.guidance[2].guidance
+    );
+    const couldGuidanceForSection = couldLabel.closest(
+        "section"
+    ) as HTMLElement;
+    const couldGuidance = within(couldGuidanceForSection).getAllByRole(
+        "listitem"
+    );
+    expect(couldGuidance).toHaveLength(1);
+    within(couldGuidanceForSection).getByText(
+        testTicketData.guidance[3].guidance
+    );
 });
