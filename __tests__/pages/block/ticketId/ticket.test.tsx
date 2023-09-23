@@ -97,6 +97,57 @@ test("should render ticket page with expected content", async () => {
         testTicketData.guidance[3].guidance
     );
 });
-test.todo("checkboxes - WWW/EBI cards");
+test("should render WWW and EBI feedback after box selection", async () => {
+    useUserContextSpy.mockReturnValue({
+        adminMode: false,
+        email: "hi@northcoders.com",
+        displayName: "JB",
+        setAdminMode: () => {},
+    });
+
+    const testTicketData = createTicketGuidanceAndFeedback();
+
+    useGetTicketByIdSpy.mockReturnValue({
+        ticket: testTicketData,
+        isLoading: false,
+    });
+
+    const ticket = { ticket_id: "1" };
+    render(<TicketPage params={ticket} />);
+
+    const mustLabel = screen.getByRole("heading", {
+        name: /must/i,
+    });
+
+    const user = userEvent.setup();
+
+    const mustGuidanceForSection = mustLabel.closest("section") as HTMLElement;
+    const [completeBox, wwwBox, ebiBox] = within(
+        mustGuidanceForSection
+    ).getAllByRole("checkbox");
+    expect(wwwBox).toBeDisabled();
+    expect(ebiBox).toBeEnabled();
+
+    await user.click(completeBox);
+
+    expect(ebiBox).toBeDisabled();
+
+    await user.click(wwwBox);
+
+    screen.getByText(`- ${testTicketData.guidance[0].feedback[0].www}`);
+
+    await user.click(wwwBox);
+
+    const wwwFeedback = screen.queryByText(
+        `- ${testTicketData.guidance[0].feedback[0].www}`
+    );
+    expect(wwwFeedback).not.toBeInTheDocument();
+
+    await user.click(completeBox);
+
+    await user.click(ebiBox);
+
+    screen.getByText(`- [ ] ${testTicketData.guidance[0].feedback[0].ebi}`);
+});
 test.todo("updating feedback through modal");
 test.todo("adding guidance through admin mode");

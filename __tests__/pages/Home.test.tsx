@@ -1,17 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import Home from "../../app/page";
-import * as useUserContext from "../../hooks/useUserContext";
-import RootLayout from "@/app/layout";
-
-jest.mock(`../../hooks/useUserContext`, () => {
-    const originalModule = jest.requireActual(`../../hooks/useUserContext`);
-    return {
-        ...originalModule,
-        __esModule: true,
-    };
-});
-
-export const useUserContextSpy = jest.spyOn(useUserContext, "default");
 
 describe("HomePage", () => {
     test("should render available blocks", () => {
