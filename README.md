@@ -1,5 +1,7 @@
 # Project Feedback/Guidance
 
+Hosted version: https://guidance-feedback-gen.vercel.app/
+
 **.env**
 
 DATABASE_URL="postgresql://YOURUSERNAME:YOURPASSWORD@localhost:5432/feedback"
@@ -17,3 +19,5 @@ npm run prepare
 npx prisma migrate reset
 
 npx prisma generate
+
+
