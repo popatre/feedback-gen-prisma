@@ -47,7 +47,7 @@ export default function Navbar({}: Props) {
 
     const pages = [
         { name: "Home", url: "/" },
-        { name: "BE", url: "/be" },
+
         { name: "FE", url: "/fe" },
     ];
 
