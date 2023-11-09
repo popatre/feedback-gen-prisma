@@ -151,3 +151,5 @@ test("should render WWW and EBI feedback after box selection", async () => {
 });
 test.todo("updating feedback through modal");
 test.todo("adding guidance through admin mode");
+test.todo("editing guidance through admin mode");
+test.todo("deleting guidance through admin mode");
