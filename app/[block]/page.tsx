@@ -135,6 +135,19 @@ export default function Page({ params }: Props) {
                                 {adminMode && (
                                     <div className="flex justify-between">
                                         <Button
+                                            label="Del"
+                                            className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-1"
+                                            handleClick={() => {
+                                                ticketRef.current = {
+                                                    ticketId: ticket_id,
+                                                    ticketNumber: ticket_number,
+                                                    description: description,
+                                                };
+                                                setCrudModal("delete");
+                                                openModal();
+                                            }}
+                                        />
+                                        <Button
                                             label="edit"
                                             className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
                                             handleClick={() => {
@@ -145,19 +158,6 @@ export default function Page({ params }: Props) {
                                                     ticketNumber: ticket_number,
                                                     description: description,
                                                 };
-                                            }}
-                                        />
-                                        <Button
-                                            label="Del"
-                                            className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
-                                            handleClick={() => {
-                                                ticketRef.current = {
-                                                    ticketId: ticket_id,
-                                                    ticketNumber: ticket_number,
-                                                    description: description,
-                                                };
-                                                setCrudModal("delete");
-                                                openModal();
                                             }}
                                         />
                                     </div>
