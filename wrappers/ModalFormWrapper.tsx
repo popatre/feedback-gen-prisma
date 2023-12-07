@@ -22,12 +22,6 @@ export default function ModalFormWrapper({
             <h2 className="font-bold mb-10 text-lg">{title}</h2>
             {children}
             <div className="form-btns flex justify-around">
-                <button
-                    disabled={isLoading}
-                    className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
-                >
-                    {isLoading ? `Working on it...` : `${confirmButtonLabel}`}
-                </button>
                 {!isLoading && (
                     <button
                         type="button"
@@ -37,6 +31,12 @@ export default function ModalFormWrapper({
                         Cancel
                     </button>
                 )}
+                <button
+                    disabled={isLoading}
+                    className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
+                >
+                    {isLoading ? `Working on it...` : `${confirmButtonLabel}`}
+                </button>
             </div>
         </form>
     );

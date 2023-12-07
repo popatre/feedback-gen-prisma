@@ -106,6 +106,14 @@ const FeedbackForm = ({
                 </div>
             )}
             <div className="form-btns flex justify-around">
+                {!isSuccess && !isLoading && (
+                    <button
+                        className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
+                        onClick={closeModal}
+                    >
+                        Cancel
+                    </button>
+                )}
                 {!isSuccess ? (
                     <button
                         className="bg-green-600 hover:bg-green-700 text-xs text-white font-bold py-3 px-4 rounded my-1"
@@ -116,14 +124,6 @@ const FeedbackForm = ({
                     </button>
                 ) : (
                     <h2 className="font-bold text-xl">Feedback Updated!</h2>
-                )}
-                {!isSuccess && !isLoading && (
-                    <button
-                        className="bg-rose-600 hover:bg-rose-700 text-xs text-white font-bold py-3 px-4 rounded my-1 mx-5"
-                        onClick={closeModal}
-                    >
-                        Cancel
-                    </button>
                 )}
             </div>
         </form>
