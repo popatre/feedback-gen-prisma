@@ -9,7 +9,7 @@ import TicketAdder from "@/components/TicketAdder";
 import useModal from "@/hooks/useModal";
 import { useSingleBlockQuery } from "@/hooks/useSingleBlockQuery";
 import useUserContext from "@/hooks/useUserContext";
-import { Block, Ticket } from "@/types/types";
+import { Block } from "@/types/types";
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 
