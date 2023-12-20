@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
@@ -9,9 +8,9 @@ import useHandleUserLogin from "@/hooks/useHandleUserLogin";
 import Loading from "./Loading";
 import useUserContext from "@/hooks/useUserContext";
 import { isNorthcodersEmail } from "@/utils/helpers/isNorthcodersEmail";
-import Select, { ActionMeta } from "react-select";
 import { useSingleBlockQuery } from "@/hooks/useSingleBlockQuery";
 import { Navbar, Nav } from "rsuite";
+import "rsuite/dist/rsuite-no-reset.min.css";
 
 type Props = {};
 
