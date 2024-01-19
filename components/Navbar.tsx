@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
@@ -9,14 +8,28 @@ import useHandleUserLogin from "@/hooks/useHandleUserLogin";
 import Loading from "./Loading";
 import useUserContext from "@/hooks/useUserContext";
 import { isNorthcodersEmail } from "@/utils/helpers/isNorthcodersEmail";
+import { useSingleBlockQuery } from "@/hooks/useSingleBlockQuery";
+import { Navbar, Nav } from "rsuite";
+import "rsuite/dist/rsuite-no-reset.min.css";
 
 type Props = {};
 
-export default function Navbar({}: Props) {
+type Option = { value: string; label: string };
+
+export default function NavbarComp({}: Props) {
     const router = useRouter();
     const { email, displayName, adminMode, setAdminMode } = useUserContext();
 
     const { handleLogin, isLoading, isError } = useHandleUserLogin();
+
+    const { isLoading: isLoadingTickets, block: blockData } =
+        useSingleBlockQuery("fe");
+
+    const tickets = blockData?.tickets;
+
+    const ticketOptions = tickets?.map((ticket) => {
+        return { value: ticket.ticket_id, label: ticket.description };
+    });
 
     useEffect(() => {
         if (email && isNorthcodersEmail(email)) {
@@ -47,15 +60,44 @@ export default function Navbar({}: Props) {
 
     const pages = [
         { name: "Home", url: "/" },
-
         { name: "FE", url: "/fe" },
     ];
+
+    const handleNavigation = (page: string) => {
+        router.push(page);
+    };
 
     if (isLoading) return <Loading />;
 
     return (
         <nav className="mb-10 nav-bar">
-            <ul className="flex flex-row justify-around py-5">
+            <Navbar
+                appearance="subtle"
+                className="font-semibold text-white  ml-3"
+            >
+                <Nav>
+                    <Nav.Item onClick={() => handleNavigation("/")}>
+                        {"Home"}
+                    </Nav.Item>
+
+                    <Nav.Menu
+                        title={isLoadingTickets ? "Loading..." : "FE Tickets"}
+                    >
+                        {ticketOptions?.map((ticket) => {
+                            return (
+                                <Nav.Item
+                                    onClick={() =>
+                                        handleNavigation(`/fe/${ticket.value}`)
+                                    }
+                                >
+                                    {ticket.label}
+                                </Nav.Item>
+                            );
+                        })}
+                    </Nav.Menu>
+                </Nav>
+            </Navbar>
+            {/* <ul className="flex flex-row justify-around py-5">
                 {email &&
                     isNorthcodersEmail(email) &&
                     pages.map((page) => {
@@ -68,7 +110,8 @@ export default function Navbar({}: Props) {
                             </li>
                         );
                     })}
-            </ul>
+            </ul> */}
+
             {email && isNorthcodersEmail(email) && (
                 <button
                     className={
