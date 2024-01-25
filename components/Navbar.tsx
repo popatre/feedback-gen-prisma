@@ -86,6 +86,7 @@ export default function NavbarComp({}: Props) {
                         {ticketOptions?.map((ticket) => {
                             return (
                                 <Nav.Item
+                                    key={ticket.value}
                                     onClick={() =>
                                         handleNavigation(`/fe/${ticket.value}`)
                                     }
